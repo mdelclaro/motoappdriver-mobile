@@ -1,0 +1,48 @@
+{
+  "name": "MotoAppDriver",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
+    "adb": "adb -s 27c5c81c96217ece reverse tcp:8081 tcp:8081"
+  },
+  "dependencies": {
+    "eslint": "^5.15.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "formik": "^1.3.1",
+    "geolib": "^2.0.24",
+    "react": "16.6.3",
+    "react-native": "0.58.6",
+    "react-native-elements": "^1.1.0",
+    "react-native-geocoding": "^0.3.0",
+    "react-native-google-places": "^2.5.2",
+    "react-native-google-places-autocomplete": "^1.3.9",
+    "react-native-keyboard-aware-scroll-view": "^0.7.4",
+    "react-native-maps": "^0.23.0",
+    "react-native-maps-directions": "^1.6.0",
+    "react-native-modal": "^6.5.0",
+    "react-native-navigation": "^2.13.2",
+    "react-native-vector-icons": "^6.4.1",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-persist": "^5.10.0",
+    "redux-thunk": "^2.3.0",
+    "socket.io-client": "^2.2.0",
+    "styled-components": "^4.1.3",
+    "uuid": "^3.3.2",
+    "yup": "^0.26.6"
+  },
+  "devDependencies": {
+    "babel-jest": "23.6.0",
+    "metro-react-native-babel-preset": "^0.45.0",
+    "babel-core": "7.0.0-bridge.0",
+    "eslint-plugin-import": "^2.16.0",
+    "jest": "23.6.0",
+    "react-test-renderer": "16.6.3"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
