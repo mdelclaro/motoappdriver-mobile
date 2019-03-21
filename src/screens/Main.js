@@ -66,10 +66,10 @@ class Main extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={styles.container}>
         <Map />
         <TouchableOpacity style={styles.button}>
-          <Text>Iniciar</Text>
+          <Text style={styles.text}>INICIAR</Text>
         </TouchableOpacity>
       </View>
     );
@@ -78,22 +78,29 @@ class Main extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    // position: "absolute",
-    // bottom: 15,
+    flex: 1,
     justifyContent: "center",
     alignItems: "center"
   },
   button: {
+    width: 90,
+    height: 90,
+    backgroundColor: "#425cf4",
+    justifyContent: "center",
+    alignItems: "center",
     position: "absolute",
-    bottom: 100,
-    height: 30,
-    width: 30,
-    // justifyContent: "center",
-    // alignItems: "center",
+    bottom: 15,
     borderRadius: 100,
-    padding: 10,
-    borderRadius: 10,
-    marginTop: 10
+    elevation: 1,
+    shadowColor: "#000",
+    shadowOffset: { x: 0, y: 0 },
+    shadowRadius: 3
+  },
+  text: {
+    color: "#fff",
+    textAlign: "center",
+    fontSize: 22,
+    fontWeight: "bold"
   }
 });
 

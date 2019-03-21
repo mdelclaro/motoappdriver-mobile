@@ -5,6 +5,8 @@ import { Navigation } from "react-native-navigation";
 
 import helmet from "../../assets/helmet/helmet.png";
 
+const { width, height } = Dimensions.get("window");
+
 class Localizacao extends Component {
   constructor(props) {
     super(props);
@@ -16,7 +18,11 @@ class Localizacao extends Component {
     region: null,
     myLocation: new AnimatedRegion({
       latitude: null,
-      longitude: null
+      longitude: null,
+      latitudeDelta: 0.0122,
+      longitudeDelta:
+        (Dimensions.get("window").width / Dimensions.get("window").height) *
+        0.0122
     })
   };
 
@@ -122,7 +128,7 @@ class Localizacao extends Component {
     return (
       <View style={{ flex: 1 }}>
         <MapView
-          style={{ flex: 1 }}
+          style={{ flex: 1, height: height, width: width }}
           region={region}
           loadingEnabled
           showsCompass={false}
