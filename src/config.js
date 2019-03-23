@@ -1,7 +1,7 @@
-// export const baseUrl = "http://192.168.2.107:8080/motoapp/v1/";
-export const baseUrl = "http://192.168.1.13:8080/motoapp/v1/";
-// export const socketUrl = "http://192.168.2.107:8080/drivers";
-export const socketUrl = "http://192.168.1.13:8080/drivers";
+export const baseUrl = "http://192.168.2.107:8080/motoapp/v1/";
+// export const baseUrl = "http://192.168.1.13:8080/motoapp/v1/";
+export const socketUrl = "http://192.168.2.107:8080/drivers";
+// export const socketUrl = "http://192.168.1.13:8080/drivers";
 
 // export const baseColor = "#425cf4";
 export const baseColor = "#4286f4";
