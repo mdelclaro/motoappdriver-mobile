@@ -1,13 +1,3 @@
-export { uiStartLoading, uiStopLoading } from "./UIAction";
-export { signUp } from "./SignUpAction";
-export { addRating } from "./RatingAction";
-export {
-  tryAuth,
-  authGetToken,
-  authLogout,
-  authAutoSignIn
-} from "./AuthAction";
-
 export {
   emailChanged,
   senhaChanged,
@@ -19,3 +9,16 @@ export {
   placaChanged,
   clearForm
 } from "./FormAction";
+
+export {
+  tryAuth,
+  authGetToken,
+  authLogout,
+  authAutoSignIn
+} from "./AuthAction";
+
+export { signUp } from "./SignUpAction";
+export { uiStartLoading, uiStopLoading } from "./UIAction";
+export { acceptCorrida, startCorrida, finishCorrida } from "./RequestAction";
+export { goOnline, goOffline } from "./StatusAction";
+export { addRating } from "./RatingAction";

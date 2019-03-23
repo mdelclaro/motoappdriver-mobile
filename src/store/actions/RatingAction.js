@@ -1,4 +1,4 @@
-import { uiStartLoading, uiStopLoading, authGetToken } from "./index";
+import { uiStartLoading, uiStopLoading, authGetToken } from "./UIAction";
 import { baseUrl } from "../../config";
 
 export const addRating = (idMotoqueiro, nota) => {

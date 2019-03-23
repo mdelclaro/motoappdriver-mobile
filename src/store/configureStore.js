@@ -3,21 +3,25 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
 
-// import RequestReducer from "./reducers/RequestReducer";
+import RequestReducer from "./reducers/RequestReducer";
 import UIReducer from "./reducers/UIReducer";
 import AuthReducer from "./reducers/AuthReducer";
 import FormReducer from "./reducers/FormReducer";
+import StatusReducer from "./reducers/StatusReducer";
 
 const rootReducer = combineReducers({
   ui: UIReducer,
   auth: AuthReducer,
-  form: FormReducer
+  form: FormReducer,
+  status: StatusReducer,
+  corrida: RequestReducer
 });
 
 // redux-persist
 const persistConfig = {
   key: "root",
-  storage
+  storage,
+  blacklist: ["status", "ui", "corrida"]
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

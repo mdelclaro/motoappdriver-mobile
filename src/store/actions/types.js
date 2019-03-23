@@ -13,11 +13,11 @@ export const FORM_COR_CHANGED = "form_cor_changed";
 export const FORM_PLACA_CHANGED = "form_placa_changed";
 export const FORM_CLEAR = "form_clear";
 
-export const CORRIDA_ADDED = "corrida_added";
-export const CORRIDA_CANCELLED = "corrida_cancelled";
-
-export const MOTOQUEIRO_FETCHED = "motoqueiro_fetched";
-export const MOTOQUEIRO_DISTANCIA = "motoqueiro_distancia";
-
 export const UI_START_LOADING = "ui_start_loading";
 export const UI_STOP_LOADING = "ui_stop_loading";
+
+export const GO_ONLINE = "go_online";
+export const GO_OFFLINE = "go_offline";
+
+export const SET_CORRIDA = "set_corrida";
+export const CLEAR_CORRIDA = "clear_corrida";

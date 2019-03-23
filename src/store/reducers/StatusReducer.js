@@ -1,20 +1,20 @@
-import { SET_CORRIDA, CLEAR_CORRIDA } from "../actions/types";
+import { GO_ONLINE, GO_OFFLINE } from "../actions/types";
 
 const INITIAL_STATE = {
-  corrida: null
+  isOnline: false
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case SET_CORRIDA:
+    case GO_ONLINE:
       return {
         ...state,
-        corrida: action.payload
+        isOnline: true
       };
-    case CLEAR_CORRIDA:
+    case GO_OFFLINE:
       return {
         ...state,
-        corrida: null
+        isOnline: false
       };
     default:
       return state;
