@@ -22,8 +22,8 @@ class Auth extends Component {
 
   componentDidMount() {
     // startApp();
-    this.props.onAutoSignIn();
-    // this.props.onTryAuth("matheus_delclaro@hotmail.com", "123456");
+    // this.props.onAutoSignIn();
+    this.props.onTryAuth("tiao@gmail.com", "123456");
   }
 
   switchAuthModeHandler = () => {

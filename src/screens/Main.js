@@ -39,9 +39,9 @@ class Main extends Component {
     super(props);
     Navigation.events().bindComponent(this);
     getImageSource(
-      Platform.OS === "android" ? "md-reorder" : "ios-menu",
+      Platform.OS === "android" ? "md-menu" : "ios-menu",
       30,
-      "#425cf4"
+      baseColor
     ).then(icon => {
       Navigation.mergeOptions("Main", {
         topBar: {
@@ -53,9 +53,9 @@ class Main extends Component {
           ]
         },
         bottomTab: {
-          selectedIconColor: "#425cf4",
-          textColor: "#425cf4",
-          selectedTextColor: "#425cf4"
+          selectedIconColor: baseColor,
+          textColor: baseColor,
+          selectedTextColor: baseColor
         }
       });
     });
@@ -70,8 +70,22 @@ class Main extends Component {
     reply: "reject",
     corrida: null,
     cliente: null,
-    distancia: null
+    distancia: null,
+    step: null
   };
+
+  componentDidMount() {
+    if (this.props.corrida && this.props.cliente) {
+      this.setState({
+        showOnline: false,
+        corrida: this.props.corrida,
+        cliente: this.props.cliente,
+        distancia: this.props.distancia,
+        step: 2
+      });
+      this.handleStart();
+    }
+  }
 
   navigationButtonPressed({ buttonId }) {
     if (buttonId === "menuButton") {
@@ -100,7 +114,9 @@ class Main extends Component {
       // this.socket2.emit("join", { id: this.props.idCliente });
       // this.socket3.emit("join", { id: this.props.idCliente });
 
-      this.setState({ showOnline: true });
+      if (!this.props.corrida) {
+        this.setState({ showOnline: true });
+      }
 
       this.socket.on("dispatch", (data, reply) => {
         this.setState({ showOnline: false });
@@ -108,7 +124,8 @@ class Main extends Component {
           timer: true,
           corrida: data.corrida,
           cliente: data.cliente,
-          distancia: data.distance
+          distancia: data.distance,
+          step: 1
         });
         setTimeout(() => {
           reply(this.state.reply);
@@ -128,11 +145,18 @@ class Main extends Component {
   };
 
   handleAccept = async () => {
-    this.setState({ timer: false, reply: "accept", showOnline: false });
-    const exec = await this.props.onAcceptCorrida(
-      this.state.corrida._id,
-      this.props.idMotoqueiro
-    );
+    this.setState({
+      timer: false,
+      reply: "accept",
+      showOnline: false
+    });
+    const data = {
+      idCorrida: this.state.corrida._id,
+      idMotoqueiro: this.props.idMotoqueiro,
+      cliente: this.state.cliente,
+      distancia: this.state.distancia
+    };
+    const exec = await this.props.onAcceptCorrida(data);
     if (!exec) {
       this.setState({
         showOnline: true,
@@ -142,10 +166,12 @@ class Main extends Component {
         distancia: null
       });
     }
+    this.setState({ step: 2 });
   };
 
-  handleReject = () => {
+  handleReset = () => {
     this.setState({
+      step: null,
       showOnline: true,
       timer: false,
       reply: "reject",
@@ -158,7 +184,7 @@ class Main extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Map corrida={this.state.corrida} />
+        <Map corrida={this.state.corrida} step={this.state.step} />
         {!this.props.isOnline && (
           <TouchableOpacity onPress={this.handleStart} style={styles.button}>
             <Text style={styles.text}>INICIAR</Text>
@@ -179,12 +205,12 @@ class Main extends Component {
               textStyle={{ fontSize: 15, color: "#FFF" }}
               subTextStyle={{ fontSize: 20, color: "#FFF" }}
               isPausable={true}
-              onTimeElapsed={this.handleReject}
+              onTimeElapsed={this.handleReset}
               onPause={this.handleAccept}
               minScale={0.9}
               maxScale={1.2}
-              text1={"Aceitar"}
-              text2={"Aceitar"}
+              pauseText={"Aceitar"}
+              resumeText={"Aceitar"}
             />
           </View>
         )}
@@ -193,7 +219,7 @@ class Main extends Component {
             corrida={this.state.corrida}
             cliente={this.state.cliente}
             distancia={this.state.distancia}
-            handleReset={this.handleReject}
+            handleReset={this.handleReset}
           />
         )}
         {this.state.showOnline && <Online />}
@@ -227,7 +253,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     position: "absolute",
-    top: 40
+    top: 60
   },
   text: {
     color: "#fff",
@@ -241,7 +267,10 @@ const mapStateToProps = state => {
   return {
     isLoading: state.ui.isLoading,
     idMotoqueiro: state.auth.userId,
-    isOnline: state.status.isOnline
+    isOnline: state.status.isOnline,
+    corrida: state.corrida.corrida,
+    cliente: state.corrida.cliente,
+    distancia: state.corrida.distancia
   };
 };
 
@@ -249,8 +278,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onGoOnline: () => dispatch(goOnline()),
     onGoOffline: () => dispatch(goOffline()),
-    onAcceptCorrida: (idCorrida, idMotoqueiro) =>
-      dispatch(acceptCorrida(idCorrida, idMotoqueiro))
+    onAcceptCorrida: data => dispatch(acceptCorrida(data))
   };
 };
 

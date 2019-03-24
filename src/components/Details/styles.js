@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 export const Container = styled.View`
+  flex: 1;
   background: #fff;
-  height: 40%;
+  height: 260px;
   width: 100%;
   position: absolute;
   bottom: 0;
@@ -13,7 +14,7 @@ export const Container = styled.View`
   elevation: 3;
   border: 1px solid #ddd;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   padding: 20px;
   border-top-left-radius: 15;
   border-top-right-radius: 15;

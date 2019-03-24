@@ -20,4 +20,6 @@ export const GO_ONLINE = "go_online";
 export const GO_OFFLINE = "go_offline";
 
 export const SET_CORRIDA = "set_corrida";
+export const SET_CLIENTE = "set_cliente";
+export const SET_DISTANCIA = "set_distancia";
 export const CLEAR_CORRIDA = "clear_corrida";

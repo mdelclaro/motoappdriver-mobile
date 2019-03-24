@@ -1,7 +1,18 @@
 import React, { Component, Fragment } from "react";
-import { View, Platform, PermissionsAndroid, Dimensions } from "react-native";
+import {
+  View,
+  Platform,
+  PermissionsAndroid,
+  Dimensions,
+  ActivityIndicator
+} from "react-native";
 import MapView, { Marker, AnimatedRegion } from "react-native-maps";
 import { Navigation } from "react-native-navigation";
+import { connect } from "react-redux";
+
+import Directions from "../Directions/Directions";
+
+import { getPixelSize } from "../../utils";
 
 import helmet from "../../assets/helmet/helmet.png";
 
@@ -15,6 +26,7 @@ class Localizacao extends Component {
   }
 
   state = {
+    isLoading: true,
     region: null,
     myLocation: new AnimatedRegion({
       latitude: null,
@@ -73,8 +85,10 @@ class Localizacao extends Component {
           myLocation: {
             latitude,
             longitude
-          }
+          },
+          isLoading: false
         });
+        console.log(this.props.acceptedCorrida);
       },
       err => console.log(err),
       {
@@ -88,7 +102,6 @@ class Localizacao extends Component {
   locationChanged = () => {
     this.watchID = navigator.geolocation.watchPosition(
       lastPosition => {
-        console.log("mudou");
         const latitude = parseFloat(
           JSON.stringify(lastPosition.coords.latitude)
         );
@@ -127,26 +140,127 @@ class Localizacao extends Component {
     const { region, myLocation } = this.state;
     return (
       <View style={{ flex: 1 }}>
-        <MapView
-          style={{ flex: 1, height: height, width: width }}
-          region={region}
-          loadingEnabled
-          showsCompass={false}
-          showsScale={false}
-          ref={el => (this.mapView = el)}
-        >
-          <Marker.Animated
-            // anchor={{ x: 0.5, y: 0.5 }}
-            coordinate={myLocation}
-            image={helmet}
-            ref={el => {
-              this.marker = el;
-            }}
-          />
-        </MapView>
+        {this.state.isLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <MapView
+            style={{ flex: 1, height: height, width: width }}
+            region={region}
+            loadingEnabled
+            showsCompass={false}
+            showsScale={false}
+            ref={el => (this.mapView = el)}
+          >
+            <Marker.Animated
+              // anchor={{ x: 0.5, y: 0.5 }}
+              coordinate={myLocation}
+              image={helmet}
+              ref={el => {
+                this.marker = el;
+              }}
+            />
+            {this.props.step === 1 ? (
+              <Fragment>
+                <Directions
+                  origin={{
+                    latitude: this.state.region.latitude,
+                    longitude: this.state.region.longitude
+                  }}
+                  destination={{
+                    latitude: this.props.corrida.origem.lat,
+                    longitude: this.props.corrida.origem.long
+                  }}
+                  onReady={result => {
+                    this.setState({
+                      duration: Math.floor(result.duration),
+                      distance: Math.floor(result.distance)
+                    });
+                    this.mapView.fitToCoordinates(result.coordinates, {
+                      edgePadding: {
+                        right: getPixelSize(60),
+                        left: getPixelSize(60),
+                        top: getPixelSize(260),
+                        bottom: getPixelSize(260)
+                      },
+                      animated: true
+                    });
+                  }}
+                />
+                <Marker
+                  coordinate={{
+                    latitude: this.props.corrida.origem.lat,
+                    longitude: this.props.corrida.origem.long
+                  }}
+                />
+              </Fragment>
+            ) : null}
+            {this.props.step === 2
+              ? this.props.acceptedCorrida && (
+                  <Fragment>
+                    <Directions
+                      origin={{
+                        latitude:
+                          this.props.acceptedCorrida.status === 1 // aceita
+                            ? this.state.region.latitude // origem eh minha posicao
+                            : this.props.acceptedCorrida.origem.lat, // origem eh a propria origem
+                        longitude:
+                          this.props.acceptedCorrida.status === 1
+                            ? this.state.region.longitude
+                            : this.props.acceptedCorrida.origem.long
+                      }}
+                      destination={{
+                        latitude:
+                          this.props.acceptedCorrida.status === 1
+                            ? this.props.acceptedCorrida.origem.lat // destino eh a origem da corrida
+                            : this.props.acceptedCorrida.destino.lat, // destino eh o proprio destino
+                        longitude:
+                          this.props.acceptedCorrida.status === 1
+                            ? this.props.acceptedCorrida.origem.long
+                            : this.props.acceptedCorrida.destino.long
+                      }}
+                      onReady={result => {
+                        this.setState({
+                          duration: Math.floor(result.duration),
+                          distance: Math.floor(result.distance)
+                        });
+                        this.mapView.fitToCoordinates(result.coordinates, {
+                          edgePadding: {
+                            right: getPixelSize(60),
+                            left: getPixelSize(60),
+                            top: getPixelSize(260),
+                            bottom: getPixelSize(260)
+                          },
+                          animated: true
+                        });
+                      }}
+                    />
+                    <Marker
+                      coordinate={{
+                        latitude:
+                          this.props.acceptedCorrida.status === 1
+                            ? this.props.acceptedCorrida.origem.lat // destino eh a origem da corrida
+                            : this.props.acceptedCorrida.destino.lat, // destino eh o proprio destino
+                        longitude:
+                          this.props.acceptedCorrida.status === 1
+                            ? this.props.acceptedCorrida.origem.long
+                            : this.props.acceptedCorrida.destino.long
+                      }}
+                    />
+                  </Fragment>
+                )
+              : null}
+          </MapView>
+        )}
       </View>
     );
   }
 }
 
-export default Localizacao;
+const mapStateToProps = state => {
+  return {
+    acceptedCorrida: state.corrida.corrida
+  };
+};
+
+export default connect(mapStateToProps)(Localizacao);
+// export default Localizacao;

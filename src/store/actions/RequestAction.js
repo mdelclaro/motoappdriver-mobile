@@ -1,9 +1,15 @@
-import { SET_CORRIDA, CLEAR_CORRIDA } from "../actions/types";
+import {
+  SET_CORRIDA,
+  SET_CLIENTE,
+  SET_DISTANCIA,
+  CLEAR_CORRIDA
+} from "../actions/types";
 import { uiStartLoading, uiStopLoading } from "./UIAction";
 import { authGetToken } from "./AuthAction";
 import { baseUrl } from "../../config";
 
-export const acceptCorrida = (idCorrida, idMotoqueiro) => {
+export const acceptCorrida = data => {
+  const { idMotoqueiro, cliente, distancia } = data;
   idCorrida = "5c9528711f2f8b11c4defe01";
   return async dispatch => {
     dispatch(uiStartLoading());
@@ -24,6 +30,8 @@ export const acceptCorrida = (idCorrida, idMotoqueiro) => {
       if (result.ok) {
         let res = await result.json();
         dispatch(setCorrida(res.corrida));
+        dispatch(setCliente(cliente));
+        dispatch(setDistancia(distancia));
         dispatch(uiStopLoading());
         return true;
       } else {
@@ -122,6 +130,20 @@ export const setCorrida = corrida => {
   return {
     type: SET_CORRIDA,
     payload: corrida
+  };
+};
+
+export const setCliente = cliente => {
+  return {
+    type: SET_CLIENTE,
+    payload: cliente
+  };
+};
+
+export const setDistancia = distancia => {
+  return {
+    type: SET_DISTANCIA,
+    payload: distancia
   };
 };
 

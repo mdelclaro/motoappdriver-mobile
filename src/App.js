@@ -6,7 +6,7 @@ console.disableYellowBox = true;
 const startApp = () => {
   Promise.all([
     getImageSource(
-      Platform.OS === "android" ? "md-navigate" : "ios-pin",
+      Platform.OS === "android" ? "md-pin" : "ios-pin",
       35,
       baseColor
     ),
