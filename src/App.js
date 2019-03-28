@@ -5,13 +5,17 @@ import { getImageSource } from "react-native-vector-icons/Ionicons";
 import { baseColor } from "./config";
 console.disableYellowBox = true;
 
+Navigation.setDefaultOptions({
+  topBar: {
+    visible: false,
+    drawBehind: true,
+    animate: false
+  }
+});
+
 const startApp = accountStatus => {
+  // accountStatus = true;
   if (!accountStatus) {
-    Navigation.setDefaultOptions({
-      topBar: {
-        visible: false
-      }
-    });
     Navigation.setRoot({
       root: {
         stack: {

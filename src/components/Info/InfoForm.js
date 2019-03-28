@@ -53,6 +53,7 @@ class SignupForm extends Component {
               options: {
                 topBar: {
                   visible: true,
+                  drawBehind: false,
                   title: {
                     text: "Tirar foto da CNH (frente)"
                   }
@@ -80,6 +81,7 @@ class SignupForm extends Component {
               options: {
                 topBar: {
                   visible: true,
+                  drawBehind: false,
                   title: {
                     text: "Tirar foto da CNH (verso)"
                   }
