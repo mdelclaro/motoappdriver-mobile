@@ -3,7 +3,8 @@ export {
   senhaChanged,
   nomeChanged,
   sobrenomeChanged,
-  cnhChanged,
+  cnh1Changed,
+  cnh2Changed,
   motoChanged,
   corChanged,
   placaChanged,
@@ -22,3 +23,4 @@ export { uiStartLoading, uiStopLoading } from "./UIAction";
 export { acceptCorrida, startCorrida, finishCorrida } from "./RequestAction";
 export { goOnline, goOffline } from "./StatusAction";
 export { addRating } from "./RatingAction";
+export { updateInfo } from "./InfoAction";

@@ -4,7 +4,8 @@ import {
   FORM_NOME_CHANGED,
   FORM_SOBRENOME_CHANGED,
   FORM_MOTO_CHANGED,
-  FORM_CNH_CHANGED,
+  FORM_CNH1_CHANGED,
+  FORM_CNH2_CHANGED,
   FORM_COR_CHANGED,
   FORM_PLACA_CHANGED,
   FORM_CLEAR
@@ -15,7 +16,8 @@ const INITIAL_STATE = {
   senha: "",
   nome: "",
   sobrenome: "",
-  cnh: "",
+  cnh1: null,
+  cnh2: null,
   moto: "",
   placa: "",
   cor: ""
@@ -48,10 +50,15 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         moto: action.payload
       };
-    case FORM_CNH_CHANGED:
+    case FORM_CNH1_CHANGED:
       return {
         ...state,
-        cnh: action.payload
+        cnh1: action.payload
+      };
+    case FORM_CNH2_CHANGED:
+      return {
+        ...state,
+        cnh2: action.payload
       };
     case FORM_COR_CHANGED:
       return {
