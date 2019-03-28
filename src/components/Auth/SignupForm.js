@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import {
   View,
   StyleSheet,
@@ -9,9 +9,8 @@ import {
   ActivityIndicator
 } from "react-native";
 import { connect } from "react-redux";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-import { Formik, yupToFormErrors } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 
 import ButtonWithBackground from "../UI/ButtonWithBackground";
@@ -68,7 +67,7 @@ class SignupForm extends Component {
         </MainText>
       );
     }
-    return this.state.step === 0 ? (
+    return (
       <Formik
         ref={el => (this.form = el)}
         initialValues={{
@@ -78,7 +77,6 @@ class SignupForm extends Component {
           senha: this.props.senha,
           confirmPassword: ""
         }}
-        // onSubmit={() => this.setState({ step: 1 })}
         onSubmit={this.props.submitHandler}
         validationSchema={Yup.object().shape({
           nome: Yup.string()
@@ -114,6 +112,7 @@ class SignupForm extends Component {
                   placeholder="Nome"
                   autoCapitalize="words"
                   returnKeyType="next"
+                  blurOnSubmit={false}
                   onSubmitEditing={() => this.sobrenomeInput.focus()}
                   autoCorrect={false}
                   value={this.props.nome}
@@ -129,6 +128,7 @@ class SignupForm extends Component {
                   autoCapitalize="words"
                   returnKeyType="next"
                   onSubmitEditing={() => this.emailInput.focus()}
+                  blurOnSubmit={false}
                   autoCorrect={false}
                   value={this.props.sobrenome}
                   onChange={setFieldValue}
@@ -144,6 +144,7 @@ class SignupForm extends Component {
                   autoCapitalize="none"
                   returnKeyType="next"
                   onSubmitEditing={() => this.senhaInput.focus()}
+                  blurOnSubmit={false}
                   autoCorrect={false}
                   value={this.props.email}
                   onChange={setFieldValue}
@@ -152,191 +153,58 @@ class SignupForm extends Component {
                   error={touched.email && errors.email}
                   style={styles.input}
                 />
-                <View
-                  style={
-                    this.state.viewMode === "portrait" ||
-                    this.state.authMode === "login"
-                      ? styles.portraitPasswordContainer
-                      : styles.landscapePasswordContainer
-                  }
-                >
-                  <View
-                    style={
-                      this.state.viewMode === "portrait" ||
-                      this.state.authMode === "login"
-                        ? styles.portraitPasswordWrapper
-                        : styles.landscapePasswordWrapper
-                    }
-                  >
-                    <InputValidation
-                      myRef={ref => (this.senhaInput = ref)}
-                      placeholder="Senha"
-                      autoCapitalize="none"
-                      returnKeyType="next"
-                      onSubmitEditing={() => this.confirmarSenhaInput.focus()}
-                      secureTextEntry
-                      value={this.props.senha}
-                      onChange={setFieldValue}
-                      onTouch={setFieldTouched}
-                      name="senha"
-                      error={touched.senha && errors.senha}
-                      style={styles.input}
-                    />
-                  </View>
-                  <View
-                    style={
-                      this.state.viewMode === "portrait"
-                        ? styles.portraitPasswordWrapper
-                        : styles.landscapePasswordWrapper
-                    }
-                  >
-                    <InputValidation
-                      myRef={ref => (this.confirmarSenhaInput = ref)}
-                      placeholder="Confirmar senha"
-                      autoCapitalize="none"
-                      returnKeyType="send"
-                      secureTextEntry
-                      onSubmitEditing={handleSubmit}
-                      value={values.confirmPassword}
-                      onChange={setFieldValue}
-                      onTouch={setFieldTouched}
-                      name="confirmPassword"
-                      error={touched.confirmPassword && errors.confirmPassword}
-                      style={styles.input}
-                    />
-                  </View>
-                </View>
+                <InputValidation
+                  myRef={ref => (this.senhaInput = ref)}
+                  placeholder="Senha"
+                  autoCapitalize="none"
+                  returnKeyType="next"
+                  onSubmitEditing={() => this.confirmarSenhaInput.focus()}
+                  blurOnSubmit={false}
+                  secureTextEntry
+                  value={this.props.senha}
+                  onChange={setFieldValue}
+                  onTouch={setFieldTouched}
+                  name="senha"
+                  error={touched.senha && errors.senha}
+                  style={styles.input}
+                />
+
+                <InputValidation
+                  myRef={ref => (this.confirmarSenhaInput = ref)}
+                  placeholder="Confirmar senha"
+                  autoCapitalize="none"
+                  returnKeyType="send"
+                  secureTextEntry
+                  onSubmitEditing={handleSubmit}
+                  value={values.confirmPassword}
+                  onChange={setFieldValue}
+                  onTouch={setFieldTouched}
+                  name="confirmPassword"
+                  error={touched.confirmPassword && errors.confirmPassword}
+                  style={styles.input}
+                />
               </View>
               <View style={{ width: "80%" }}>
-                <ButtonWithBackground
-                  myRef={ref => (this.submitButton = ref)}
-                  color="#425cf4"
-                  onPress={handleSubmit}
-                  isDisabled={!isValid}
-                >
-                  {/* Próximo */}
-                  Enviar
-                </ButtonWithBackground>
-              </View>
-            </KeyboardAvoidingView>
-          </TouchableWithoutFeedback>
-        )}
-      />
-    ) : (
-      <Formik
-        initialValues={{
-          cnh: this.props.cnh,
-          moto: this.props.moto,
-          placa: this.props.placa,
-          cor: this.props.cor
-        }}
-        onSubmit={this.props.submitHandler}
-        validationSchema={Yup.object().shape({
-          cnh: Yup.string()
-            .required("Preencha a CNH")
-            .min(7, "Insira um número de documento válido")
-            .max(7, "Insira um número de documento válido"),
-          moto: Yup.string()
-            .required("Preencha o modelo da moto")
-            .min(3, "Modelo inválido"),
-          cor: Yup.string()
-            .required("Preencha a cor da moto")
-            .min(3, "Cor inválida"),
-          placa: Yup.string()
-            .required("Preencha a placa")
-            .length(7, "Placa inválida")
-        })}
-        render={({
-          handleSubmit,
-          setFieldValue,
-          errors,
-          touched,
-          setFieldTouched,
-          isValid
-        }) => (
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <KeyboardAvoidingView style={styles.container} behavior="padding">
-              {headingText}
-              <View style={styles.inputContainer}>
-                <InputValidation
-                  myRef={ref => (this.cnh = ref)}
-                  placeholder="CNH (apenas números)"
-                  autoCapitalize="none"
-                  returnKeyType="next"
-                  onSubmitEditing={() => this.moto.focus()}
-                  autoCorrect={false}
-                  value={this.props.cnh}
-                  onChange={setFieldValue}
-                  onTouch={setFieldTouched}
-                  name="cnh"
-                  error={touched.cnh && errors.cnh}
-                  style={styles.input}
-                />
-                <InputValidation
-                  myRef={ref => (this.moto = ref)}
-                  placeholder="Modelo da moto"
-                  autoCapitalize="words"
-                  returnKeyType="next"
-                  onSubmitEditing={() => this.cor.focus()}
-                  autoCorrect={false}
-                  value={this.props.moto}
-                  onChange={setFieldValue}
-                  onTouch={setFieldTouched}
-                  name="moto"
-                  error={touched.moto && errors.moto}
-                  style={styles.input}
-                />
-                <InputValidation
-                  myRef={ref => (this.cor = ref)}
-                  placeholder="Cor da moto"
-                  autoCapitalize="words"
-                  returnKeyType="next"
-                  onSubmitEditing={() => this.placa.focus()}
-                  autoCorrect={false}
-                  value={this.props.cor}
-                  onChange={setFieldValue}
-                  onTouch={setFieldTouched}
-                  name="cor"
-                  error={touched.cor && errors.cor}
-                  style={styles.input}
-                />
-                <InputValidation
-                  myRef={ref => (this.placa = ref)}
-                  placeholder="Placa da moto (apenas letras e números)"
-                  autoCapitalize="none"
-                  returnKeyType="next"
-                  onSubmitEditing={handleSubmit}
-                  autoCorrect={false}
-                  value={this.props.placa}
-                  onChange={setFieldValue}
-                  onTouch={setFieldTouched}
-                  name="placa"
-                  error={touched.placa && errors.placa}
-                  style={styles.input}
-                />
-              </View>
-              {!this.props.isLoading ? (
-                <View style={{ width: "80%" }}>
+                {this.props.isLoading ? (
+                  <ActivityIndicator />
+                ) : (
                   <ButtonWithBackground
-                    myRef={ref => (this.submitButton = ref)}
                     color="#425cf4"
                     onPress={handleSubmit}
                     isDisabled={!isValid}
                   >
                     Enviar
                   </ButtonWithBackground>
-                </View>
-              ) : (
-                <ActivityIndicator />
-              )}
-              {!this.props.isLoading ? (
-                <ButtonWithBackground
-                  onPress={this.props.onSwitchAuthMode}
-                  textColor="#425cf4"
-                >
-                  Cancelar
-                </ButtonWithBackground>
-              ) : null}
+                )}
+                {!this.props.isLoading ? (
+                  <ButtonWithBackground
+                    onPress={this.props.onSwitchAuthMode}
+                    textColor="#425cf4"
+                  >
+                    Cancelar
+                  </ButtonWithBackground>
+                ) : null}
+              </View>
             </KeyboardAvoidingView>
           </TouchableWithoutFeedback>
         )}

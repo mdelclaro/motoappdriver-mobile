@@ -24,13 +24,7 @@ class Main extends Component {
   static get options() {
     return {
       topBar: {
-        animate: true,
-        drawBehind: true,
-        transparent: true,
-        translucent: true,
-        noBorder: true,
-        elevation: 0,
-        background: { color: "transparent" }
+        visible: false
       }
     };
   }

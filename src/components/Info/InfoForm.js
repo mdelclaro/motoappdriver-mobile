@@ -1,17 +1,17 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import {
   View,
   StyleSheet,
-  Dimensions,
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
-  ActivityIndicator
+  ActivityIndicator,
+  Text
 } from "react-native";
 import { connect } from "react-redux";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { Navigation } from "react-native-navigation";
 
-import { Formik, yupToFormErrors } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 
 import ButtonWithBackground from "../UI/ButtonWithBackground";
@@ -20,16 +20,6 @@ import HeadingText from "../UI/HeadingText";
 import MainText from "../UI/MainText";
 
 class SignupForm extends Component {
-  constructor(props) {
-    super(props);
-    Dimensions.addEventListener("change", this.updateStyles);
-  }
-
-  state = {
-    viewMode: Dimensions.get("window").height > 500 ? "portrait" : "landscape",
-    step: 0
-  };
-
   componentDidMount() {
     if (
       this.form.initialValues.email !== "" ||
@@ -48,48 +38,82 @@ class SignupForm extends Component {
     }
   }
 
-  componentWillUnmount() {
-    Dimensions.removeEventListener("change", this.updateStyles);
-  }
+  renderCameraFrente = () => {
+    Navigation.showModal({
+      stack: {
+        id: "infoStack",
+        children: [
+          {
+            component: {
+              passProps: {
+                cnh: 1
+              },
+              id: "camera",
+              name: "motoapp.Camera",
+              options: {
+                topBar: {
+                  visible: true,
+                  title: {
+                    text: "Tirar foto da CNH (frente)"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    });
+  };
 
-  updateStyles = dims => {
-    this.setState({
-      viewMode: dims.window.height > 500 ? "portrait" : "landscape"
+  renderCameraVerso = () => {
+    Navigation.showModal({
+      stack: {
+        id: "infoStack",
+        children: [
+          {
+            component: {
+              passProps: {
+                cnh: 2
+              },
+              id: "camera",
+              name: "motoapp.Camera",
+              options: {
+                topBar: {
+                  visible: true,
+                  title: {
+                    text: "Tirar foto da CNH (verso)"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
     });
   };
 
   render() {
     let headingText = null;
+    headingText = (
+      <MainText>
+        <HeadingText style={{ color: "#425cf4" }}>
+          Adicionar informações
+        </HeadingText>
+      </MainText>
+    );
 
-    if (this.state.viewMode === "portrait") {
-      headingText = (
-        <MainText>
-          <HeadingText style={{ color: "#425cf4" }}>
-            Adicionar informações
-          </HeadingText>
-        </MainText>
-      );
-    }
     return (
       <Formik
+        ref={el => (this.form = el)}
         initialValues={{
-          cnh: this.props.cnh,
           moto: this.props.moto,
-          placa: this.props.placa,
-          cor: this.props.cor
+          placa: this.props.placa
         }}
         onSubmit={this.props.submitHandler}
         validationSchema={Yup.object().shape({
-          cnh: Yup.string()
-            .required("Preencha a CNH")
-            .min(7, "Insira um número de documento válido")
-            .max(7, "Insira um número de documento válido"),
           moto: Yup.string()
-            .required("Preencha o modelo da moto")
-            .min(3, "Modelo inválido"),
-          cor: Yup.string()
-            .required("Preencha a cor da moto")
-            .min(3, "Cor inválida"),
+            .required("Preencha o modelo e cor da moto")
+            .min(5, "Modelo e/ou cor inválida"),
           placa: Yup.string()
             .required("Preencha a placa")
             .length(7, "Placa inválida")
@@ -104,28 +128,42 @@ class SignupForm extends Component {
         }) => (
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <KeyboardAvoidingView style={styles.container} behavior="padding">
-              {headingText}
+              <View
+                style={{
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  paddingBottom: 15
+                }}
+              >
+                {headingText}
+                <Text>
+                  Complete seu cadastro insirindo as informações abaixo
+                </Text>
+              </View>
               <View style={styles.inputContainer}>
-                <InputValidation
-                  myRef={ref => (this.cnh = ref)}
-                  placeholder="CNH (apenas números)"
-                  autoCapitalize="none"
-                  returnKeyType="next"
-                  onSubmitEditing={() => this.moto.focus()}
-                  autoCorrect={false}
-                  value={this.props.cnh}
-                  onChange={setFieldValue}
-                  onTouch={setFieldTouched}
-                  name="cnh"
-                  error={touched.cnh && errors.cnh}
-                  style={styles.input}
-                />
+                {/* <View> */}
+                <ButtonWithBackground
+                  color="#425cf4"
+                  onPress={this.renderCameraFrente}
+                >
+                  Foto da CNH (frente)
+                </ButtonWithBackground>
+                {/* </View> */}
+                {/* <View> */}
+                <ButtonWithBackground
+                  color="#425cf4"
+                  onPress={this.renderCameraVerso}
+                >
+                  Foto da CNH (verso)
+                </ButtonWithBackground>
+                {/* </View> */}
                 <InputValidation
                   myRef={ref => (this.moto = ref)}
-                  placeholder="Modelo da moto"
+                  placeholder="Modelo e cor da moto (Titan 125 - Prata)"
                   autoCapitalize="words"
                   returnKeyType="next"
-                  onSubmitEditing={() => this.cor.focus()}
+                  onSubmitEditing={() => this.placa.focus()}
+                  // onSubmitEditing={() => this.cor.focus()}
                   autoCorrect={false}
                   value={this.props.moto}
                   onChange={setFieldValue}
@@ -134,7 +172,7 @@ class SignupForm extends Component {
                   error={touched.moto && errors.moto}
                   style={styles.input}
                 />
-                <InputValidation
+                {/* <InputValidation
                   myRef={ref => (this.cor = ref)}
                   placeholder="Cor da moto"
                   autoCapitalize="words"
@@ -147,7 +185,7 @@ class SignupForm extends Component {
                   name="cor"
                   error={touched.cor && errors.cor}
                   style={styles.input}
-                />
+                /> */}
                 <InputValidation
                   myRef={ref => (this.placa = ref)}
                   placeholder="Placa da moto (apenas letras e números)"
@@ -177,14 +215,6 @@ class SignupForm extends Component {
               ) : (
                 <ActivityIndicator />
               )}
-              {!this.props.isLoading ? (
-                <ButtonWithBackground
-                  onPress={this.props.onSwitchAuthMode}
-                  textColor="#425cf4"
-                >
-                  Cancelar
-                </ButtonWithBackground>
-              ) : null}
             </KeyboardAvoidingView>
           </TouchableWithoutFeedback>
         )}
@@ -233,14 +263,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     isLoading: state.ui.isLoading,
-    email: state.form.email,
-    senha: state.form.senha,
-    nome: state.form.nome,
-    sobrenome: state.form.sobrenome,
-    cnh: state.form.cnh,
     moto: state.form.moto,
-    placa: state.form.placa,
-    cor: state.form.cor
+    placa: state.form.placa
   };
 };
 

@@ -10,7 +10,7 @@ import { baseUrl } from "../../config";
 
 export const acceptCorrida = data => {
   const { idMotoqueiro, cliente, distancia } = data;
-  idCorrida = "5c9528711f2f8b11c4defe01";
+  // idCorrida = "5c9528711f2f8b11c4defe01";
   return async dispatch => {
     dispatch(uiStartLoading());
     const token = await dispatch(authGetToken());

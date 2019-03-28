@@ -1,0 +1,164 @@
+import React, { Component } from "react";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Dimensions,
+  ImageBackground,
+  Platform
+} from "react-native";
+import { connect } from "react-redux";
+import { RNCamera } from "react-native-camera";
+import { Navigation } from "react-native-navigation";
+import Icon from "react-native-vector-icons/Ionicons";
+
+import { cnh1Changed, cnh2Changed } from "../store/actions/";
+
+import { baseColor } from "../config";
+
+class Camera extends Component {
+  state = {
+    path: null
+  };
+
+  renderCamera() {
+    return (
+      <RNCamera
+        ref={camera => {
+          this.camera = camera;
+        }}
+        style={styles.preview}
+        type={RNCamera.Constants.Type.back}
+        autoFocus={RNCamera.Constants.AutoFocus.on}
+        flashMode={RNCamera.Constants.FlashMode.off}
+        captureAudio={false}
+        permissionDialogTitle={"Permissão para usar a câmera"}
+        permissionDialogMessage={
+          "Precisamos de sua permissão para usar a câmera do dispositivo"
+        }
+      >
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={this.takePicture} style={styles.capture}>
+            <Icon
+              name={Platform.OS === "android" ? "md-camera" : "ios-camera"}
+              size={35}
+              color="#FFF"
+            />
+          </TouchableOpacity>
+        </View>
+      </RNCamera>
+    );
+  }
+
+  renderImage() {
+    return (
+      <View>
+        <ImageBackground
+          source={{ uri: this.state.path }}
+          style={styles.preview}
+        >
+          <Text
+            style={styles.cancel}
+            onPress={() => this.setState({ path: null })}
+          >
+            Excluir
+          </Text>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              onPress={this.uploadPicture}
+              style={styles.capture}
+            >
+              <Icon
+                name={
+                  Platform.OS === "android" ? "md-checkmark" : "ios-checkmark"
+                }
+                size={35}
+                color="#FFF"
+              />
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
+      </View>
+    );
+  }
+
+  takePicture = async () => {
+    if (this.camera) {
+      try {
+        const options = { quality: 0.5, fixOrientation: true };
+        const data = await this.camera.takePictureAsync(options);
+        this.setState({ path: data.uri });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  uploadPicture = () => {
+    this.props.cnh === 1
+      ? this.props.onCnh1Changed(this.state.path)
+      : this.props.onCnh2Changed(this.state.path);
+
+    Navigation.dismissModal(this.props.componentId);
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        {this.state.path ? this.renderImage() : this.renderCamera()}
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#000"
+  },
+  buttonContainer: {
+    flex: 0,
+    flexDirection: "row",
+    justifyContent: "center"
+  },
+  capture: {
+    flex: 0,
+    backgroundColor: baseColor,
+    borderRadius: 100,
+    padding: 15,
+    paddingHorizontal: 20,
+    alignSelf: "stretch",
+    margin: 20
+  },
+  preview: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    height: Dimensions.get("window").height,
+    width: Dimensions.get("window").width
+  },
+  cancel: {
+    position: "absolute",
+    right: 15,
+    top: 15,
+    backgroundColor: "transparent",
+    color: "#FFF",
+    fontWeight: "600",
+    fontSize: 17
+  }
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onCnh1Changed: image => dispatch(cnh1Changed(image)),
+    onCnh2Changed: image => dispatch(cnh2Changed(image))
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Camera);

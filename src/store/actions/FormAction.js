@@ -4,7 +4,8 @@ import {
   FORM_NOME_CHANGED,
   FORM_SOBRENOME_CHANGED,
   FORM_MOTO_CHANGED,
-  FORM_CNH_CHANGED,
+  FORM_CNH1_CHANGED,
+  FORM_CNH2_CHANGED,
   FORM_COR_CHANGED,
   FORM_PLACA_CHANGED,
   FORM_CLEAR
@@ -45,9 +46,16 @@ export const motoChanged = moto => {
   };
 };
 
-export const cnhChanged = cnh => {
+export const cnh1Changed = cnh => {
   return {
-    type: FORM_CNH_CHANGED,
+    type: FORM_CNH1_CHANGED,
+    payload: cnh
+  };
+};
+
+export const cnh2Changed = cnh => {
+  return {
+    type: FORM_CNH2_CHANGED,
     payload: cnh
   };
 };
