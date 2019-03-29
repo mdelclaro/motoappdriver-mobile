@@ -148,7 +148,7 @@ class SignupForm extends Component {
               >
                 {headingText}
                 <Text>
-                  Complete seu cadastro inserindo as informações abaixo
+                  Informe os dados abaixo para completar o seu cadastro
                 </Text>
               </View>
               <View

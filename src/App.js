@@ -2,6 +2,7 @@ import { Platform } from "react-native";
 import { Navigation } from "react-native-navigation";
 import { getImageSource } from "react-native-vector-icons/Ionicons";
 import { store } from "./store/configureStore";
+import { getAccountStatus } from "./store/actions/StatusAction";
 
 import { baseColor } from "./config";
 console.disableYellowBox = true;
@@ -14,10 +15,14 @@ Navigation.setDefaultOptions({
   }
 });
 
-const startApp = () => {
-  const status = store.getState().status.accountStatus;
+const startApp = async () => {
+  let status = store.getState().status.accountStatus;
+  if (status === 1) {
+    await store.dispatch(getAccountStatus(store.getState().auth.userId));
+    status = store.getState().status.accountStatus;
+  }
+  // cadastrar documentos
   if (status === 0) {
-    // cadastrar documentos
     Navigation.setRoot({
       root: {
         stack: {
@@ -38,8 +43,9 @@ const startApp = () => {
         }
       }
     });
-  } else if (status === 1) {
-    // aguardando aprovação
+  }
+  // aguardando aprovação
+  else if (status === 1) {
     Navigation.setRoot({
       root: {
         stack: {
@@ -60,8 +66,9 @@ const startApp = () => {
         }
       }
     });
-  } else if (status === 2) {
-    // aprovado
+  }
+  // aprovado
+  else if (status === 2) {
     Promise.all([
       getImageSource(
         Platform.OS === "android" ? "md-pin" : "ios-pin",

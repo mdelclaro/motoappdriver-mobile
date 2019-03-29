@@ -25,15 +25,15 @@ const Verification = () => {
           </Text>
         </View>
 
-        <View style={{ marginBottom: 20 }}>
-          <Text style={{ fontSize: 16, textAlign: "center" }}>
-            Já recebemos os seus dados e estamos em fase de análise. Você irá
-            receber um retorno de nossa equipe dentro de 1 a 3 semanas.
-          </Text>
-        </View>
-
         <View style={styles.imageContainer}>
           <Image source={flags} style={styles.image} />
+        </View>
+
+        <View style={{ marginTop: 20 }}>
+          <Text style={{ fontSize: 16, textAlign: "center" }}>
+            Já recebemos os seus dados e estamos em fase de análise. Você irá
+            receber um retorno de nossa equipe dentro de 1 a 2 semanas.
+          </Text>
         </View>
 
         <View style={styles.footer}>

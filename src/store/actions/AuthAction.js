@@ -8,7 +8,7 @@ import startApp from "../../App";
 export const authAutoSignIn = () => {
   return async dispatch => {
     try {
-      const token = await dispatch(authGetToken());
+      await dispatch(authGetToken());
       startApp();
     } catch (err) {}
   };
