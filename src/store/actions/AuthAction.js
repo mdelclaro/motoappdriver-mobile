@@ -11,7 +11,6 @@ export const authAutoSignIn = () => {
     try {
       dispatch(uiStartLoading());
       await dispatch(authGetToken());
-      dispatch(uiStopLoading());
       startApp();
     } catch (err) {
       dispatch(uiStopLoading());
@@ -41,7 +40,6 @@ export const tryAuth = (email, senha) => {
         dispatch(updateAccountStatus(accountStatus));
         dispatch(storeAuth(token, refreshToken, userId, expiryDate));
         startApp();
-        dispatch(uiStopLoading());
       } else {
         let res = await result.json();
         alert(res.message);

@@ -10,8 +10,6 @@ import {
   emailChanged
 } from "../store/actions/index";
 
-import startApp from "../App";
-
 import SignupForm from "../components/Auth/SignupForm";
 import LoginForm from "../components/Auth/LoginForm";
 
@@ -21,7 +19,6 @@ class Auth extends Component {
   };
 
   componentDidMount() {
-    // startApp();
     this.props.onAutoSignIn();
     // this.props.onTryAuth("tiao@gmail.com", "123456");
   }

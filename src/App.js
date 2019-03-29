@@ -3,8 +3,10 @@ import { Navigation } from "react-native-navigation";
 import { getImageSource } from "react-native-vector-icons/Ionicons";
 import { store } from "./store/configureStore";
 import { getAccountStatus } from "./store/actions/StatusAction";
+import { uiStopLoading } from "./store/actions/UIAction";
 
 import { baseColor } from "./config";
+
 console.disableYellowBox = true;
 
 Navigation.setDefaultOptions({
@@ -179,6 +181,7 @@ const startApp = async () => {
           }
         }
       });
+      store.dispatch(uiStopLoading());
     });
   }
 };

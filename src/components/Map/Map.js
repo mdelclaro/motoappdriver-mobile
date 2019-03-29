@@ -149,6 +149,7 @@ class Localizacao extends Component {
             region={region}
             loadingEnabled
             showsCompass={false}
+            showsMyLocationButton={false}
             showsScale={false}
             ref={el => (this.mapView = el)}
           >
