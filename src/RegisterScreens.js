@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityIndicator } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 import { Navigation } from "react-native-navigation";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -13,12 +13,18 @@ import Verification from "./screens/Verification";
 
 import { store, persistor } from "./store/configureStore";
 
+const loadingComponent = (
+  <View style={{ flex: 1, justifyContent: "center" }}>
+    <ActivityIndicator size="large" />
+  </View>
+);
+
 const registerScreens = () => {
   Navigation.registerComponent(
     "motoapp.Main",
     () => props => (
       <Provider store={store}>
-        <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
+        <PersistGate loading={loadingComponent} persistor={persistor}>
           <Main {...props} />
         </PersistGate>
       </Provider>
@@ -29,7 +35,7 @@ const registerScreens = () => {
     "motoapp.Auth",
     () => props => (
       <Provider store={store}>
-        <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
+        <PersistGate loading={loadingComponent} persistor={persistor}>
           <Auth {...props} />
         </PersistGate>
       </Provider>
@@ -40,7 +46,7 @@ const registerScreens = () => {
     "motoapp.Verification",
     () => props => (
       <Provider store={store}>
-        <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
+        <PersistGate loading={loadingComponent} persistor={persistor}>
           <Verification {...props} />
         </PersistGate>
       </Provider>
@@ -51,7 +57,7 @@ const registerScreens = () => {
     "motoapp.Info",
     () => props => (
       <Provider store={store}>
-        <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
+        <PersistGate loading={loadingComponent} persistor={persistor}>
           <Info {...props} />
         </PersistGate>
       </Provider>
@@ -62,7 +68,7 @@ const registerScreens = () => {
     "motoapp.SideMenu",
     () => props => (
       <Provider store={store}>
-        <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
+        <PersistGate loading={loadingComponent} persistor={persistor}>
           <SideMenu {...props} />
         </PersistGate>
       </Provider>
@@ -73,7 +79,7 @@ const registerScreens = () => {
     "motoapp.Camera",
     () => props => (
       <Provider store={store}>
-        <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
+        <PersistGate loading={loadingComponent} persistor={persistor}>
           <Camera {...props} />
         </PersistGate>
       </Provider>

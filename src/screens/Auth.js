@@ -57,7 +57,7 @@ class Auth extends Component {
   renderContent = () => {
     let content;
     if (this.props.isLoading) {
-      content = <ActivityIndicator />;
+      content = <ActivityIndicator size="large" />;
     } else {
       content =
         this.state.authMode === "login" ? (
@@ -83,7 +83,8 @@ class Auth extends Component {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    flex: 1
+    flex: 1,
+    justifyContent: "center"
   }
 });
 

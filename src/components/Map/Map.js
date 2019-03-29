@@ -140,7 +140,9 @@ class Localizacao extends Component {
     return (
       <View style={{ flex: 1 }}>
         {this.state.isLoading ? (
-          <ActivityIndicator />
+          <View style={{ flex: 1, justifyContent: "center" }}>
+            <ActivityIndicator size="large" />
+          </View>
         ) : (
           <MapView
             style={{ flex: 1, height: height, width: width }}
@@ -262,4 +264,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(Localizacao);
-// export default Localizacao;

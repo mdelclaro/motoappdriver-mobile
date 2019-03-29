@@ -9,9 +9,13 @@ import startApp from "../../App";
 export const authAutoSignIn = () => {
   return async dispatch => {
     try {
+      dispatch(uiStartLoading());
       await dispatch(authGetToken());
+      dispatch(uiStopLoading());
       startApp();
-    } catch (err) {}
+    } catch (err) {
+      dispatch(uiStopLoading());
+    }
   };
 };
 
