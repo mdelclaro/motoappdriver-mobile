@@ -1,6 +1,5 @@
 export const AUTH_SET_TOKEN = "auth_set_token";
 export const AUTH_REMOVE_TOKEN = "auth_remove_token";
-export const AUTH_SET_ACCOUNT_STATUS = "auth_set_account_status";
 
 export const SIGN_UP = "sign_up";
 
@@ -20,6 +19,7 @@ export const UI_STOP_LOADING = "ui_stop_loading";
 
 export const GO_ONLINE = "go_online";
 export const GO_OFFLINE = "go_offline";
+export const SET_ACCOUNT_STATUS = "set_account_status";
 
 export const SET_CORRIDA = "set_corrida";
 export const SET_CLIENTE = "set_cliente";

@@ -21,6 +21,6 @@ export {
 export { signUp } from "./SignUpAction";
 export { uiStartLoading, uiStopLoading } from "./UIAction";
 export { acceptCorrida, startCorrida, finishCorrida } from "./RequestAction";
-export { goOnline, goOffline } from "./StatusAction";
+export { goOnline, goOffline, updateAccountStatus } from "./StatusAction";
 export { addRating } from "./RatingAction";
 export { updateInfo } from "./InfoAction";

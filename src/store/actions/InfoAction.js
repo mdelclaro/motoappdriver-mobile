@@ -1,7 +1,7 @@
 import { uiStartLoading, uiStopLoading } from "./UIAction";
 import { authGetToken } from "./AuthAction";
+import { updateAccountStatus } from "./StatusAction";
 import { baseUrl } from "../../config";
-import { AUTH_SET_ACCOUNT_STATUS } from "./types";
 
 export const updateInfo = (cnh1, cnh2, moto, placa, idMotoqueiro) => {
   return async dispatch => {
@@ -27,10 +27,8 @@ export const updateInfo = (cnh1, cnh2, moto, placa, idMotoqueiro) => {
 
       if (result.ok) {
         let res = await result.json();
-        console.log(res);
         dispatch(updateAccountStatus(res.motoqueiro.status));
         dispatch(uiStopLoading());
-
         return true;
       } else {
         let res = await result.json();
@@ -45,12 +43,5 @@ export const updateInfo = (cnh1, cnh2, moto, placa, idMotoqueiro) => {
       console.log("Erro: " + err);
       return false;
     }
-  };
-};
-
-export const updateAccountStatus = status => {
-  return {
-    type: AUTH_SET_ACCOUNT_STATUS,
-    payload: status
   };
 };

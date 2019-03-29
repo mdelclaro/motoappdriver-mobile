@@ -78,6 +78,8 @@ class Main extends Component {
         step: 2
       });
       this.handleStart();
+    } else {
+      this.props.onGoOffline();
     }
   }
 
@@ -105,8 +107,6 @@ class Main extends Component {
 
       // join no room
       this.socket.emit("join", { id: this.props.idMotoqueiro });
-      // this.socket2.emit("join", { id: this.props.idCliente });
-      // this.socket3.emit("join", { id: this.props.idCliente });
 
       if (!this.props.corrida) {
         this.setState({ showOnline: true });
@@ -127,12 +127,6 @@ class Main extends Component {
       });
 
       this.props.onGoOnline();
-
-      // this.socket2.on("dispatch", (data, reply) => {
-      //   setTimeout(() => {
-      //     reply("reject");
-      //   }, 2000);
-      // });
     } catch (err) {
       alert("Houve um problema ao se conectar. Tente novamente mais tarde...");
     }

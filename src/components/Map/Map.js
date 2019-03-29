@@ -88,7 +88,6 @@ class Localizacao extends Component {
           },
           isLoading: false
         });
-        console.log(this.props.acceptedCorrida);
       },
       err => console.log(err),
       {
