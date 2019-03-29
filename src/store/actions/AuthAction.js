@@ -1,6 +1,7 @@
 import { AsyncStorage } from "react-native";
 import { AUTH_SET_TOKEN, AUTH_REMOVE_TOKEN } from "./types";
 import { uiStartLoading, uiStopLoading } from "./UIAction";
+import { updateAccountStatus } from "./StatusAction";
 import { baseUrl } from "../../config";
 
 import startApp from "../../App";
@@ -31,8 +32,9 @@ export const tryAuth = (email, senha) => {
 
       if (result.ok) {
         let res = await result.json();
-        const { token, refreshToken, userId, expiryDate } = res;
+        const { token, refreshToken, userId, expiryDate, accountStatus } = res;
 
+        dispatch(updateAccountStatus(accountStatus));
         dispatch(storeAuth(token, refreshToken, userId, expiryDate));
         startApp();
         dispatch(uiStopLoading());
@@ -103,8 +105,15 @@ export const authGetToken = () => {
 
           if (result.ok) {
             let res = await result.json();
-            const { token, refreshToken, userId, expiryDate } = res;
+            const {
+              token,
+              refreshToken,
+              userId,
+              expiryDate,
+              accountStatus
+            } = res;
 
+            dispatch(updateAccountStatus(accountStatus));
             dispatch(storeAuth(token, refreshToken, userId, expiryDate));
             return token;
           } else {
