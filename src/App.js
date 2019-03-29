@@ -15,8 +15,6 @@ Navigation.setDefaultOptions({
 });
 
 const startApp = () => {
-  console.log("startApp()");
-  console.log(store.getState().status.accountStatus);
   if (!store.getState().status.accountStatus) {
     Navigation.setRoot({
       root: {
