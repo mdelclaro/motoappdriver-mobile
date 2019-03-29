@@ -19,6 +19,8 @@ class Info extends Component {
       values.placa,
       this.props.userId
     );
+    if (!exec) return;
+    startApp(this.props.status);
   };
 
   render() {
@@ -40,7 +42,8 @@ const mapStateToProps = state => {
   return {
     userId: state.auth.userId,
     cnh1: state.form.cnh1,
-    cnh2: state.form.cnh2
+    cnh2: state.form.cnh2,
+    status: state.auth.accountStatus
   };
 };
 

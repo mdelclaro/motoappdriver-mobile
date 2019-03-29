@@ -3,16 +3,14 @@ import {
   View,
   Text,
   TouchableOpacity,
-  //TouchableNativeFeedback,
   StyleSheet,
   Platform
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
-const buttonWithBackground = props => {
+const ButtonWithBackground = props => {
   let buttonColor = null;
   let textColor = props.textColor;
-  //let buttonShadow = null;
 
   if (props.isDisabled) {
     buttonColor = {
@@ -23,16 +21,6 @@ const buttonWithBackground = props => {
       backgroundColor: props.color
     };
   }
-
-  // if (props.color) {
-  //   buttonShadow = {
-  //     shadowColor: '#000',
-  //     shadowOffset: { width: 15, height: 15 },
-  //     shadowOpacity: 0.4,
-  //     shadowRadius: 10,
-  //     elevation: 10
-  //   };
-  // }
 
   const content = (
     <View style={[styles.button, buttonColor, props.style]}>
@@ -63,14 +51,8 @@ const buttonWithBackground = props => {
 const styles = StyleSheet.create({
   button: {
     padding: 10,
-    //margin: 5,
     borderRadius: 10,
-    marginTop: 10
-    // borderWidth: 1,
-    // borderColor: 'black',
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // flexGrow: 1
+    margin: 10
   },
   icon: {
     justifyContent: "center",
@@ -79,4 +61,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default buttonWithBackground;
+export default ButtonWithBackground;

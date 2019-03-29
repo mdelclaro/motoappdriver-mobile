@@ -7,6 +7,7 @@ export const googleApi = "AIzaSyBtJI4iAvzXZw9o5k2Ee9UwgVyR0vX0vPs";
 
 // export const baseColor = "#425cf4";
 export const baseColor = "#4286f4";
+export const baseErrorColor = "#f24b4b";
 
 export const mapStyle = [
   {

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
   Dimensions,
@@ -15,7 +14,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 import { cnh1Changed, cnh2Changed } from "../store/actions/";
 
-import { baseColor } from "../config";
+import { baseColor, baseErrorColor } from "../config";
 
 class Camera extends Component {
   state = {
@@ -42,7 +41,7 @@ class Camera extends Component {
           <TouchableOpacity onPress={this.takePicture} style={styles.capture}>
             <Icon
               name={Platform.OS === "android" ? "md-camera" : "ios-camera"}
-              size={35}
+              size={32}
               color="#FFF"
             />
           </TouchableOpacity>
@@ -58,13 +57,18 @@ class Camera extends Component {
           source={{ uri: this.state.path }}
           style={styles.preview}
         >
-          <Text
-            style={styles.cancel}
-            onPress={() => this.setState({ path: null })}
-          >
-            Excluir
-          </Text>
           <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              onPress={() => this.setState({ path: null })}
+              style={[styles.capture, { backgroundColor: baseErrorColor }]}
+            >
+              <Icon
+                name={Platform.OS === "android" ? "md-close" : "ios-close"}
+                size={32}
+                color="#FFF"
+              />
+            </TouchableOpacity>
+
             <TouchableOpacity
               onPress={this.uploadPicture}
               style={styles.capture}
@@ -73,7 +77,7 @@ class Camera extends Component {
                 name={
                   Platform.OS === "android" ? "md-checkmark" : "ios-checkmark"
                 }
-                size={35}
+                size={32}
                 color="#FFF"
               />
             </TouchableOpacity>
@@ -128,10 +132,12 @@ const styles = StyleSheet.create({
     flex: 0,
     backgroundColor: baseColor,
     borderRadius: 100,
-    padding: 15,
-    paddingHorizontal: 20,
-    alignSelf: "stretch",
-    margin: 20
+    height: 55,
+    width: 55,
+    margin: 20,
+    // paddingHorizontal: 15,
+    alignItems: "center",
+    justifyContent: "center"
   },
   preview: {
     flex: 1,
@@ -143,7 +149,7 @@ const styles = StyleSheet.create({
   cancel: {
     position: "absolute",
     right: 15,
-    top: 15,
+    top: 35,
     backgroundColor: "transparent",
     color: "#FFF",
     fontWeight: "600",
