@@ -9,6 +9,7 @@ import SideMenu from "./screens/SideMenu";
 import Main from "./screens/Main";
 import Camera from "./screens/Camera";
 import Info from "./screens/Info";
+import Verification from "./screens/Verification";
 
 import { store, persistor } from "./store/configureStore";
 
@@ -34,6 +35,17 @@ const registerScreens = () => {
       </Provider>
     ),
     () => Auth
+  );
+  Navigation.registerComponent(
+    "motoapp.Verification",
+    () => props => (
+      <Provider store={store}>
+        <PersistGate loading={<ActivityIndicator />} persistor={persistor}>
+          <Verification {...props} />
+        </PersistGate>
+      </Provider>
+    ),
+    () => Info
   );
   Navigation.registerComponent(
     "motoapp.Info",

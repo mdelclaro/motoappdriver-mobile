@@ -15,7 +15,9 @@ Navigation.setDefaultOptions({
 });
 
 const startApp = () => {
-  if (!store.getState().status.accountStatus) {
+  const status = store.getState().status.accountStatus;
+  if (status === 0) {
+    // cadastrar documentos
     Navigation.setRoot({
       root: {
         stack: {
@@ -36,7 +38,30 @@ const startApp = () => {
         }
       }
     });
-  } else {
+  } else if (status === 1) {
+    // aguardando aprovação
+    Navigation.setRoot({
+      root: {
+        stack: {
+          id: "verificationStack",
+          children: [
+            {
+              component: {
+                id: "verification",
+                name: "motoapp.Verification",
+                options: {
+                  topBar: {
+                    visible: false
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    });
+  } else if (status === 2) {
+    // aprovado
     Promise.all([
       getImageSource(
         Platform.OS === "android" ? "md-pin" : "ios-pin",
