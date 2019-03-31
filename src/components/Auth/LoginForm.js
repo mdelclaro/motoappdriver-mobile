@@ -102,6 +102,7 @@ class LoginForm extends Component {
                   onChange={setFieldValue}
                   onTouch={setFieldTouched}
                   onSubmitEditing={() => this.senhaInput.focus()}
+                  blurOnSubmit={false}
                   name="email"
                   error={touched.email && errors.email}
                   style={styles.input}

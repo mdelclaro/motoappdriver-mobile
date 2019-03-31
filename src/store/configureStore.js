@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["status", "ui", "form"],
+  blacklist: ["ui", "form"],
   timeout: 0
 };
 

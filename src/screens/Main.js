@@ -24,7 +24,11 @@ class Main extends Component {
   static get options() {
     return {
       topBar: {
-        visible: false
+        transparent: true,
+        translucent: true,
+        noBorder: true,
+        elevation: 0,
+        background: { color: "transparent" }
       }
     };
   }
@@ -39,6 +43,7 @@ class Main extends Component {
     ).then(icon => {
       Navigation.mergeOptions("Main", {
         topBar: {
+          visible: true,
           rightButtons: [
             {
               id: "menuButton",
@@ -54,8 +59,6 @@ class Main extends Component {
       });
     });
     this.socket;
-    // this.socket2 = openSocket(socketUrl);
-    // this.socket3 = openSocket(socketUrl);
   }
 
   state = {
@@ -78,6 +81,8 @@ class Main extends Component {
         step: 2
       });
       this.handleStart();
+    } else {
+      this.props.onGoOffline();
     }
   }
 
@@ -105,8 +110,6 @@ class Main extends Component {
 
       // join no room
       this.socket.emit("join", { id: this.props.idMotoqueiro });
-      // this.socket2.emit("join", { id: this.props.idCliente });
-      // this.socket3.emit("join", { id: this.props.idCliente });
 
       if (!this.props.corrida) {
         this.setState({ showOnline: true });
@@ -127,12 +130,6 @@ class Main extends Component {
       });
 
       this.props.onGoOnline();
-
-      // this.socket2.on("dispatch", (data, reply) => {
-      //   setTimeout(() => {
-      //     reply("reject");
-      //   }, 2000);
-      // });
     } catch (err) {
       alert("Houve um problema ao se conectar. Tente novamente mais tarde...");
     }
@@ -238,9 +235,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 15,
     borderRadius: 100,
-    elevation: 1,
+    elevation: 3,
     shadowColor: "#000",
-    shadowOffset: { x: 0, y: 0 },
+    shadowOffset: { x: 1, y: 0 },
     shadowRadius: 3
   },
   timer: {

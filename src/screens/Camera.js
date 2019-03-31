@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
   Dimensions,
@@ -15,7 +14,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 import { cnh1Changed, cnh2Changed } from "../store/actions/";
 
-import { baseColor } from "../config";
+import { baseColor, baseErrorColor } from "../config";
 
 class Camera extends Component {
   state = {
@@ -58,16 +57,10 @@ class Camera extends Component {
           source={{ uri: this.state.path }}
           style={styles.preview}
         >
-          {/* <Text
-            style={styles.cancel}
-            onPress={() => this.setState({ path: null })}
-          >
-            Excluir
-          </Text> */}
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={() => this.setState({ path: null })}
-              style={[styles.capture, { backgroundColor: "red" }]}
+              style={[styles.capture, { backgroundColor: baseErrorColor }]}
             >
               <Icon
                 name={Platform.OS === "android" ? "md-close" : "ios-close"}

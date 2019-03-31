@@ -8,11 +8,8 @@ import startApp from "../App";
 import InfoForm from "../components/Info/InfoForm";
 
 class Info extends Component {
-  componentDidMount() {}
-
   submitHandler = async values => {
-    // console.log(values);
-    const exec = this.props.onUpdateInfo(
+    const exec = await this.props.onUpdateInfo(
       this.props.cnh1,
       this.props.cnh2,
       values.moto,
@@ -20,7 +17,7 @@ class Info extends Component {
       this.props.userId
     );
     if (!exec) return;
-    startApp(this.props.status);
+    startApp();
   };
 
   render() {

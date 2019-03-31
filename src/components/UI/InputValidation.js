@@ -53,11 +53,9 @@ const styles = StyleSheet.create({
   input: {
     width: "100%",
     borderBottomWidth: 1,
-    //borderColor: '#eee',
     padding: 5,
     marginTop: 8,
     marginBottom: 8
-    //justifyContent: 'center'
   },
   errorMsg: {
     color: "red",

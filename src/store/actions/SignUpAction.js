@@ -1,4 +1,5 @@
 import { uiStartLoading, uiStopLoading } from "./UIAction";
+import { updateAccountStatus } from "./StatusAction";
 import { baseUrl } from "../../config";
 
 export const signUp = (email, senha, nome, sobrenome) => {
@@ -19,6 +20,7 @@ export const signUp = (email, senha, nome, sobrenome) => {
       });
 
       if (result.ok) {
+        dispatch(updateAccountStatus(1));
         dispatch(uiStopLoading());
         return true;
       } else {

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import {
   View,
   StyleSheet,
@@ -18,6 +18,8 @@ import ButtonWithBackground from "../UI/ButtonWithBackground";
 import InputValidation from "../UI/InputValidation";
 import HeadingText from "../UI/HeadingText";
 import MainText from "../UI/MainText";
+import ButtonIcon from "../UI/ButtonIcon";
+import { baseColor, baseErrorColor } from "../../config";
 
 class SignupForm extends Component {
   componentDidMount() {
@@ -38,7 +40,7 @@ class SignupForm extends Component {
     }
   }
 
-  renderCameraFrente = () => {
+  renderCamera1 = () => {
     Navigation.showModal({
       stack: {
         id: "infoStack",
@@ -66,7 +68,7 @@ class SignupForm extends Component {
     });
   };
 
-  renderCameraVerso = () => {
+  renderCamera2 = () => {
     Navigation.showModal({
       stack: {
         id: "infoStack",
@@ -95,21 +97,27 @@ class SignupForm extends Component {
   };
 
   render() {
-    let headingText = null;
-    headingText = (
+    let headingText = (
       <MainText>
-        <HeadingText style={{ color: "#425cf4" }}>
+        <HeadingText
+          style={{
+            // color: "#425cf4"
+            color: baseColor
+          }}
+        >
           Adicionar informações
         </HeadingText>
       </MainText>
     );
 
+    const { moto, placa, cnh1, cnh2 } = this.props.form;
+
     return (
       <Formik
         ref={el => (this.form = el)}
         initialValues={{
-          moto: this.props.moto,
-          placa: this.props.placa
+          moto,
+          placa
         }}
         onSubmit={this.props.submitHandler}
         validationSchema={Yup.object().shape({
@@ -129,36 +137,47 @@ class SignupForm extends Component {
           isValid
         }) => (
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            {/* <Fragment> */}
             <KeyboardAvoidingView style={styles.container} behavior="padding">
               <View
                 style={{
-                  justifyContent: "space-between",
+                  justifyContent: "flex-start",
                   alignItems: "center",
-                  paddingBottom: 15
+                  paddingTop: 35
                 }}
               >
                 {headingText}
                 <Text>
-                  Complete seu cadastro insirindo as informações abaixo
+                  Informe os dados abaixo para completar o seu cadastro
                 </Text>
               </View>
-              <View style={styles.inputContainer}>
-                {/* <View> */}
-                <ButtonWithBackground
-                  color="#425cf4"
-                  onPress={this.renderCameraFrente}
+              <View
+                style={{
+                  flex: 0,
+                  flexDirection: "row",
+                  justifyContent: "center"
+                }}
+              >
+                <ButtonIcon
+                  icon={cnh1 ? "checkmark" : "close"}
+                  onPress={this.renderCamera1}
+                  buttonStyle={
+                    cnh1 ? null : { backgroundColor: baseErrorColor }
+                  }
                 >
                   Foto da CNH (frente)
-                </ButtonWithBackground>
-                {/* </View> */}
-                {/* <View> */}
-                <ButtonWithBackground
-                  color="#425cf4"
-                  onPress={this.renderCameraVerso}
+                </ButtonIcon>
+                <ButtonIcon
+                  icon={cnh2 ? "checkmark" : "close"}
+                  onPress={this.renderCamera2}
+                  buttonStyle={
+                    cnh2 ? null : { backgroundColor: baseErrorColor }
+                  }
                 >
                   Foto da CNH (verso)
-                </ButtonWithBackground>
-                {/* </View> */}
+                </ButtonIcon>
+              </View>
+              <View style={styles.inputContainer}>
                 <InputValidation
                   myRef={ref => (this.moto = ref)}
                   placeholder="Modelo e cor da moto (Titan 125 - Prata)"
@@ -167,7 +186,7 @@ class SignupForm extends Component {
                   onSubmitEditing={() => this.placa.focus()}
                   // onSubmitEditing={() => this.cor.focus()}
                   autoCorrect={false}
-                  value={this.props.moto}
+                  value={moto}
                   onChange={setFieldValue}
                   onTouch={setFieldTouched}
                   name="moto"
@@ -195,7 +214,7 @@ class SignupForm extends Component {
                   returnKeyType="next"
                   onSubmitEditing={handleSubmit}
                   autoCorrect={false}
-                  value={this.props.placa}
+                  value={placa}
                   onChange={setFieldValue}
                   onTouch={setFieldTouched}
                   name="placa"
@@ -207,7 +226,7 @@ class SignupForm extends Component {
                 <View style={{ width: "80%" }}>
                   <ButtonWithBackground
                     myRef={ref => (this.submitButton = ref)}
-                    color="#425cf4"
+                    color={baseColor}
                     onPress={handleSubmit}
                     isDisabled={!isValid}
                   >
@@ -218,6 +237,7 @@ class SignupForm extends Component {
                 <ActivityIndicator />
               )}
             </KeyboardAvoidingView>
+            {/* </Fragment> */}
           </TouchableWithoutFeedback>
         )}
       />
@@ -228,8 +248,8 @@ class SignupForm extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
-    justifyContent: "center",
+    paddingTop: 15,
+    justifyContent: "flex-start",
     alignItems: "center"
   },
   backgroundImage: {
@@ -265,8 +285,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     isLoading: state.ui.isLoading,
-    moto: state.form.moto,
-    placa: state.form.placa
+    form: state.form
   };
 };
 

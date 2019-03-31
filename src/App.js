@@ -1,8 +1,12 @@
 import { Platform } from "react-native";
 import { Navigation } from "react-native-navigation";
 import { getImageSource } from "react-native-vector-icons/Ionicons";
+import { store } from "./store/configureStore";
+import { getAccountStatus } from "./store/actions/StatusAction";
+import { uiStopLoading } from "./store/actions/UIAction";
 
 import { baseColor } from "./config";
+
 console.disableYellowBox = true;
 
 Navigation.setDefaultOptions({
@@ -13,9 +17,14 @@ Navigation.setDefaultOptions({
   }
 });
 
-const startApp = accountStatus => {
-  // accountStatus = true;
-  if (!accountStatus) {
+const startApp = async () => {
+  let status = store.getState().status.accountStatus;
+  if (status === 1) {
+    await store.dispatch(getAccountStatus(store.getState().auth.userId));
+    status = store.getState().status.accountStatus;
+  }
+  // cadastrar documentos
+  if (status === 0) {
     Navigation.setRoot({
       root: {
         stack: {
@@ -36,7 +45,32 @@ const startApp = accountStatus => {
         }
       }
     });
-  } else {
+  }
+  // aguardando aprovação
+  else if (status === 1) {
+    Navigation.setRoot({
+      root: {
+        stack: {
+          id: "verificationStack",
+          children: [
+            {
+              component: {
+                id: "verification",
+                name: "motoapp.Verification",
+                options: {
+                  topBar: {
+                    visible: false
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    });
+  }
+  // aprovado
+  else if (status === 2) {
     Promise.all([
       getImageSource(
         Platform.OS === "android" ? "md-pin" : "ios-pin",
@@ -147,6 +181,7 @@ const startApp = accountStatus => {
           }
         }
       });
+      store.dispatch(uiStopLoading());
     });
   }
 };

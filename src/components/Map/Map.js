@@ -88,7 +88,6 @@ class Localizacao extends Component {
           },
           isLoading: false
         });
-        console.log(this.props.acceptedCorrida);
       },
       err => console.log(err),
       {
@@ -141,13 +140,16 @@ class Localizacao extends Component {
     return (
       <View style={{ flex: 1 }}>
         {this.state.isLoading ? (
-          <ActivityIndicator />
+          <View style={{ flex: 1, justifyContent: "center" }}>
+            <ActivityIndicator size="large" />
+          </View>
         ) : (
           <MapView
             style={{ flex: 1, height: height, width: width }}
             region={region}
             loadingEnabled
             showsCompass={false}
+            showsMyLocationButton={false}
             showsScale={false}
             ref={el => (this.mapView = el)}
           >
@@ -263,4 +265,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(Localizacao);
-// export default Localizacao;

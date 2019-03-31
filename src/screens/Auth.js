@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, ActivityIndicator, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
 import {
@@ -10,8 +10,6 @@ import {
   emailChanged
 } from "../store/actions/index";
 
-import startApp from "../App";
-
 import SignupForm from "../components/Auth/SignupForm";
 import LoginForm from "../components/Auth/LoginForm";
 
@@ -21,7 +19,6 @@ class Auth extends Component {
   };
 
   componentDidMount() {
-    // startApp();
     this.props.onAutoSignIn();
     // this.props.onTryAuth("tiao@gmail.com", "123456");
   }
@@ -54,10 +51,13 @@ class Auth extends Component {
     }
   };
 
-  render() {
-    return (
-      <View style={styles.backgroundImage}>
-        {this.state.authMode === "login" ? (
+  renderContent = () => {
+    let content;
+    if (this.props.isLoading) {
+      content = <ActivityIndicator size="large" />;
+    } else {
+      content =
+        this.state.authMode === "login" ? (
           <LoginForm
             onSwitchAuthMode={this.switchAuthModeHandler}
             submitHandler={this.submitHandler}
@@ -67,18 +67,29 @@ class Auth extends Component {
             onSwitchAuthMode={this.switchAuthModeHandler}
             submitHandler={this.submitHandler}
           />
-        )}
-      </View>
-    );
+        );
+    }
+    return content;
+  };
+
+  render() {
+    return <View style={styles.container}>{this.renderContent()}</View>;
   }
 }
 
 const styles = StyleSheet.create({
-  backgroundImage: {
+  container: {
     width: "100%",
-    flex: 1
+    flex: 1,
+    justifyContent: "center"
   }
 });
+
+const mapStateToProps = state => {
+  return {
+    isLoading: state.ui.isLoading
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -92,6 +103,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Auth);

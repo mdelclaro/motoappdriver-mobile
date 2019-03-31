@@ -1,18 +1,20 @@
 import { AsyncStorage } from "react-native";
 import { AUTH_SET_TOKEN, AUTH_REMOVE_TOKEN } from "./types";
 import { uiStartLoading, uiStopLoading } from "./UIAction";
+import { updateAccountStatus } from "./StatusAction";
 import { baseUrl } from "../../config";
 
 import startApp from "../../App";
 
-let _accountStatus;
-
 export const authAutoSignIn = () => {
   return async dispatch => {
     try {
-      const token = await dispatch(authGetToken());
-      startApp(_accountStatus);
-    } catch (err) {}
+      dispatch(uiStartLoading());
+      await dispatch(authGetToken());
+      startApp();
+    } catch (err) {
+      dispatch(uiStopLoading());
+    }
   };
 };
 
@@ -34,13 +36,10 @@ export const tryAuth = (email, senha) => {
       if (result.ok) {
         let res = await result.json();
         const { token, refreshToken, userId, expiryDate, accountStatus } = res;
-        _accountStatus = accountStatus;
 
-        dispatch(
-          storeAuth(token, refreshToken, userId, expiryDate, accountStatus)
-        );
-        startApp(_accountStatus);
-        dispatch(uiStopLoading());
+        dispatch(updateAccountStatus(accountStatus));
+        dispatch(storeAuth(token, refreshToken, userId, expiryDate));
+        startApp();
       } else {
         let res = await result.json();
         alert(res.message);
@@ -55,31 +54,23 @@ export const tryAuth = (email, senha) => {
   };
 };
 
-export const storeAuth = (
-  jwt,
-  refreshToken,
-  userId,
-  expiryDate,
-  accountStatus
-) => {
+export const storeAuth = (jwt, refreshToken, userId, expiryDate) => {
   return async dispatch => {
-    dispatch(authSetToken(jwt, expiryDate, userId, accountStatus));
+    dispatch(authSetToken(jwt, expiryDate, userId));
     AsyncStorage.setItem("ap:auth:jwt", jwt);
     AsyncStorage.setItem("ap:auth:refreshToken", refreshToken);
     AsyncStorage.setItem("ap:auth:expiryDate", expiryDate);
     AsyncStorage.setItem("ap:auth:userId", userId);
-    AsyncStorage.setItem("ap:auth:accountStatus", accountStatus);
   };
 };
 
-export const authSetToken = (jwt, expiryDate, userId, accountStatus) => {
+export const authSetToken = (jwt, expiryDate, userId) => {
   return {
     type: AUTH_SET_TOKEN,
     payload: {
       jwt,
       expiryDate,
-      userId,
-      accountStatus
+      userId
     }
   };
 };
@@ -94,9 +85,6 @@ export const authGetToken = () => {
         const fetchedToken = await AsyncStorage.getItem("ap:auth:jwt");
         const expiryDate = await AsyncStorage.getItem("ap:auth:expiryDate");
         const userId = await AsyncStorage.getItem("ap:auth:userId");
-        const accountStatus = await AsyncStorage.getItem(
-          "ap:auth:accountStatus"
-        );
 
         // verificar se token do storage eh valido
         if (!fetchedToken || new Date(expiryDate) <= new Date()) {
@@ -127,18 +115,15 @@ export const authGetToken = () => {
               accountStatus
             } = res;
 
-            dispatch(
-              storeAuth(token, refreshToken, userId, expiryDate, accountStatus)
-            );
+            dispatch(updateAccountStatus(accountStatus));
+            dispatch(storeAuth(token, refreshToken, userId, expiryDate));
             return token;
           } else {
             error = new Error("Realizar login");
             throw Error();
           }
         } else {
-          dispatch(
-            authSetToken(fetchedToken, expiryDate, userId, accountStatus)
-          );
+          dispatch(authSetToken(fetchedToken, expiryDate, userId));
           return fetchedToken;
         }
       } catch (err) {
@@ -156,7 +141,6 @@ export const authClearStorage = () => {
     AsyncStorage.removeItem("ap:auth:expiryDate");
     AsyncStorage.removeItem("ap:auth:refreshToken");
     AsyncStorage.removeItem("ap:auth:userId");
-    AsyncStorage.removeItem("ap:auth:accountStatus");
   };
 };
 
