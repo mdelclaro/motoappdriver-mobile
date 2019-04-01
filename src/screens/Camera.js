@@ -100,11 +100,10 @@ class Camera extends Component {
   };
 
   uploadPicture = () => {
-    this.props.cnh === 1
-      ? this.props.onCnh1Changed(this.state.path)
-      : this.props.onCnh2Changed(this.state.path);
+    const { cnh, cnh1Changed, cnh2Changed, componentId } = this.props;
+    cnh === 1 ? cnh1Changed(this.state.path) : cnh2Changed(this.state.path);
 
-    Navigation.dismissModal(this.props.componentId);
+    Navigation.dismissModal(componentId);
   };
 
   render() {
@@ -157,11 +156,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onCnh1Changed: image => dispatch(cnh1Changed(image)),
-    onCnh2Changed: image => dispatch(cnh2Changed(image))
-  };
+const mapDispatchToProps = {
+  cnh1Changed: image => cnh1Changed(image),
+  cnh2Changed: image => cnh2Changed(image)
 };
 
 export default connect(

@@ -6,7 +6,6 @@ import {
   FORM_MOTO_CHANGED,
   FORM_CNH1_CHANGED,
   FORM_CNH2_CHANGED,
-  FORM_COR_CHANGED,
   FORM_PLACA_CHANGED,
   FORM_CLEAR
 } from "./types";
@@ -57,13 +56,6 @@ export const cnh2Changed = cnh => {
   return {
     type: FORM_CNH2_CHANGED,
     payload: cnh
-  };
-};
-
-export const corChanged = cor => {
-  return {
-    type: FORM_COR_CHANGED,
-    payload: cor
   };
 };
 

@@ -8,22 +8,29 @@ import {
   nomeChanged,
   sobrenomeChanged,
   motoChanged,
-  placaChanged,
-  cnhChanged,
-  corChanged
+  placaChanged
 } from "../../store/actions/index";
 
 class InputValidation extends Component {
   textChangeHandler = value => {
-    this.props.onChange(this.props.name, value);
-    if (this.props.name == "email") this.props.onEmailChanged(value);
-    if (this.props.name == "senha") this.props.onSenhaChanged(value);
-    if (this.props.name == "nome") this.props.onNomeChanged(value);
-    if (this.props.name == "sobrenome") this.props.onSobrenomeChanged(value);
-    if (this.props.name == "moto") this.props.onMotoChanged(value);
-    if (this.props.name == "placa") this.props.onPlacaChanged(value);
-    if (this.props.name == "cnh") this.props.onCnhChanged(value);
-    if (this.props.name == "cor") this.props.onCorChanged(value);
+    const {
+      name,
+      onChange,
+      emailChanged,
+      senhaChanged,
+      nomeChanged,
+      sobrenomeChanged,
+      motoChanged,
+      placaChanged
+    } = this.props;
+
+    onChange(name, value);
+    if (name == "email") emailChanged(value);
+    if (name == "senha") senhaChanged(value);
+    if (name == "nome") nomeChanged(value);
+    if (name == "sobrenome") sobrenomeChanged(value);
+    if (name == "moto") motoChanged(value);
+    if (name == "placa") placaChanged(value);
   };
 
   touchHandler = () => {
@@ -31,17 +38,17 @@ class InputValidation extends Component {
   };
 
   render() {
-    const { placeholder, error, ...rest } = this.props;
+    const { placeholder, error, myRef, style, ...rest } = this.props;
     return (
       <View>
         <TextInput
-          ref={this.props.myRef}
+          ref={myRef}
           underlineColorAndroid="transparent"
           onChangeText={this.textChangeHandler}
           onBlur={this.touchHandler}
           placeholder={placeholder}
           {...rest}
-          style={[styles.input, this.props.style]}
+          style={[styles.input, style]}
         />
         {error && <Text style={styles.errorMsg}>{error}</Text>}
       </View>
@@ -64,17 +71,15 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onEmailChanged: email => dispatch(emailChanged(email)),
-    onSenhaChanged: senha => dispatch(senhaChanged(senha)),
-    onNomeChanged: nome => dispatch(nomeChanged(nome)),
-    onSobrenomeChanged: sobrenome => dispatch(sobrenomeChanged(sobrenome)),
-    onMotoChanged: moto => dispatch(motoChanged(moto)),
-    onPlacaChanged: placa => dispatch(placaChanged(placa)),
-    onCnhChanged: cnh => dispatch(cnhChanged(cnh)),
-    onCorChanged: cor => dispatch(corChanged(cor))
-  };
+const mapDispatchToProps = {
+  emailChanged: email => emailChanged(email),
+  senhaChanged: senha => senhaChanged(senha),
+  nomeChanged: nome => nomeChanged(nome),
+  sobrenomeChanged: sobrenome => sobrenomeChanged(sobrenome),
+  motoChanged: moto => motoChanged(moto),
+  placaChanged: placa => placaChanged(placa),
+  cnhChanged: cnh => cnhChanged(cnh),
+  corChanged: cor => corChanged(cor)
 };
 
 export default connect(

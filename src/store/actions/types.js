@@ -10,7 +10,6 @@ export const FORM_SOBRENOME_CHANGED = "form_sobrenome_changed";
 export const FORM_MOTO_CHANGED = "form_moto_changed";
 export const FORM_CNH1_CHANGED = "form_cnh1_changed";
 export const FORM_CNH2_CHANGED = "form_cnh2_changed";
-export const FORM_COR_CHANGED = "form_cor_changed";
 export const FORM_PLACA_CHANGED = "form_placa_changed";
 export const FORM_CLEAR = "form_clear";
 
