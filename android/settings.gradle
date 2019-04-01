@@ -1,4 +1,4 @@
-rootProject.name = 'MotoAppDriver'
+rootProject.name = 'localMotoappDriver'
 
 include ':app'
 

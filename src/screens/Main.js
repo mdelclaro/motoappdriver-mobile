@@ -72,17 +72,18 @@ class Main extends Component {
   };
 
   componentDidMount() {
-    if (this.props.corrida && this.props.cliente) {
+    const { corrida, cliente, distancia, goOffline } = this.props;
+    if (corrida && cliente) {
       this.setState({
         showOnline: false,
-        corrida: this.props.corrida,
-        cliente: this.props.cliente,
-        distancia: this.props.distancia,
+        corrida,
+        cliente,
+        distancia,
         step: 2
       });
       this.handleStart();
     } else {
-      this.props.onGoOffline();
+      goOffline();
     }
   }
 
@@ -100,18 +101,19 @@ class Main extends Component {
 
   handleStart = () => {
     try {
+      const { idMotoqueiro, corrida, goOnline } = this.props;
       //criar conexão
       this.socket = openSocket(socketUrl);
 
       // lidar com reconexão
       this.socket.on("reconnect", () => {
-        this.socket.emit("join", { id: this.props.idMotoqueiro });
+        this.socket.emit("join", { id: idMotoqueiro });
       });
 
       // join no room
-      this.socket.emit("join", { id: this.props.idMotoqueiro });
+      this.socket.emit("join", { id: idMotoqueiro });
 
-      if (!this.props.corrida) {
+      if (!corrida) {
         this.setState({ showOnline: true });
       }
 
@@ -128,26 +130,27 @@ class Main extends Component {
           reply(this.state.reply);
         }, 10000);
       });
-
-      this.props.onGoOnline();
+      goOnline();
     } catch (err) {
       alert("Houve um problema ao se conectar. Tente novamente mais tarde...");
     }
   };
 
   handleAccept = async () => {
+    const { idMotoqueiro, acceptCorrida } = this.props;
+    const { corrida, cliente, distancia } = this.state;
     this.setState({
       timer: false,
       reply: "accept",
       showOnline: false
     });
     const data = {
-      idCorrida: this.state.corrida._id,
-      idMotoqueiro: this.props.idMotoqueiro,
-      cliente: this.state.cliente,
-      distancia: this.state.distancia
+      idCorrida: corrida._id,
+      idMotoqueiro,
+      cliente,
+      distancia
     };
-    const exec = await this.props.onAcceptCorrida(data);
+    const exec = await acceptCorrida(data);
     if (!exec) {
       this.setState({
         showOnline: true,
@@ -173,15 +176,24 @@ class Main extends Component {
   };
 
   render() {
+    const {
+      corrida,
+      step,
+      timer,
+      cliente,
+      distancia,
+      showOnline,
+      isLoading
+    } = this.state;
     return (
       <View style={styles.container}>
-        <Map corrida={this.state.corrida} step={this.state.step} />
+        <Map corrida={corrida} step={step} />
         {!this.props.isOnline && (
           <TouchableOpacity onPress={this.handleStart} style={styles.button}>
             <Text style={styles.text}>INICIAR</Text>
           </TouchableOpacity>
         )}
-        {this.state.timer && (
+        {timer && (
           <View style={styles.timer}>
             <Timer
               beat={true}
@@ -205,16 +217,16 @@ class Main extends Component {
             />
           </View>
         )}
-        {this.state.corrida && (
+        {corrida && (
           <Details
-            corrida={this.state.corrida}
-            cliente={this.state.cliente}
-            distancia={this.state.distancia}
+            corrida={corrida}
+            cliente={cliente}
+            distancia={distancia}
             handleReset={this.handleReset}
           />
         )}
-        {this.state.showOnline && <Online />}
-        {this.state.isLoading && <ActivityIndicator size="large" />}
+        {showOnline && <Online />}
+        {isLoading && <ActivityIndicator size="large" />}
       </View>
     );
   }
@@ -250,7 +262,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
     fontSize: 20
-    // fontWeight: "bold"
   }
 });
 
@@ -265,12 +276,10 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onGoOnline: () => dispatch(goOnline()),
-    onGoOffline: () => dispatch(goOffline()),
-    onAcceptCorrida: data => dispatch(acceptCorrida(data))
-  };
+const mapDispatchToProps = {
+  goOnline,
+  goOffline,
+  acceptCorrida: data => acceptCorrida(data)
 };
 
 export default connect(

@@ -9,12 +9,13 @@ import InfoForm from "../components/Info/InfoForm";
 
 class Info extends Component {
   submitHandler = async values => {
-    const exec = await this.props.onUpdateInfo(
-      this.props.cnh1,
-      this.props.cnh2,
+    const { cnh1, cnh2, userId, updateInfo } = this.props;
+    const exec = await updateInfo(
+      cnh1,
+      cnh2,
       values.moto,
       values.placa,
-      this.props.userId
+      userId
     );
     if (!exec) return;
     startApp();
@@ -44,11 +45,10 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onUpdateInfo: (cnh1, cnh2, moto, placa, idMotoqueiro) =>
-      dispatch(updateInfo(cnh1, cnh2, moto, placa, idMotoqueiro))
-  };
+const mapDispatchToProps = {
+  updateInfo: (cnh1, cnh2, moto, placa, idMotoqueiro) =>
+    updateInfo(cnh1, cnh2, moto, placa, idMotoqueiro)
+
 };
 
 export default connect(

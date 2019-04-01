@@ -37,12 +37,12 @@ class Details extends Component {
   };
 
   handleStart = async () => {
-    const exec = await this.props.onStart(this.props.acceptedCorrida._id);
+    const exec = await this.props.startCorrida(this.props.acceptedCorrida._id);
     if (!exec) return;
   };
 
   handleFinish = async () => {
-    const exec = await this.props.onFinish(this.props.acceptedCorrida._id);
+    const exec = await this.props.finishCorrida(this.props.acceptedCorrida._id);
     if (!exec) return;
     this.props.handleReset();
   };
@@ -87,11 +87,9 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onStart: idCorrida => dispatch(startCorrida(idCorrida)),
-    onFinish: idCorrida => dispatch(finishCorrida(idCorrida))
-  };
+const mapDispatchToProps = {
+  startCorrida: idCorrida => startCorrida(idCorrida),
+  finishCorrida: idCorrida => finishCorrida(idCorrida)
 };
 
 export default connect(
