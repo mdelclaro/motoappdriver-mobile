@@ -14,7 +14,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 import { cnh1Changed, cnh2Changed } from "../store/actions/";
 
-import { baseColor, baseErrorColor } from "../config";
+import { BASE_COLOR, baseErrorColor } from "../config";
 
 class Camera extends Component {
   state = {
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   },
   capture: {
     flex: 0,
-    backgroundColor: baseColor,
+    backgroundColor: BASE_COLOR,
     borderRadius: 100,
     height: 55,
     width: 55,
@@ -159,7 +159,6 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = {
   cnh1Changed: image => cnh1Changed(image),
   cnh2Changed: image => cnh2Changed(image)
-
 };
 
 export default connect(

@@ -19,7 +19,7 @@ import InputValidation from "../UI/InputValidation";
 import HeadingText from "../UI/HeadingText";
 import MainText from "../UI/MainText";
 import ButtonIcon from "../UI/ButtonIcon";
-import { baseColor, baseErrorColor } from "../../config";
+import { BASE_COLOR, baseErrorColor } from "../../config";
 
 class SignupForm extends Component {
   componentDidMount() {
@@ -102,7 +102,7 @@ class SignupForm extends Component {
         <HeadingText
           style={{
             // color: "#425cf4"
-            color: baseColor
+            color: BASE_COLOR
           }}
         >
           Adicionar informações
@@ -226,7 +226,7 @@ class SignupForm extends Component {
                 <View style={{ width: "80%" }}>
                   <ButtonWithBackground
                     myRef={ref => (this.submitButton = ref)}
-                    color={baseColor}
+                    color={BASE_COLOR}
                     onPress={handleSubmit}
                     isDisabled={!isValid}
                   >

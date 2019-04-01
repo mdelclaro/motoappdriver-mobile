@@ -2,9 +2,10 @@ import { AsyncStorage } from "react-native";
 import { AUTH_SET_TOKEN, AUTH_REMOVE_TOKEN } from "./types";
 import { uiStartLoading, uiStopLoading } from "./UIAction";
 import { updateAccountStatus } from "./StatusAction";
-import { baseUrl } from "../../config";
+import { BASE_URL } from "../../config";
 
 import startApp from "../../App";
+import { timeout } from "../../utils";
 
 export const authAutoSignIn = () => {
   return async dispatch => {
@@ -13,6 +14,7 @@ export const authAutoSignIn = () => {
       await dispatch(authGetToken());
       startApp();
     } catch (err) {
+      console.log(err);
       dispatch(uiStopLoading());
     }
   };
@@ -22,16 +24,18 @@ export const tryAuth = (email, senha) => {
   return async dispatch => {
     dispatch(uiStartLoading());
     try {
-      const result = await fetch(`${baseUrl}auth/motoqueiro/`, {
-        method: "POST",
-        body: JSON.stringify({
-          email,
-          senha
-        }),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
+      const result = await timeout(
+        fetch(`${BASE_URL}auth/motoqueiro/`, {
+          method: "POST",
+          body: JSON.stringify({
+            email,
+            senha
+          }),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+      );
 
       if (result.ok) {
         let res = await result.json();
@@ -92,9 +96,8 @@ export const authGetToken = () => {
           const refreshToken = await AsyncStorage.getItem(
             "ap:auth:refreshToken"
           );
-          const result = await fetch(
-            `${baseUrl}auth/motoqueiro/refreshToken/`,
-            {
+          const result = await timeout(
+            fetch(`${BASE_URL}auth/motoqueiro/refreshToken/`, {
               method: "POST",
               body: JSON.stringify({
                 refreshToken
@@ -102,7 +105,7 @@ export const authGetToken = () => {
               headers: {
                 "Content-Type": "application/json"
               }
-            }
+            })
           );
 
           if (result.ok) {

@@ -1,7 +1,9 @@
 import { uiStartLoading, uiStopLoading } from "./UIAction";
 import { authGetToken } from "./AuthAction";
 import { updateAccountStatus } from "./StatusAction";
-import { baseUrl } from "../../config";
+import { BASE_URL } from "../../config";
+
+import { timeout } from "../../utils";
 
 export const updateInfo = (cnh1, cnh2, moto, placa, idMotoqueiro) => {
   return async dispatch => {
@@ -14,15 +16,14 @@ export const updateInfo = (cnh1, cnh2, moto, placa, idMotoqueiro) => {
       formData.append("moto", moto);
       formData.append("placa", placa);
 
-      const result = await fetch(
-        `${baseUrl}usuario/motoqueiro/${idMotoqueiro}`,
-        {
+      const result = await timeout(
+        fetch(`${BASE_URL}usuario/motoqueiro/${idMotoqueiro}`, {
           method: "PUT",
           body: formData,
           headers: {
             Authorization: "Bearer " + token
           }
-        }
+        })
       );
 
       if (result.ok) {

@@ -13,7 +13,7 @@ import openSocket from "socket.io-client";
 import { connect } from "react-redux";
 import Timer from "react-native-timekeeper";
 
-import { socketUrl, baseColor } from "../config";
+import { SOCKET_URL, BASE_COLOR } from "../config";
 import Map from "../components/Map/Map";
 import Details from "../components/Details/Details";
 import Online from "../components/Online/Online";
@@ -39,7 +39,7 @@ class Main extends Component {
     getImageSource(
       Platform.OS === "android" ? "md-menu" : "ios-menu",
       30,
-      baseColor
+      BASE_COLOR
     ).then(icon => {
       Navigation.mergeOptions("Main", {
         topBar: {
@@ -52,9 +52,9 @@ class Main extends Component {
           ]
         },
         bottomTab: {
-          selectedIconColor: baseColor,
-          textColor: baseColor,
-          selectedTextColor: baseColor
+          selectedIconColor: BASE_COLOR,
+          textColor: BASE_COLOR,
+          selectedTextColor: BASE_COLOR
         }
       });
     });
@@ -103,7 +103,7 @@ class Main extends Component {
     try {
       const { idMotoqueiro, corrida, goOnline } = this.props;
       //criar conexão
-      this.socket = openSocket(socketUrl);
+      this.socket = openSocket(SOCKET_URL);
 
       // lidar com reconexão
       this.socket.on("reconnect", () => {
@@ -201,7 +201,7 @@ class Main extends Component {
               radius={60}
               borderWidth={2}
               color="#FFF"
-              bgColor={baseColor}
+              bgColor={BASE_COLOR}
               bgColorSecondary="#79a3e5"
               bgColorThirt="#77abff"
               shadowColor="#9cbef4"

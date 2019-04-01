@@ -19,7 +19,7 @@ class Auth extends Component {
   };
 
   componentDidMount() {
-    this.props.autoSignIn();
+    this.props.authAutoSignIn();
 
     // this.props.onTryAuth("tiao@gmail.com", "123456");
   }
@@ -95,7 +95,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  autoSignIn,
+  authAutoSignIn,
   clearForm,
   tryAuth: (email, senha) => tryAuth(email, senha),
   emailChanged: email => emailChanged(email),

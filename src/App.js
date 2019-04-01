@@ -5,7 +5,7 @@ import { store } from "./store/configureStore";
 import { getAccountStatus } from "./store/actions/StatusAction";
 import { uiStopLoading } from "./store/actions/UIAction";
 
-import { baseColor } from "./config";
+import { BASE_COLOR } from "./config";
 
 console.disableYellowBox = true;
 
@@ -75,17 +75,17 @@ const startApp = async () => {
       getImageSource(
         Platform.OS === "android" ? "md-pin" : "ios-pin",
         35,
-        baseColor
+        BASE_COLOR
       ),
       getImageSource(
         Platform.OS === "android" ? "md-paper-plane" : "ios-paper-plane",
         35,
-        baseColor
+        BASE_COLOR
       ),
       getImageSource(
         Platform.OS === "android" ? "md-arrow-back" : "ios-arrow-back",
         35,
-        baseColor
+        BASE_COLOR
       )
     ]).then(icons => {
       Navigation.setRoot({

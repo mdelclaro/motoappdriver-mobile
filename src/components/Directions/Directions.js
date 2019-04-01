@@ -1,15 +1,15 @@
 import React from "react";
 import MapViewDirections from "react-native-maps-directions";
-import { googleApi, baseColor } from "../../config";
+import { GOOGLE_API, BASE_COLOR } from "../../config";
 
 const Direction = ({ destination, origin, onReady }) => (
   <MapViewDirections
     destination={destination}
     origin={origin}
     onReady={onReady}
-    apikey={googleApi}
+    apikey={GOOGLE_API}
     strokeWidth={4}
-    strokeColor={baseColor}
+    strokeColor={BASE_COLOR}
   />
 );
 

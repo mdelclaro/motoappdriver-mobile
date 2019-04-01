@@ -1,7 +1,9 @@
 import { uiStartLoading, uiStopLoading } from "./UIAction";
 import { GO_ONLINE, GO_OFFLINE, SET_ACCOUNT_STATUS } from "./types";
 import { authGetToken } from "./AuthAction";
-import { baseUrl } from "../../config";
+import { BASE_URL } from "../../config";
+
+import { timeout } from "../../utils";
 
 export const goOnline = () => {
   return {
@@ -20,15 +22,14 @@ export const getAccountStatus = idMotoqueiro => {
     dispatch(uiStartLoading());
     const token = await dispatch(authGetToken());
     try {
-      const result = await fetch(
-        `${baseUrl}usuario/motoqueiro/${idMotoqueiro}`,
-        {
+      const result = await timeout(
+        fetch(`${BASE_URL}usuario/motoqueiro/${idMotoqueiro}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + token
           }
-        }
+        })
       );
 
       if (result.ok) {

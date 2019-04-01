@@ -1,23 +1,27 @@
 import { uiStartLoading, uiStopLoading } from "./UIAction";
 import { updateAccountStatus } from "./StatusAction";
-import { baseUrl } from "../../config";
+import { BASE_URL } from "../../config";
+
+import { timeout } from "../../utils";
 
 export const signUp = (email, senha, nome, sobrenome) => {
   return async dispatch => {
     dispatch(uiStartLoading());
     try {
-      const result = await fetch(`${baseUrl}usuario/motoqueiro/`, {
-        method: "POST",
-        body: JSON.stringify({
-          email,
-          senha,
-          nome,
-          sobrenome
-        }),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
+      const result = await timeout(
+        fetch(`${BASE_URL}usuario/motoqueiro/`, {
+          method: "POST",
+          body: JSON.stringify({
+            email,
+            senha,
+            nome,
+            sobrenome
+          }),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+      );
 
       if (result.ok) {
         dispatch(updateAccountStatus(1));

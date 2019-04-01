@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import HeadingText from "../components/UI/HeadingText";
 import MainText from "../components/UI/MainText";
 
-import { baseColor } from "../config";
+import { BASE_COLOR } from "../config";
 import flags from "../assets/flags/flags.png";
 
 const Verification = () => {
@@ -11,7 +11,7 @@ const Verification = () => {
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <MainText>
-          <HeadingText style={{ color: baseColor }}>MotoApp</HeadingText>
+          <HeadingText style={{ color: BASE_COLOR }}>MotoApp</HeadingText>
           <HeadingText style={{ color: "#ddd" }}> Driver</HeadingText>
         </MainText>
       </View>

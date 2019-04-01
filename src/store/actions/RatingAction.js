@@ -1,6 +1,8 @@
 import { uiStartLoading, uiStopLoading } from "./UIAction";
 import { authGetToken } from "./AuthAction";
-import { baseUrl } from "../../config";
+import { BASE_URL } from "../../config";
+
+import { timeout } from "../../utils";
 
 export const addRating = (idMotoqueiro, nota) => {
   return async dispatch => {
@@ -8,17 +10,19 @@ export const addRating = (idMotoqueiro, nota) => {
     dispatch(uiStartLoading());
     const token = await dispatch(authGetToken());
     try {
-      const result = await fetch(`${baseUrl}avaliacao/`, {
-        method: "POST",
-        body: JSON.stringify({
-          idMotoqueiro,
-          nota
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token
-        }
-      });
+      const result = await timeout(
+        fetch(`${BASE_URL}avaliacao/`, {
+          method: "POST",
+          body: JSON.stringify({
+            idMotoqueiro,
+            nota
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token
+          }
+        })
+      );
 
       if (result.ok) {
         let res = await result.json();

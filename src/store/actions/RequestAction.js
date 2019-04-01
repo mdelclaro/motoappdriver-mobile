@@ -6,7 +6,9 @@ import {
 } from "../actions/types";
 import { uiStartLoading, uiStopLoading } from "./UIAction";
 import { authGetToken } from "./AuthAction";
-import { baseUrl } from "../../config";
+import { BASE_URL } from "../../config";
+
+import { timeout } from "../../utils";
 
 export const acceptCorrida = data => {
   const { idMotoqueiro, cliente, distancia } = data;
@@ -15,17 +17,19 @@ export const acceptCorrida = data => {
     dispatch(uiStartLoading());
     const token = await dispatch(authGetToken());
     try {
-      const result = await fetch(`${baseUrl}corrida/${idCorrida}`, {
-        method: "PUT",
-        body: JSON.stringify({
-          idMotoqueiro,
-          status: 1
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token
-        }
-      });
+      const result = await timeout(
+        fetch(`${BASE_URL}corrida/${idCorrida}`, {
+          method: "PUT",
+          body: JSON.stringify({
+            idMotoqueiro,
+            status: 1
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token
+          }
+        })
+      );
 
       if (result.ok) {
         let res = await result.json();
@@ -56,16 +60,18 @@ export const startCorrida = idCorrida => {
     dispatch(uiStartLoading());
     const token = await dispatch(authGetToken());
     try {
-      const result = await fetch(`${baseUrl}corrida/${idCorrida}`, {
-        method: "PUT",
-        body: JSON.stringify({
-          status: 2
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token
-        }
-      });
+      const result = await timeout(
+        fetch(`${BASE_URL}corrida/${idCorrida}`, {
+          method: "PUT",
+          body: JSON.stringify({
+            status: 2
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token
+          }
+        })
+      );
 
       if (result.ok) {
         let res = await result.json();
@@ -94,16 +100,18 @@ export const finishCorrida = idCorrida => {
     dispatch(uiStartLoading());
     const token = await dispatch(authGetToken());
     try {
-      const result = await fetch(`${baseUrl}corrida/${idCorrida}`, {
-        method: "PUT",
-        body: JSON.stringify({
-          status: 3
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token
-        }
-      });
+      const result = await timeout(
+        fetch(`${BASE_URL}corrida/${idCorrida}`, {
+          method: "PUT",
+          body: JSON.stringify({
+            status: 3
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token
+          }
+        })
+      );
 
       if (result.ok) {
         let res = await result.json();

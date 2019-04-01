@@ -7,7 +7,7 @@ import {
   Platform
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { baseColor } from "../../config";
+import { BASE_COLOR } from "../../config";
 
 const ButtonIcon = props => {
   const icon = props.icon;
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: baseColor,
+    backgroundColor: BASE_COLOR,
     borderRadius: 10,
     margin: 15
   },
