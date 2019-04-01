@@ -48,6 +48,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   updateInfo: (cnh1, cnh2, moto, placa, idMotoqueiro) =>
     updateInfo(cnh1, cnh2, moto, placa, idMotoqueiro)
+
 };
 
 export default connect(

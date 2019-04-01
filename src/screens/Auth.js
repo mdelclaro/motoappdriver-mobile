@@ -20,6 +20,7 @@ class Auth extends Component {
 
   componentDidMount() {
     this.props.autoSignIn();
+
     // this.props.onTryAuth("tiao@gmail.com", "123456");
   }
 

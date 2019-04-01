@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = {
   cnh1Changed: image => cnh1Changed(image),
   cnh2Changed: image => cnh2Changed(image)
+
 };
 
 export default connect(

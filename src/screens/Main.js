@@ -130,7 +130,6 @@ class Main extends Component {
           reply(this.state.reply);
         }, 10000);
       });
-
       goOnline();
     } catch (err) {
       alert("Houve um problema ao se conectar. Tente novamente mais tarde...");
