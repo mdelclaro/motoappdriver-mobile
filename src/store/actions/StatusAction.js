@@ -1,5 +1,9 @@
 import { uiStartLoading, uiStopLoading } from "./UIAction";
-import { GO_ONLINE, GO_OFFLINE, SET_ACCOUNT_STATUS } from "./types";
+import {
+  STATUS_GO_ONLINE,
+  STATUS_GO_OFFLINE,
+  STATUS_SET_ACCOUNT_STATUS
+} from "./types";
 import { authGetToken } from "./AuthAction";
 import { BASE_URL } from "../../config";
 
@@ -7,13 +11,13 @@ import { timeout } from "../../utils";
 
 export const goOnline = () => {
   return {
-    type: GO_ONLINE
+    type: STATUS_GO_ONLINE
   };
 };
 
 export const goOffline = () => {
   return {
-    type: GO_OFFLINE
+    type: STATUS_GO_OFFLINE
   };
 };
 
@@ -53,7 +57,7 @@ export const getAccountStatus = idMotoqueiro => {
 
 export const updateAccountStatus = status => {
   return {
-    type: SET_ACCOUNT_STATUS,
+    type: STATUS_SET_ACCOUNT_STATUS,
     payload: status
   };
 };

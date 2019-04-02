@@ -8,13 +8,15 @@ import UIReducer from "./reducers/UIReducer";
 import AuthReducer from "./reducers/AuthReducer";
 import FormReducer from "./reducers/FormReducer";
 import StatusReducer from "./reducers/StatusReducer";
+import LocationReducer from "./reducers/LocationReducer";
 
 const rootReducer = combineReducers({
   ui: UIReducer,
   auth: AuthReducer,
   form: FormReducer,
   status: StatusReducer,
-  corrida: RequestReducer
+  corrida: RequestReducer,
+  localizacao: LocationReducer
 });
 
 // redux-persist

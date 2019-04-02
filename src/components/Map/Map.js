@@ -11,7 +11,7 @@ import { Navigation } from "react-native-navigation";
 import { connect } from "react-redux";
 
 import Directions from "../Directions/Directions";
-
+import { updateLocation } from "../../store/actions/";
 import { getPixelSize } from "../../utils";
 
 import helmet from "../../assets/helmet/helmet.png";
@@ -88,6 +88,7 @@ class Localizacao extends Component {
           },
           isLoading: false
         });
+        // this.props.updateLocation(this.state.myLocation, this.props.userId);
       },
       err => console.log(err),
       {
@@ -108,6 +109,7 @@ class Localizacao extends Component {
           JSON.stringify(lastPosition.coords.longitude)
         );
         const location = { latitude, longitude };
+        this.props.updateLocation(location, this.props.userId);
         this.setState(prevState => {
           return {
             region: {
@@ -181,7 +183,7 @@ class Localizacao extends Component {
                       edgePadding: {
                         right: getPixelSize(60),
                         left: getPixelSize(60),
-                        top: getPixelSize(260),
+                        top: getPixelSize(60),
                         bottom: getPixelSize(260)
                       },
                       animated: true
@@ -229,8 +231,8 @@ class Localizacao extends Component {
                           edgePadding: {
                             right: getPixelSize(60),
                             left: getPixelSize(60),
-                            top: getPixelSize(260),
-                            bottom: getPixelSize(260)
+                            top: getPixelSize(250),
+                            bottom: getPixelSize(450)
                           },
                           animated: true
                         });
@@ -260,8 +262,16 @@ class Localizacao extends Component {
 
 const mapStateToProps = state => {
   return {
-    acceptedCorrida: state.corrida.corrida
+    acceptedCorrida: state.corrida.corrida,
+    userId: state.auth.userId
   };
 };
 
-export default connect(mapStateToProps)(Localizacao);
+const mapDispatchToProps = {
+  updateLocation
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Localizacao);

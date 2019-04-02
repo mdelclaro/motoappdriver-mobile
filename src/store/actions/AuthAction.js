@@ -12,6 +12,7 @@ export const authAutoSignIn = () => {
     try {
       dispatch(uiStartLoading());
       await dispatch(authGetToken());
+      console.log("pegou token");
       startApp();
     } catch (err) {
       console.log(err);
@@ -39,6 +40,7 @@ export const tryAuth = (email, senha) => {
 
       if (result.ok) {
         let res = await result.json();
+        console.log(res);
         const { token, refreshToken, userId, expiryDate, accountStatus } = res;
 
         dispatch(updateAccountStatus(accountStatus));

@@ -16,11 +16,13 @@ export const FORM_CLEAR = "form_clear";
 export const UI_START_LOADING = "ui_start_loading";
 export const UI_STOP_LOADING = "ui_stop_loading";
 
-export const GO_ONLINE = "go_online";
-export const GO_OFFLINE = "go_offline";
-export const SET_ACCOUNT_STATUS = "set_account_status";
+export const STATUS_GO_ONLINE = "status_go_online";
+export const STATUS_GO_OFFLINE = "status_go_offline";
+export const STATUS_SET_ACCOUNT_STATUS = "status_set_account_status";
 
-export const SET_CORRIDA = "set_corrida";
-export const SET_CLIENTE = "set_cliente";
-export const SET_DISTANCIA = "set_distancia";
-export const CLEAR_CORRIDA = "clear_corrida";
+export const REQUEST_SET_CORRIDA = "request_set_corrida";
+export const REQUEST_SET_CLIENTE = "request_set_cliente";
+export const REQUEST_SET_DISTANCIA = "request_set_distancia";
+export const REQUEST_CLEAR_CORRIDA = "request_clear_corrida";
+
+export const LOCATION_SET_LOCATION = "location_set_location";

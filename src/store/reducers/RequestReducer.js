@@ -1,8 +1,8 @@
 import {
-  SET_CORRIDA,
-  SET_CLIENTE,
-  SET_DISTANCIA,
-  CLEAR_CORRIDA
+  REQUEST_SET_CORRIDA,
+  REQUEST_SET_CLIENTE,
+  REQUEST_SET_DISTANCIA,
+  REQUEST_CLEAR_CORRIDA
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -13,22 +13,22 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case SET_CORRIDA:
+    case REQUEST_SET_CORRIDA:
       return {
         ...state,
         corrida: action.payload
       };
-    case SET_CLIENTE:
+    case REQUEST_SET_CLIENTE:
       return {
         ...state,
         cliente: action.payload
       };
-    case SET_DISTANCIA:
+    case REQUEST_SET_DISTANCIA:
       return {
         ...state,
         distancia: action.payload
       };
-    case CLEAR_CORRIDA:
+    case REQUEST_CLEAR_CORRIDA:
       return {
         ...state,
         corrida: null,

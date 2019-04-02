@@ -90,10 +90,6 @@ const startApp = async () => {
     ]).then(icons => {
       Navigation.setRoot({
         root: {
-          component: {
-            id: "info",
-            name: "motoapp.Info"
-          },
           sideMenu: {
             right: {
               component: {
@@ -181,6 +177,7 @@ const startApp = async () => {
           }
         }
       });
+      console.log("ja era");
       store.dispatch(uiStopLoading());
     });
   }

@@ -49,8 +49,7 @@ class Details extends Component {
 
   render() {
     const { corrida, cliente, distancia } = this.props;
-    const _distancia = parseInt(distancia);
-
+    console.log(distancia);
     return (
       <Container>
         <Title>
@@ -69,7 +68,7 @@ class Details extends Component {
         <Description>
           De {corrida.origem.local} para {corrida.destino.local}
         </Description>
-        <Description>R$6,00 - {Math.floor(_distancia / 1000)}km</Description>
+        <Description>R$6,00 - {Math.floor(distancia / 1000)}km</Description>
         {this.props.acceptedCorrida && (
           <Fragment>
             {this.props.isLoading ? <ActivityIndicator /> : this.getStatus()}

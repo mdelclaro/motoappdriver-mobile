@@ -1,8 +1,8 @@
 import {
-  SET_CORRIDA,
-  SET_CLIENTE,
-  SET_DISTANCIA,
-  CLEAR_CORRIDA
+  REQUEST_SET_CORRIDA,
+  REQUEST_SET_CLIENTE,
+  REQUEST_SET_DISTANCIA,
+  REQUEST_CLEAR_CORRIDA
 } from "../actions/types";
 import { uiStartLoading, uiStopLoading } from "./UIAction";
 import { authGetToken } from "./AuthAction";
@@ -11,8 +11,7 @@ import { BASE_URL } from "../../config";
 import { timeout } from "../../utils";
 
 export const acceptCorrida = data => {
-  const { idMotoqueiro, cliente, distancia } = data;
-  // idCorrida = "5c9528711f2f8b11c4defe01";
+  const { idCorrida, idMotoqueiro, cliente, distancia } = data;
   return async dispatch => {
     dispatch(uiStartLoading());
     const token = await dispatch(authGetToken());
@@ -55,7 +54,8 @@ export const acceptCorrida = data => {
 };
 
 export const startCorrida = idCorrida => {
-  idCorrida = "5c9528711f2f8b11c4defe01";
+  console.log(idCorrida);
+  // idCorrida = "5c9528711f2f8b11c4defe01";
   return async dispatch => {
     dispatch(uiStartLoading());
     const token = await dispatch(authGetToken());
@@ -95,7 +95,7 @@ export const startCorrida = idCorrida => {
 };
 
 export const finishCorrida = idCorrida => {
-  idCorrida = "5c9528711f2f8b11c4defe01";
+  // idCorrida = "5c9528711f2f8b11c4defe01";
   return async dispatch => {
     dispatch(uiStartLoading());
     const token = await dispatch(authGetToken());
@@ -136,27 +136,27 @@ export const finishCorrida = idCorrida => {
 
 export const setCorrida = corrida => {
   return {
-    type: SET_CORRIDA,
+    type: REQUEST_SET_CORRIDA,
     payload: corrida
   };
 };
 
 export const setCliente = cliente => {
   return {
-    type: SET_CLIENTE,
+    type: REQUEST_SET_CLIENTE,
     payload: cliente
   };
 };
 
 export const setDistancia = distancia => {
   return {
-    type: SET_DISTANCIA,
+    type: REQUEST_SET_DISTANCIA,
     payload: distancia
   };
 };
 
 export const clearCorrida = () => {
   return {
-    type: CLEAR_CORRIDA
+    type: REQUEST_CLEAR_CORRIDA
   };
 };

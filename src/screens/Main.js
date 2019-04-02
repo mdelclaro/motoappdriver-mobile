@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Navigation } from "react-native-navigation";
 import { getImageSource } from "react-native-vector-icons/Ionicons";
-import openSocket from "socket.io-client";
+import io from "socket.io-client";
 import { connect } from "react-redux";
 import Timer from "react-native-timekeeper";
 
@@ -18,7 +18,13 @@ import Map from "../components/Map/Map";
 import Details from "../components/Details/Details";
 import Online from "../components/Online/Online";
 
-import { goOnline, goOffline, acceptCorrida } from "../store/actions/";
+import {
+  goOnline,
+  goOffline,
+  acceptCorrida,
+  uiStartLoading,
+  uiStopLoading
+} from "../store/actions/";
 
 class Main extends Component {
   static get options() {
@@ -63,12 +69,17 @@ class Main extends Component {
 
   state = {
     showOnline: false,
+    showStart: true,
     timer: false,
     reply: "reject",
     corrida: null,
     cliente: null,
     distancia: null,
-    step: null
+    step: null,
+    toast: {
+      show: false,
+      msg: ""
+    }
   };
 
   componentDidMount() {
@@ -100,40 +111,80 @@ class Main extends Component {
   }
 
   handleStart = () => {
-    try {
-      const { idMotoqueiro, corrida, goOnline } = this.props;
-      //criar conexão
-      this.socket = openSocket(SOCKET_URL);
+    const { idMotoqueiro, corrida, goOnline, goOffline } = this.props;
 
-      // lidar com reconexão
-      this.socket.on("reconnect", () => {
-        this.socket.emit("join", { id: idMotoqueiro });
-      });
+    this.setState({
+      showStart: false,
+      toast: {
+        show: true,
+        msg: "Conectando..."
+      }
+    });
 
-      // join no room
+    //criar conexão com timeout
+    this.socket = io(SOCKET_URL, {
+      timeout: 3000
+    });
+
+    //tratar evento de conexão
+    this.socket.on("connect", () => {
+      //join no room
       this.socket.emit("join", { id: idMotoqueiro });
-
+      this.setState({
+        corrida,
+        toast: {
+          show: false,
+          msg: ""
+        }
+      });
+      goOnline();
       if (!corrida) {
         this.setState({ showOnline: true });
       }
+    });
 
-      this.socket.on("dispatch", (data, reply) => {
-        this.setState({ showOnline: false });
-        this.setState({
-          timer: true,
-          corrida: data.corrida,
-          cliente: data.cliente,
-          distancia: data.distance,
-          step: 1
-        });
-        setTimeout(() => {
-          reply(this.state.reply);
-        }, 10000);
+    //tratar erro de conexão (timeout)
+    this.socket.on("connect_timeout", () => {
+      this.setState({
+        corrida: null,
+        toast: {
+          show: true,
+          msg: "Houve um problema. Tentando reconectar..."
+        }
       });
-      goOnline();
-    } catch (err) {
-      alert("Houve um problema ao se conectar. Tente novamente mais tarde...");
-    }
+    });
+
+    //tratar evento de desconexão
+    this.socket.on("disconnect", () => {
+      this.setState({
+        corrida: null,
+        toast: {
+          show: true,
+          msg: "Houve um problema. Tentando reconectar..."
+        },
+        showOnline: false
+      });
+    });
+
+    //tratar reconexão
+    this.socket.on("reconnect", () => {
+      this.socket.emit("join", { id: idMotoqueiro });
+    });
+
+    //tratar evento de dispatch
+    this.socket.on("dispatch", (data, reply) => {
+      this.setState({ showOnline: false });
+      this.setState({
+        timer: true,
+        corrida: data.corrida,
+        cliente: data.cliente,
+        distancia: data.distance,
+        step: 1
+      });
+      setTimeout(() => {
+        reply(this.state.reply);
+      }, 10000);
+    });
   };
 
   handleAccept = async () => {
@@ -175,6 +226,35 @@ class Main extends Component {
     });
   };
 
+  renderMsg() {
+    const msg = this.state.toast.msg;
+    return (
+      <View
+        style={{
+          flexDirection: "row",
+          backgroundColor: "#333338",
+          position: "absolute",
+          bottom: 25,
+          padding: 10,
+          borderRadius: 35
+        }}
+      >
+        <ActivityIndicator color="#FFF" size="small" />
+        <Text
+          style={{
+            textAlign: "center",
+            color: "#FFF",
+            fontSize: 16,
+            fontWeight: "bold"
+          }}
+        >
+          {" "}
+          {msg}
+        </Text>
+      </View>
+    );
+  }
+
   render() {
     const {
       corrida,
@@ -183,12 +263,14 @@ class Main extends Component {
       cliente,
       distancia,
       showOnline,
-      isLoading
+      showStart,
+      isLoading,
+      toast
     } = this.state;
     return (
       <View style={styles.container}>
         <Map corrida={corrida} step={step} />
-        {!this.props.isOnline && (
+        {showStart && (
           <TouchableOpacity onPress={this.handleStart} style={styles.button}>
             <Text style={styles.text}>INICIAR</Text>
           </TouchableOpacity>
@@ -227,6 +309,7 @@ class Main extends Component {
         )}
         {showOnline && <Online />}
         {isLoading && <ActivityIndicator size="large" />}
+        {toast.show && this.renderMsg()}
       </View>
     );
   }
@@ -245,7 +328,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     position: "absolute",
-    bottom: 15,
+    bottom: 25,
     borderRadius: 100,
     elevation: 3,
     shadowColor: "#000",
@@ -277,6 +360,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
+  uiStartLoading,
+  uiStopLoading,
   goOnline,
   goOffline,
   acceptCorrida: data => acceptCorrida(data)

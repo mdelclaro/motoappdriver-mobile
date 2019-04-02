@@ -1,4 +1,8 @@
-import { GO_ONLINE, GO_OFFLINE, SET_ACCOUNT_STATUS } from "../actions/types";
+import {
+  STATUS_GO_ONLINE,
+  STATUS_GO_OFFLINE,
+  STATUS_SET_ACCOUNT_STATUS
+} from "../actions/types";
 
 const INITIAL_STATE = {
   isOnline: false,
@@ -7,17 +11,17 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case GO_ONLINE:
+    case STATUS_GO_ONLINE:
       return {
         ...state,
         isOnline: true
       };
-    case GO_OFFLINE:
+    case STATUS_GO_OFFLINE:
       return {
         ...state,
         isOnline: false
       };
-    case SET_ACCOUNT_STATUS:
+    case STATUS_SET_ACCOUNT_STATUS:
       return {
         ...state,
         accountStatus: action.payload
