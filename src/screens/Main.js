@@ -98,6 +98,10 @@ class Main extends Component {
     }
   }
 
+  componentWillUnmount() {
+    if (this.socket.connected) this.socket.disconnect();
+  }
+
   navigationButtonPressed({ buttonId }) {
     if (buttonId === "menuButton") {
       Navigation.mergeOptions("Main", {
@@ -111,7 +115,7 @@ class Main extends Component {
   }
 
   handleStart = () => {
-    const { idMotoqueiro, corrida, goOnline, goOffline } = this.props;
+    const { idMotoqueiro, corrida, localizacao, goOnline } = this.props;
 
     this.setState({
       showStart: false,
@@ -129,7 +133,10 @@ class Main extends Component {
     //tratar evento de conexão
     this.socket.on("connect", () => {
       //join no room
-      this.socket.emit("join", { id: idMotoqueiro });
+      this.socket.emit("join", {
+        id: idMotoqueiro,
+        coords: localizacao
+      });
       this.setState({
         corrida,
         toast: {
@@ -355,7 +362,8 @@ const mapStateToProps = state => {
     isOnline: state.status.isOnline,
     corrida: state.corrida.corrida,
     cliente: state.corrida.cliente,
-    distancia: state.corrida.distancia
+    distancia: state.corrida.distancia,
+    localizacao: state.localizacao
   };
 };
 

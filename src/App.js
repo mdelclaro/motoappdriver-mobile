@@ -177,7 +177,6 @@ const startApp = async () => {
           }
         }
       });
-      console.log("ja era");
       store.dispatch(uiStopLoading());
     });
   }

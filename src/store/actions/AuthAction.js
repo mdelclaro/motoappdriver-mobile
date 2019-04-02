@@ -12,7 +12,6 @@ export const authAutoSignIn = () => {
     try {
       dispatch(uiStartLoading());
       await dispatch(authGetToken());
-      console.log("pegou token");
       startApp();
     } catch (err) {
       console.log(err);

@@ -49,7 +49,6 @@ class Details extends Component {
 
   render() {
     const { corrida, cliente, distancia } = this.props;
-    console.log(distancia);
     return (
       <Container>
         <Title>
