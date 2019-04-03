@@ -14,7 +14,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 import { cnh1Changed, cnh2Changed } from "../store/actions/";
 
-import { BASE_COLOR, baseErrorColor } from "../config";
+import { BASE_COLOR, BASE_COLOR_ERROR } from "../config";
 
 class Camera extends Component {
   state = {
@@ -60,7 +60,7 @@ class Camera extends Component {
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={() => this.setState({ path: null })}
-              style={[styles.capture, { backgroundColor: baseErrorColor }]}
+              style={[styles.capture, { backgroundColor: BASE_COLOR_ERROR }]}
             >
               <Icon
                 name={Platform.OS === "android" ? "md-close" : "ios-close"}

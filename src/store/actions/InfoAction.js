@@ -33,10 +33,9 @@ export const updateInfo = (cnh1, cnh2, moto, placa, idMotoqueiro) => {
         return true;
       } else {
         let res = await result.json();
-        alert(res.message);
         console.log(result);
         dispatch(uiStopLoading());
-        throw new Error(result.message);
+        throw new Error(res.message);
       }
     } catch (err) {
       dispatch(uiStopLoading());
