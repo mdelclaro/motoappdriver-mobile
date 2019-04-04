@@ -9,6 +9,7 @@ import AuthReducer from "./reducers/AuthReducer";
 import FormReducer from "./reducers/FormReducer";
 import StatusReducer from "./reducers/StatusReducer";
 import LocationReducer from "./reducers/LocationReducer";
+import InfoReducer from "./reducers/InfoReducer";
 
 const rootReducer = combineReducers({
   ui: UIReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   form: FormReducer,
   status: StatusReducer,
   corrida: RequestReducer,
-  localizacao: LocationReducer
+  localizacao: LocationReducer,
+  info: InfoReducer
 });
 
 // redux-persist

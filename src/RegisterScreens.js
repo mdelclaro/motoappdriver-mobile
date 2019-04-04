@@ -10,6 +10,7 @@ import Main from "./screens/Main";
 import Camera from "./screens/Camera";
 import Info from "./screens/Info";
 import Verification from "./screens/Verification";
+import ProfileImage from "./components/ProfileImage/ProfileImage";
 
 import { store, persistor } from "./store/configureStore";
 
@@ -86,6 +87,7 @@ const registerScreens = () => {
     ),
     () => Camera
   );
+  Navigation.registerComponent("motoapp.ProfileImage", () => ProfileImage);
 };
 
 export default registerScreens;

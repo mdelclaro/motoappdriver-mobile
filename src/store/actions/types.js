@@ -26,3 +26,5 @@ export const REQUEST_SET_DISTANCIA = "request_set_distancia";
 export const REQUEST_CLEAR_CORRIDA = "request_clear_corrida";
 
 export const LOCATION_SET_LOCATION = "location_set_location";
+
+export const INFO_UPDATE = "info_update";

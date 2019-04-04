@@ -1,80 +1,106 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   Platform,
   Image
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { Navigation } from "react-native-navigation";
+import FastImage from "react-native-fast-image";
+import { connect } from "react-redux";
+import MenuItem from "../components/UI/MenuItem";
 
-import { BASE_COLOR, baseErrorColor } from "../config";
-import avatar from "../assets/avatar/avatar.png";
+import { BASE_COLOR, IMAGES_URL } from "../config";
 
 class Menu extends Component {
+  renderImage() {
+    return (
+      <Fragment>
+        <TouchableOpacity onPress={() => this.renderAvatar(uri)}>
+          <FastImage
+            source={{ uri: IMAGES_URL + this.props.imgPerfil }}
+            style={styles.image}
+            fallback
+          />
+        </TouchableOpacity>
+        <View style={styles.imageIconContainer}>
+          <TouchableOpacity
+            style={styles.imageIcon}
+            onPress={this.renderCamera}
+          >
+            <Icon
+              name={Platform.OS === "android" ? "md-create" : "ios-create"}
+              size={25}
+              color="#4e4e4f"
+            />
+          </TouchableOpacity>
+        </View>
+      </Fragment>
+    );
+  }
+
+  renderCamera = () => {
+    Navigation.showModal({
+      stack: {
+        id: "infoStack",
+        children: [
+          {
+            component: {
+              id: "camera",
+              name: "motoapp.Camera"
+            }
+          }
+        ]
+      }
+    });
+  };
+
+  renderAvatar = async uri => {
+    Navigation.showModal({
+      stack: {
+        children: [
+          {
+            component: {
+              name: "motoapp.ProfileImage",
+              passProps: {
+                uri
+              },
+              options: {
+                topBar: {
+                  visible: true,
+                  drawBehind: true,
+                  noBorder: true,
+                  elevation: 0,
+                  background: { color: "transparent" }
+                }
+              }
+            }
+          }
+        ]
+      }
+    });
+  };
+
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={{ flex: 0, justifyContent: "center" }}>
-          <Image
-            source={avatar}
-            style={{
-              alignSelf: "center",
-              paddingBottom: 3,
-              width: 60,
-              height: 60,
-              resizeMode: "center",
-              borderRadius: 100
-            }}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.props.onLogout}>
-          <View style={styles.drawerItem}>
-            <Icon
-              name={Platform.OS === "android" ? "md-person" : "ios-person"}
-              size={30}
-              color={BASE_COLOR}
-              style={styles.drawerItemIcon}
-            />
-            <Text>Perfil</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.props.onLogout}>
-          <View style={styles.drawerItem}>
-            <Icon
-              name={
-                Platform.OS === "android" ? "md-chatboxes" : "ios-chatboxes"
-              }
-              size={30}
-              color={BASE_COLOR}
-              style={styles.drawerItemIcon}
-            />
-            <Text>Mensagens</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.props.onLogout}>
-          <View style={styles.drawerItem}>
-            <Icon
-              name={Platform.OS === "android" ? "md-settings" : "ios-settings"}
-              size={30}
-              color={BASE_COLOR}
-              style={styles.drawerItemIcon}
-            />
-            <Text>Configurações</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.props.onLogout}>
-          <View style={styles.drawerItem}>
-            <Icon
-              name={Platform.OS === "android" ? "md-log-out" : "ios-log-out"}
-              size={30}
-              color={baseErrorColor}
-              style={styles.drawerItemIcon}
-            />
-            <Text style={{ color: "#fc6f6f" }}>Sair</Text>
-          </View>
-        </TouchableOpacity>
+        <View style={{ flex: 0, justifyContent: "center" }}>
+          {this.renderImage()}
+        </View>
+        <MenuItem onPress={this.props.onLogout} icon="person" text="Perfil" />
+        <MenuItem
+          onPress={this.props.onLogout}
+          icon="chatboxes"
+          text="Mensagens"
+        />
+        <MenuItem
+          onPress={this.props.onLogout}
+          icon="settings"
+          text="Configurações"
+        />
+        <MenuItem onPress={this.props.onLogout} icon="log-out" text="Sair" />
       </View>
     );
   }
@@ -82,27 +108,43 @@ class Menu extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 50,
-    backgroundColor: "white",
+    paddingTop: 40,
+    backgroundColor: "#f8f8f8",
     flex: 1
   },
-  drawerItemFirst: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
-    backgroundColor: "white"
+  image: {
+    alignSelf: "center",
+    paddingBottom: 15,
+    width: 100,
+    height: 100,
+    borderRadius: 100,
+    borderWidth: 4,
+    borderColor: BASE_COLOR
   },
-  drawerItem: {
+  imageIconContainer: {
+    flex: 0,
     flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
-    backgroundColor: "white",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e8e8e8"
+    justifyContent: "center"
   },
-  drawerItemIcon: {
-    marginRight: 10
+  imageIcon: {
+    backgroundColor: "#e4e4e4",
+    flex: 0,
+    borderRadius: 100,
+    height: 30,
+    width: 30,
+    margin: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    right: 50,
+    bottom: -10
   }
 });
 
-export default Menu;
+const mapStateToProps = state => {
+  return {
+    imgPerfil: state.info.imgPerfil
+  };
+};
+
+export default connect(mapStateToProps)(Menu);

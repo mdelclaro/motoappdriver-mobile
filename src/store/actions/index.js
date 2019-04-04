@@ -29,5 +29,5 @@ export { signUp } from "./SignUpAction";
 export { uiStartLoading, uiStopLoading } from "./UIAction";
 export { acceptCorrida, startCorrida, finishCorrida } from "./RequestAction";
 export { addRating } from "./RatingAction";
-export { updateInfo } from "./InfoAction";
+export { updateInfo, updateAccountInfo } from "./InfoAction";
 export { updateLocation } from "./LocationAction";
