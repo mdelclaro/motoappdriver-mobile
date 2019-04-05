@@ -20,73 +20,43 @@ const loadingComponent = (
   </View>
 );
 
+const providerWrapper = (props, Component) => {
+  return (
+    <Provider store={store}>
+      <PersistGate loading={loadingComponent} persistor={persistor}>
+        <Component {...props} />
+      </PersistGate>
+    </Provider>
+  );
+};
+
 const registerScreens = () => {
   Navigation.registerComponent(
     "motoapp.Main",
-    () => props => (
-      <Provider store={store}>
-        <PersistGate loading={loadingComponent} persistor={persistor}>
-          <Main {...props} />
-        </PersistGate>
-      </Provider>
-    ),
+    () => props => providerWrapper(props, Main),
     () => Main
   );
   Navigation.registerComponent(
     "motoapp.Auth",
-    () => props => (
-      <Provider store={store}>
-        <PersistGate loading={loadingComponent} persistor={persistor}>
-          <Auth {...props} />
-        </PersistGate>
-      </Provider>
-    ),
+    () => props => providerWrapper(props, Auth),
     () => Auth
   );
   Navigation.registerComponent(
     "motoapp.Verification",
-    () => props => (
-      <Provider store={store}>
-        <PersistGate loading={loadingComponent} persistor={persistor}>
-          <Verification {...props} />
-        </PersistGate>
-      </Provider>
-    ),
-    () => Info
+    () => props => providerWrapper(props, Verification),
+    () => Verification
   );
   Navigation.registerComponent(
     "motoapp.Info",
-    () => props => (
-      <Provider store={store}>
-        <PersistGate loading={loadingComponent} persistor={persistor}>
-          <Info {...props} />
-        </PersistGate>
-      </Provider>
-    ),
+    () => props => providerWrapper(props, Info),
     () => Info
   );
   Navigation.registerComponent(
     "motoapp.SideMenu",
-    () => props => (
-      <Provider store={store}>
-        <PersistGate loading={loadingComponent} persistor={persistor}>
-          <SideMenu {...props} />
-        </PersistGate>
-      </Provider>
-    ),
+    () => props => providerWrapper(props, SideMenu),
     () => SideMenu
   );
-  Navigation.registerComponent(
-    "motoapp.Camera",
-    () => props => (
-      <Provider store={store}>
-        <PersistGate loading={loadingComponent} persistor={persistor}>
-          <Camera {...props} />
-        </PersistGate>
-      </Provider>
-    ),
-    () => Camera
-  );
+  Navigation.registerComponent("motoapp.Camera", () => Camera);
   Navigation.registerComponent("motoapp.ProfileImage", () => ProfileImage);
 };
 
