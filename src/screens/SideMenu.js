@@ -4,7 +4,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   Platform,
-  Alert
+  Alert,
+  ActivityIndicator
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Navigation } from "react-native-navigation";
@@ -12,7 +13,7 @@ import FastImage from "react-native-fast-image";
 import ImagePicker from "react-native-image-picker";
 import { connect } from "react-redux";
 
-import { updateAccountInfo } from "../store/actions/";
+import { updateInfo } from "../store/actions/";
 
 import MenuItem from "../components/UI/MenuItem";
 
@@ -25,7 +26,9 @@ class Menu extends Component {
 
   renderImage() {
     const uri = IMAGES_URL + this.props.imgPerfil;
-    return (
+    return this.props.isLoading ? (
+      <ActivityIndicator size="large" color="#4e4e4f" />
+    ) : (
       <Fragment>
         <TouchableOpacity onPress={this.renderAvatar}>
           <FastImage source={{ uri }} style={styles.image} fallback />
@@ -129,9 +132,9 @@ class Menu extends Component {
     });
   };
 
-  async handleUpload(uri, id = null) {
-    const { updateAccountInfo, userId, imgPerfil } = this.props;
-    await updateAccountInfo(uri, userId);
+  handleUpload(uri, id = null) {
+    const { updateInfo, userId, imgPerfil } = this.props;
+    updateInfo(uri, userId);
     this.setState({ uri: IMAGES_URL + imgPerfil });
   }
 
@@ -196,13 +199,14 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     imgPerfil: state.info.imgPerfil,
-    userId: state.auth.userId
+    userId: state.auth.userId,
+    isLoading: state.ui.isLoading
   };
 };
 
 const mapDispatchToProps = {
-  updateAccountInfo: (imgPerfil, idMotoqueiro) =>
-    updateAccountInfo(null, null, imgPerfil, idMotoqueiro)
+  updateInfo: (imgPerfil, idMotoqueiro) =>
+    updateInfo(null, null, imgPerfil, idMotoqueiro)
 };
 
 export default connect(
