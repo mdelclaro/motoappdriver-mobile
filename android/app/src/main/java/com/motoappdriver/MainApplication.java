@@ -12,6 +12,7 @@ import com.facebook.soloader.SoLoader;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.reactnativenavigation.react.ReactGateway;
+import com.imagepicker.ImagePickerPackage;
 
 import com.airbnb.android.react.maps.MapsPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -48,7 +49,8 @@ public class MainApplication extends NavigationApplication {
       new VectorIconsPackage(),
       new RNGooglePlacesPackage(),
       new RNCameraPackage(),
-      new FastImageViewPackage()
+      new FastImageViewPackage(),
+      new ImagePickerPackage()
     );
   }
 

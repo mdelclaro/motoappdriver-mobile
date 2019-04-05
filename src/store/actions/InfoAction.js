@@ -87,11 +87,20 @@ export const updateAccountInfo = (
 
       if (result.ok) {
         let res = await result.json();
-        let imgPerfil = res.motoqueiro.imgPerfil.split("images")[1];
-        imgPerfil = imgPerfil.replace("/", "");
-        imgPerfil = imgPerfil.replace("\\", "");
-        dispatch(setInfo(res.motoqueiro.email, imgPerfil));
+        let { imgPerfil, email } = res.motoqueiro;
+
+        // sanitize uri
+        if (imgPerfil) {
+          imgPerfil = imgPerfil.split("images")[1];
+          imgPerfil = imgPerfil.replace("/", "");
+          imgPerfil = imgPerfil.replace("\\", "");
+        } else {
+          imgPerfil = "avatar.png";
+        }
+
+        await dispatch(setInfo(email, imgPerfil));
         dispatch(uiStopLoading());
+        console.log("opa");
         return true;
       } else {
         let res = await result.json();

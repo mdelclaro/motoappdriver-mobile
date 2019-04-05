@@ -14,6 +14,8 @@ import { Navigation } from "react-native-navigation";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
+import { cnh1Changed, cnh2Changed } from "../../store/actions/";
+
 import ButtonWithBackground from "../UI/ButtonWithBackground";
 import InputValidation from "../UI/InputValidation";
 import HeadingText from "../UI/HeadingText";
@@ -40,7 +42,9 @@ class SignupForm extends Component {
     }
   }
 
-  renderCamera1 = () => {
+  renderCamera = id => {
+    const text = id === 1 ? "frente" : "verso";
+
     Navigation.showModal({
       stack: {
         id: "infoStack",
@@ -48,7 +52,8 @@ class SignupForm extends Component {
           {
             component: {
               passProps: {
-                cnh: 1
+                id,
+                handleUpload: (uri, id) => this.handleUpload(uri, id)
               },
               id: "camera",
               name: "motoapp.Camera",
@@ -57,7 +62,7 @@ class SignupForm extends Component {
                   visible: true,
                   drawBehind: false,
                   title: {
-                    text: "Tirar foto da CNH (frente)"
+                    text: `Tirar foto da CNH (${text})`
                   }
                 }
               }
@@ -68,33 +73,10 @@ class SignupForm extends Component {
     });
   };
 
-  renderCamera2 = () => {
-    Navigation.showModal({
-      stack: {
-        id: "infoStack",
-        children: [
-          {
-            component: {
-              passProps: {
-                cnh: 2
-              },
-              id: "camera",
-              name: "motoapp.Camera",
-              options: {
-                topBar: {
-                  visible: true,
-                  drawBehind: false,
-                  title: {
-                    text: "Tirar foto da CNH (verso)"
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
-    });
-  };
+  handleUpload(uri, id) {
+    const { cnh1Changed, cnh2Changed } = this.props;
+    id === 1 ? cnh1Changed(uri) : cnh2Changed(uri);
+  }
 
   render() {
     let headingText = (
@@ -160,7 +142,7 @@ class SignupForm extends Component {
               >
                 <ButtonIcon
                   icon={cnh1 ? "checkmark" : "close"}
-                  onPress={this.renderCamera1}
+                  onPress={() => this.renderCamera(1)}
                   buttonStyle={
                     cnh1 ? null : { backgroundColor: baseErrorColor }
                   }
@@ -169,7 +151,7 @@ class SignupForm extends Component {
                 </ButtonIcon>
                 <ButtonIcon
                   icon={cnh2 ? "checkmark" : "close"}
-                  onPress={this.renderCamera2}
+                  onPress={() => this.renderCamera(2)}
                   buttonStyle={
                     cnh2 ? null : { backgroundColor: baseErrorColor }
                   }
@@ -289,4 +271,12 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(SignupForm);
+const mapDispatchToProps = {
+  cnh1Changed: image => cnh1Changed(image),
+  cnh2Changed: image => cnh2Changed(image)
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignupForm);

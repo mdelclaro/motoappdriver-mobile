@@ -7,12 +7,9 @@ import {
   ImageBackground,
   Platform
 } from "react-native";
-import { connect } from "react-redux";
 import { RNCamera } from "react-native-camera";
 import { Navigation } from "react-native-navigation";
 import Icon from "react-native-vector-icons/Ionicons";
-
-import { cnh1Changed, cnh2Changed } from "../store/actions/";
 
 import { BASE_COLOR, BASE_COLOR_ERROR } from "../config";
 
@@ -100,9 +97,8 @@ class Camera extends Component {
   };
 
   uploadPicture = () => {
-    const { cnh, cnh1Changed, cnh2Changed, componentId } = this.props;
-    cnh === 1 ? cnh1Changed(this.state.path) : cnh2Changed(this.state.path);
-
+    const { id, handleUpload, componentId } = this.props;
+    handleUpload(this.state.path, id);
     Navigation.dismissModal(componentId);
   };
 
@@ -134,7 +130,6 @@ const styles = StyleSheet.create({
     height: 55,
     width: 55,
     margin: 20,
-    // paddingHorizontal: 15,
     alignItems: "center",
     justifyContent: "center"
   },
@@ -156,12 +151,4 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapDispatchToProps = {
-  cnh1Changed: image => cnh1Changed(image),
-  cnh2Changed: image => cnh2Changed(image)
-};
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(Camera);
+export default Camera;
