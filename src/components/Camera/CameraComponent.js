@@ -6,7 +6,7 @@ import { Navigation } from "react-native-navigation";
 import { ButtonContainer, CaptureButton, BackButton } from "./styles";
 
 export default (CameraComponent = (props, { style }) => {
-  const { takePicture, myRef, componentId } = props;
+  const { takePicture, myRef } = props;
   return (
     <Fragment>
       <RNCamera

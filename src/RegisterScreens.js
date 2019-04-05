@@ -7,9 +7,9 @@ import { PersistGate } from "redux-persist/integration/react";
 import Auth from "./screens/Auth";
 import SideMenu from "./screens/SideMenu";
 import Main from "./screens/Main";
-import Camera from "./screens/Camera";
 import Info from "./screens/Info";
 import Verification from "./screens/Verification";
+import Camera from "./components/Camera/Camera";
 import ProfileImage from "./components/ProfileImage/ProfileImage";
 
 import { store, persistor } from "./store/configureStore";

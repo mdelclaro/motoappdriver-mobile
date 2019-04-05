@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   View,
   StyleSheet,
-  Dimensions,
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
@@ -18,17 +17,9 @@ import InputValidation from "../UI/InputValidation";
 import HeadingText from "../UI/HeadingText";
 import MainText from "../UI/MainText";
 
+import { BASE_COLOR } from "../../config";
+
 class SignupForm extends Component {
-  constructor(props) {
-    super(props);
-    Dimensions.addEventListener("change", this.updateStyles);
-  }
-
-  state = {
-    viewMode: Dimensions.get("window").height > 500 ? "portrait" : "landscape",
-    step: 0
-  };
-
   componentDidMount() {
     if (
       this.form.initialValues.email !== "" ||
@@ -47,26 +38,13 @@ class SignupForm extends Component {
     }
   }
 
-  componentWillUnmount() {
-    Dimensions.removeEventListener("change", this.updateStyles);
-  }
-
-  updateStyles = dims => {
-    this.setState({
-      viewMode: dims.window.height > 500 ? "portrait" : "landscape"
-    });
-  };
-
   render() {
-    let headingText = null;
+    let headingText = (
+      <MainText>
+        <HeadingText style={{ color: BASE_COLOR }}>Criar conta</HeadingText>
+      </MainText>
+    );
 
-    if (this.state.viewMode === "portrait") {
-      headingText = (
-        <MainText>
-          <HeadingText style={{ color: "#425cf4" }}>Criar conta</HeadingText>
-        </MainText>
-      );
-    }
     return (
       <Formik
         ref={el => (this.form = el)}
@@ -189,7 +167,7 @@ class SignupForm extends Component {
                   <ActivityIndicator />
                 ) : (
                   <ButtonWithBackground
-                    color="#425cf4"
+                    color={BASE_COLOR}
                     onPress={handleSubmit}
                     isDisabled={!isValid}
                   >
@@ -199,7 +177,7 @@ class SignupForm extends Component {
                 {!this.props.isLoading ? (
                   <ButtonWithBackground
                     onPress={this.props.onSwitchAuthMode}
-                    textColor="#425cf4"
+                    textColor={BASE_COLOR}
                   >
                     Cancelar
                   </ButtonWithBackground>
@@ -225,13 +203,9 @@ const styles = StyleSheet.create({
     flex: 1
   },
   input: {
-    //backgroundColor: "#eee",
     borderBottomColor: "#bbb"
   },
   inputContainer: {
-    // it controls the input width,
-    // better approach. makes
-    // TextInputs reusable with 100% width
     width: "80%"
   },
   landscapePasswordContainer: {

@@ -1,40 +1,19 @@
 import React from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Platform
-} from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { BASE_COLOR } from "../../config";
 
 const ButtonWithBackground = props => {
-  let buttonColor = null;
-  let textColor = props.textColor;
+  const { textColor } = props;
 
-  if (props.isDisabled) {
-    buttonColor = {
-      backgroundColor: "#c1c1c1"
-    };
-  } else {
-    buttonColor = {
-      backgroundColor: props.color
-    };
-  }
+  const buttonColor = {
+    backgroundColor: props.isDisabled ? "#c1c1c1" : props.color
+  };
 
   const content = (
     <View style={[styles.button, buttonColor, props.style]}>
-      {props.children == null ? (
-        <Icon
-          name={Platform.OS === "android" ? "md-locate" : "ios-locate"}
-          size={30}
-          style={styles.icon}
-        />
-      ) : (
-        <Text style={{ color: textColor || "white", textAlign: "center" }}>
-          {props.children}
-        </Text>
-      )}
+      <Text style={{ color: textColor || "white", textAlign: "center" }}>
+        {props.children}
+      </Text>
     </View>
   );
   return (
@@ -57,7 +36,8 @@ const styles = StyleSheet.create({
   icon: {
     justifyContent: "center",
     alignContent: "center",
-    color: "#425cf4"
+    // color: "#425cf4"
+    color: BASE_COLOR
   }
 });
 

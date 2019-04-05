@@ -1,13 +1,8 @@
 import React from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Platform
-} from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+
 import { BASE_COLOR } from "../../config";
+import CustomIcon from "./CustomIcon";
 
 const ButtonIcon = props => {
   const icon = props.icon;
@@ -17,12 +12,7 @@ const ButtonIcon = props => {
       onPress={props.onPress}
     >
       <View style={styles.contentContainer}>
-        <Icon
-          name={Platform.OS === "android" ? `md-${icon}` : `ios-${icon}`}
-          size={20}
-          color="#FFF"
-          style={{ margin: 5 }}
-        />
+        <CustomIcon icon={icon} size={20} color="#FFF" style={{ margin: 5 }} />
         <Text style={[styles.text, props.textStyle]}>{props.children}</Text>
       </View>
     </TouchableOpacity>

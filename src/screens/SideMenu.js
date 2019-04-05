@@ -13,7 +13,7 @@ import FastImage from "react-native-fast-image";
 import ImagePicker from "react-native-image-picker";
 import { connect } from "react-redux";
 
-import { updateInfo } from "../store/actions/";
+import { updateAccountInfo } from "../store/actions/";
 
 import MenuItem from "../components/UI/MenuItem";
 
@@ -133,8 +133,8 @@ class Menu extends Component {
   };
 
   handleUpload(uri, id = null) {
-    const { updateInfo, userId, imgPerfil } = this.props;
-    updateInfo(uri, userId);
+    const { updateAccountInfo, userId, imgPerfil } = this.props;
+    updateAccountInfo(uri, userId);
     this.setState({ uri: IMAGES_URL + imgPerfil });
   }
 
@@ -205,8 +205,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  updateInfo: (imgPerfil, idMotoqueiro) =>
-    updateInfo(null, null, imgPerfil, idMotoqueiro)
+  updateAccountInfo: (imgPerfil, idMotoqueiro) =>
+    updateAccountInfo(null, null, imgPerfil, idMotoqueiro)
 };
 
 export default connect(
