@@ -18,7 +18,7 @@ import helmet from "../../assets/helmet/helmet.png";
 
 const { width, height } = Dimensions.get("window");
 
-class Localizacao extends Component {
+class Map extends Component {
   constructor(props) {
     super(props);
     Navigation.events().bindComponent(this, "Main");
@@ -274,4 +274,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Localizacao);
+)(Map);

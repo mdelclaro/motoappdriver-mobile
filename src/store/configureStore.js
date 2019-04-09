@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
   form: FormReducer,
   status: StatusReducer,
   corrida: RequestReducer,
-  localizacao: LocationReducer,
+  location: LocationReducer,
   info: InfoReducer
 });
 

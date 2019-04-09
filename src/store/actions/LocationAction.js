@@ -10,7 +10,7 @@ export const updateLocation = (coords, idMotoqueiro) => {
     const token = await dispatch(authGetToken());
     try {
       const result = await timeout(
-        fetch(`${BASE_URL}localizacao/`, {
+        fetch(`${BASE_URL}location/`, {
           method: "POST",
           body: JSON.stringify({
             location,

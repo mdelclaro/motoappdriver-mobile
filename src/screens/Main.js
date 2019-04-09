@@ -115,7 +115,7 @@ class Main extends Component {
   }
 
   handleStart = () => {
-    const { idMotoqueiro, corrida, localizacao, goOnline } = this.props;
+    const { idMotoqueiro, corrida, location, goOnline } = this.props;
 
     this.setState({
       showStart: false,
@@ -135,7 +135,7 @@ class Main extends Component {
       //join no room
       this.socket.emit("join", {
         id: idMotoqueiro,
-        coords: localizacao
+        coords: location
       });
       this.setState({
         corrida,
@@ -363,7 +363,7 @@ const mapStateToProps = state => {
     corrida: state.corrida.corrida,
     cliente: state.corrida.cliente,
     distancia: state.corrida.distancia,
-    localizacao: state.localizacao
+    location: state.location
   };
 };
 
