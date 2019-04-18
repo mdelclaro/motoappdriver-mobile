@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
+import { BASE_COLOR } from "../../config";
 
 export const Container = styled.View`
-  flex: 1;
   background: #fff;
   height: 240px;
   width: 100%;
@@ -14,7 +14,7 @@ export const Container = styled.View`
   elevation: 3;
   border: 1px solid #ddd;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
   padding: 20px;
   border-top-left-radius: 15;
   border-top-right-radius: 15;
@@ -30,10 +30,11 @@ export const Description = styled.Text`
   color: #666;
   font-size: 14px;
   padding-bottom: 3px;
+  text-align: center;
 `;
 
 export const RequestButton = styled.TouchableOpacity`
-  background: #425cf4;
+  background: ${BASE_COLOR};
   justify-content: center;
   align-items: center;
   height: 44px;

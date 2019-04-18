@@ -9,12 +9,12 @@ let BASE_URL, SOCKET_URL, IMAGES_URL;
 
 if (home) {
   BASE_URL = "http://192.168.2.107:8080/v1/";
-  SOCKET_URL = "http://192.168.2.107:8080";
+  SOCKET_URL = "http://192.168.2.107:8080/drivers";
   IMAGES_URL = "http://192.168.2.107:8080/images/";
 } else {
-  IMAGES_URL = "http://192.168.1.13:8080/images/";
   BASE_URL = "http://192.168.1.13:8080/v1/";
-  SOCKET_URL = "http://192.168.1.13:8080";
+  SOCKET_URL = "http://192.168.1.13:8080/drivers";
+  IMAGES_URL = "http://192.168.1.13:8080/images/";
 }
 export const FETCH_TIMEOUT = 3000;
 export { BASE_URL, SOCKET_URL, IMAGES_URL };

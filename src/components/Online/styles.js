@@ -2,7 +2,7 @@ import styled from "styled-components/native";
 
 export const Container = styled.View`
   background: #fff;
-  height: 30%;
+  height: 160px;
   width: 100%;
   position: absolute;
   bottom: 0;
@@ -29,4 +29,5 @@ export const Description = styled.Text`
   color: #666;
   font-size: 14px;
   padding-bottom: 3px;
+  text-align: center;
 `;

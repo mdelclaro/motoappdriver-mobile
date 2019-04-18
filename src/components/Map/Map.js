@@ -171,8 +171,8 @@ class Map extends Component {
                     longitude: this.state.region.longitude
                   }}
                   destination={{
-                    latitude: this.props.corrida.origem.lat,
-                    longitude: this.props.corrida.origem.long
+                    latitude: parseFloat(this.props.corrida.origem.lat),
+                    longitude: parseFloat(this.props.corrida.origem.long)
                   }}
                   onReady={result => {
                     this.setState({
@@ -192,8 +192,8 @@ class Map extends Component {
                 />
                 <Marker
                   coordinate={{
-                    latitude: this.props.corrida.origem.lat,
-                    longitude: this.props.corrida.origem.long
+                    latitude: parseFloat(this.props.corrida.origem.lat),
+                    longitude: parseFloat(this.props.corrida.origem.long)
                   }}
                 />
               </Fragment>

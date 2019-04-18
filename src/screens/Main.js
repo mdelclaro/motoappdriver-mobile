@@ -238,26 +238,33 @@ class Main extends Component {
     return (
       <View
         style={{
-          flexDirection: "row",
           backgroundColor: "#333338",
           position: "absolute",
           bottom: 25,
-          padding: 10,
+          margin: 10,
           borderRadius: 35
         }}
       >
-        <ActivityIndicator color="#FFF" size="small" />
-        <Text
+        <View
           style={{
-            textAlign: "center",
-            color: "#FFF",
-            fontSize: 16,
-            fontWeight: "bold"
+            flexDirection: "row",
+            padding: 10,
+            justifyContent: "space-around"
           }}
         >
-          {" "}
-          {msg}
-        </Text>
+          <ActivityIndicator color="#FFF" size="small" />
+          <Text
+            style={{
+              textAlign: "center",
+              color: "#FFF",
+              fontSize: 16,
+              fontWeight: "bold"
+            }}
+          >
+            {" "}
+            {msg}
+          </Text>
+        </View>
       </View>
     );
   }
@@ -287,7 +294,7 @@ class Main extends Component {
             <Timer
               beat={true}
               seconds={10}
-              radius={60}
+              radius={45}
               borderWidth={2}
               color="#FFF"
               bgColor={BASE_COLOR}
@@ -301,8 +308,8 @@ class Main extends Component {
               onPause={this.handleAccept}
               minScale={0.9}
               maxScale={1.2}
-              pauseText={"Aceitar"}
-              resumeText={"Aceitar"}
+              pauseText="Aceitar"
+              resumeText="Aceitar"
             />
           </View>
         )}
@@ -346,7 +353,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     position: "absolute",
-    top: 60
+    top: 45
   },
   text: {
     color: "#fff",
