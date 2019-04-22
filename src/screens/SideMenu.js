@@ -7,7 +7,6 @@ import {
   Alert,
   ActivityIndicator
 } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
 import { Navigation } from "react-native-navigation";
 import FastImage from "react-native-fast-image";
 import ImagePicker from "react-native-image-picker";
@@ -16,7 +15,6 @@ import { connect } from "react-redux";
 import { updateAccountInfo } from "../store/actions/";
 
 import MenuItem from "../components/UI/MenuItem";
-
 import { BASE_COLOR, IMAGES_URL } from "../config";
 
 class Menu extends Component {
@@ -35,11 +33,7 @@ class Menu extends Component {
         </TouchableOpacity>
         <View style={styles.imageIconContainer}>
           <TouchableOpacity style={styles.imageIcon} onPress={this.handleEdit}>
-            <Icon
-              name={Platform.OS === "android" ? "md-create" : "ios-create"}
-              size={25}
-              color="#4e4e4f"
-            />
+            <CustomIcon icon={"edit-2"} size={25} color="#4e4e4f" />
           </TouchableOpacity>
         </View>
       </Fragment>
@@ -165,12 +159,16 @@ class Menu extends Component {
         <View style={{ flex: 0, justifyContent: "center" }}>
           {this.renderImage()}
         </View>
-        <MenuItem onPress={this.props.onLogout} icon="person" text="Perfil" />
-        <MenuItem onPress={this.renderChat} icon="chatboxes" text="Mensagens" />
+        <MenuItem onPress={this.props.onLogout} icon="user" text="Perfil" />
+        <MenuItem
+          onPress={this.renderChat}
+          icon="message-circle"
+          text="Mensagens"
+        />
         <MenuItem
           onPress={this.props.onLogout}
-          icon="settings"
-          text="Configurações"
+          icon="map"
+          text="Minhas corridas"
         />
         <MenuItem onPress={this.props.onLogout} icon="log-out" text="Sair" />
       </View>

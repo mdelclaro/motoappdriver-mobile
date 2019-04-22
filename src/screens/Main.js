@@ -8,7 +8,7 @@ import {
   StyleSheet
 } from "react-native";
 import { Navigation } from "react-native-navigation";
-import { getImageSource } from "react-native-vector-icons/Ionicons";
+import { getImageSource } from "react-native-vector-icons/Feather";
 import io from "socket.io-client";
 import { connect } from "react-redux";
 import Timer from "react-native-timekeeper";
@@ -42,11 +42,7 @@ class Main extends Component {
   constructor(props) {
     super(props);
     Navigation.events().bindComponent(this);
-    getImageSource(
-      Platform.OS === "android" ? "md-menu" : "ios-menu",
-      30,
-      BASE_COLOR
-    ).then(icon => {
+    getImageSource("menu", 30, BASE_COLOR).then(icon => {
       Navigation.mergeOptions("Main", {
         topBar: {
           visible: true,
