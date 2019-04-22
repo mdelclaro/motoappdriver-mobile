@@ -11,7 +11,8 @@ import {
   StatusReducer,
   LocationReducer,
   InfoReducer,
-  ChatReducer
+  ChatReducer,
+  RidesReducer
 } from "./reducers/";
 
 const rootReducer = combineReducers({
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   corrida: RequestReducer,
   location: LocationReducer,
   info: InfoReducer,
-  chats: ChatReducer
+  chats: ChatReducer,
+  rides: RidesReducer
 });
 
 // redux-persist

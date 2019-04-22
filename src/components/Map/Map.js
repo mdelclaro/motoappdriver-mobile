@@ -15,6 +15,7 @@ import { updateLocation } from "../../store/actions/";
 import { getPixelSize } from "../../utils";
 
 import helmet from "../../assets/helmet/helmet.png";
+import { BASE_COLOR } from "../../config";
 
 const { width, height } = Dimensions.get("window");
 
@@ -150,6 +151,7 @@ class Map extends Component {
             style={{ flex: 1, height: height, width: width }}
             region={region}
             loadingEnabled
+            loadingIndicatorColor={BASE_COLOR}
             showsCompass={false}
             showsMyLocationButton={false}
             showsScale={false}
@@ -205,22 +207,26 @@ class Map extends Component {
                       origin={{
                         latitude:
                           this.props.acceptedCorrida.status === 1 // aceita
-                            ? this.state.region.latitude // origem eh minha posicao
-                            : this.props.acceptedCorrida.origem.lat, // origem eh a propria origem
+                            ? parseFloat(this.state.region.latitude) // origem eh minha posicao
+                            : parseFloat(this.props.acceptedCorrida.origem.lat), // origem eh a propria origem
                         longitude:
                           this.props.acceptedCorrida.status === 1
-                            ? this.state.region.longitude
-                            : this.props.acceptedCorrida.origem.long
+                            ? parseFloat(this.state.region.longitude)
+                            : parseFloat(this.props.acceptedCorrida.origem.long)
                       }}
                       destination={{
                         latitude:
                           this.props.acceptedCorrida.status === 1
-                            ? this.props.acceptedCorrida.origem.lat // destino eh a origem da corrida
-                            : this.props.acceptedCorrida.destino.lat, // destino eh o proprio destino
+                            ? parseFloat(this.props.acceptedCorrida.origem.lat) // destino eh a origem da corrida
+                            : parseFloat(
+                                this.props.acceptedCorrida.destino.lat
+                              ), // destino eh o proprio destino
                         longitude:
                           this.props.acceptedCorrida.status === 1
-                            ? this.props.acceptedCorrida.origem.long
-                            : this.props.acceptedCorrida.destino.long
+                            ? parseFloat(this.props.acceptedCorrida.origem.long)
+                            : parseFloat(
+                                this.props.acceptedCorrida.destino.long
+                              )
                       }}
                       onReady={result => {
                         this.setState({
@@ -242,12 +248,16 @@ class Map extends Component {
                       coordinate={{
                         latitude:
                           this.props.acceptedCorrida.status === 1
-                            ? this.props.acceptedCorrida.origem.lat // destino eh a origem da corrida
-                            : this.props.acceptedCorrida.destino.lat, // destino eh o proprio destino
+                            ? parseFloat(this.props.acceptedCorrida.origem.lat) // destino eh a origem da corrida
+                            : parseFloat(
+                                this.props.acceptedCorrida.destino.lat
+                              ), // destino eh o proprio destino
                         longitude:
                           this.props.acceptedCorrida.status === 1
-                            ? this.props.acceptedCorrida.origem.long
-                            : this.props.acceptedCorrida.destino.long
+                            ? parseFloat(this.props.acceptedCorrida.origem.long)
+                            : parseFloat(
+                                this.props.acceptedCorrida.destino.long
+                              )
                       }}
                     />
                   </Fragment>

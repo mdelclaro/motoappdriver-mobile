@@ -153,6 +153,28 @@ class Menu extends Component {
     });
   };
 
+  renderRides = () => {
+    Navigation.showModal({
+      stack: {
+        id: "rides",
+        children: [
+          {
+            component: {
+              id: "rides",
+              name: "motoapp.Rides",
+              passProps: { rides: 1 },
+              options: {
+                topBar: {
+                  drawBehind: true
+                }
+              }
+            }
+          }
+        ]
+      }
+    });
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -166,7 +188,7 @@ class Menu extends Component {
           text="Mensagens"
         />
         <MenuItem
-          onPress={this.props.onLogout}
+          onPress={this.renderRides}
           icon="map"
           text="Minhas corridas"
         />

@@ -5,6 +5,7 @@ export { addRating } from "./RatingAction";
 export { updateInfo, updateAccountInfo } from "./InfoAction";
 export { updateLocation } from "./LocationAction";
 export { getChats, sendMessage, setChats } from "./ChatAction";
+export { getRides } from "./RidesAction";
 export {
   emailChanged,
   senhaChanged,
