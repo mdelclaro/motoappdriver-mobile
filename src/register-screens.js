@@ -5,8 +5,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
 import { Auth, SideMenu, Main, Info, Verification, Chats } from "./screens/";
-import Camera from "./components/Camera/Camera";
-import ProfileImage from "./components/ProfileImage/ProfileImage";
+import { Camera, ProfileImage, Chat } from "./components/";
 
 import { store, persistor } from "./store/configureStore";
 
@@ -56,6 +55,11 @@ const registerScreens = () => {
     "motoapp.Chats",
     () => props => providerWrapper(props, Chats),
     () => Chats
+  );
+  Navigation.registerComponent(
+    "motoapp.Chat",
+    () => props => providerWrapper(props, Chat),
+    () => Chat
   );
   Navigation.registerComponent("motoapp.Camera", () => Camera);
   Navigation.registerComponent("motoapp.ProfileImage", () => ProfileImage);

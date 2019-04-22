@@ -38,8 +38,8 @@ class Chats extends Component {
   }
 
   async componentDidMount() {
-    const { getChats, idCliente } = this.props;
-    await getChats(idCliente);
+    const { getChats, idMotoqueiro } = this.props;
+    await getChats(idMotoqueiro);
   }
 
   componentWillUnmount() {
@@ -154,13 +154,13 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     chats: state.chats.chats,
-    idCliente: state.auth.userId,
+    idMotoqueiro: state.auth.userId,
     isLoading: state.ui.isLoading
   };
 };
 
 const mapDispatchToProps = {
-  getChats: idCliente => getChats(idCliente, 0, null)
+  getChats: idMotoqueiro => getChats(idMotoqueiro, 0, null)
 };
 
 export default connect(
