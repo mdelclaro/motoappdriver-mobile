@@ -3,13 +3,16 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
 
-import RequestReducer from "./reducers/RequestReducer";
-import UIReducer from "./reducers/UIReducer";
-import AuthReducer from "./reducers/AuthReducer";
-import FormReducer from "./reducers/FormReducer";
-import StatusReducer from "./reducers/StatusReducer";
-import LocationReducer from "./reducers/LocationReducer";
-import InfoReducer from "./reducers/InfoReducer";
+import {
+  RequestReducer,
+  UIReducer,
+  AuthReducer,
+  FormReducer,
+  StatusReducer,
+  LocationReducer,
+  InfoReducer,
+  ChatReducer
+} from "./reducers/";
 
 const rootReducer = combineReducers({
   ui: UIReducer,
@@ -18,7 +21,8 @@ const rootReducer = combineReducers({
   status: StatusReducer,
   corrida: RequestReducer,
   location: LocationReducer,
-  info: InfoReducer
+  info: InfoReducer,
+  chats: ChatReducer
 });
 
 // redux-persist

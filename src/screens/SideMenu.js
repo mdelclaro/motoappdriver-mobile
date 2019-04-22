@@ -88,6 +88,12 @@ class Menu extends Component {
     );
   };
 
+  handleUpload(uri, id = null) {
+    const { updateAccountInfo, userId, imgPerfil } = this.props;
+    updateAccountInfo(uri, userId);
+    this.setState({ uri: IMAGES_URL + imgPerfil });
+  }
+
   renderCamera = () => {
     Navigation.showModal({
       stack: {
@@ -99,6 +105,27 @@ class Menu extends Component {
               name: "motoapp.Camera",
               passProps: {
                 handleUpload: uri => this.handleUpload(uri)
+              }
+            }
+          }
+        ]
+      }
+    });
+  };
+
+  renderChat = () => {
+    Navigation.showModal({
+      stack: {
+        id: "chats",
+        children: [
+          {
+            component: {
+              id: "chats",
+              name: "motoapp.Chats",
+              options: {
+                topBar: {
+                  drawBehind: true
+                }
               }
             }
           }
@@ -132,12 +159,6 @@ class Menu extends Component {
     });
   };
 
-  handleUpload(uri, id = null) {
-    const { updateAccountInfo, userId, imgPerfil } = this.props;
-    updateAccountInfo(uri, userId);
-    this.setState({ uri: IMAGES_URL + imgPerfil });
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -145,11 +166,7 @@ class Menu extends Component {
           {this.renderImage()}
         </View>
         <MenuItem onPress={this.props.onLogout} icon="person" text="Perfil" />
-        <MenuItem
-          onPress={this.props.onLogout}
-          icon="chatboxes"
-          text="Mensagens"
-        />
+        <MenuItem onPress={this.renderChat} icon="chatboxes" text="Mensagens" />
         <MenuItem
           onPress={this.props.onLogout}
           icon="settings"

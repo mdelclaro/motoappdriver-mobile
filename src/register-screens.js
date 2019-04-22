@@ -4,11 +4,7 @@ import { Navigation } from "react-native-navigation";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
-import Auth from "./screens/Auth";
-import SideMenu from "./screens/SideMenu";
-import Main from "./screens/Main";
-import Info from "./screens/Info";
-import Verification from "./screens/Verification";
+import { Auth, SideMenu, Main, Info, Verification, Chats } from "./screens/";
 import Camera from "./components/Camera/Camera";
 import ProfileImage from "./components/ProfileImage/ProfileImage";
 
@@ -55,6 +51,11 @@ const registerScreens = () => {
     "motoapp.SideMenu",
     () => props => providerWrapper(props, SideMenu),
     () => SideMenu
+  );
+  Navigation.registerComponent(
+    "motoapp.Chats",
+    () => props => providerWrapper(props, Chats),
+    () => Chats
   );
   Navigation.registerComponent("motoapp.Camera", () => Camera);
   Navigation.registerComponent("motoapp.ProfileImage", () => ProfileImage);
