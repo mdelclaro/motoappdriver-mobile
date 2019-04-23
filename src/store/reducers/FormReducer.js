@@ -12,15 +12,15 @@ import {
 } from "../actions/types";
 
 const INITIAL_STATE = {
-  email: "",
-  senha: "",
-  nome: "",
-  sobrenome: "",
+  email: null,
+  senha: null,
+  nome: null,
+  sobrenome: null,
   cnh1: null,
   cnh2: null,
-  moto: "",
-  placa: "",
-  cor: ""
+  moto: null,
+  placa: null,
+  cor: null
 };
 
 export default (state = INITIAL_STATE, action) => {

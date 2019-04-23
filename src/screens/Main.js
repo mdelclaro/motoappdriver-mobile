@@ -95,7 +95,7 @@ class Main extends Component {
   }
 
   componentWillUnmount() {
-    if (this.socket.connected) this.socket.disconnect();
+    if (this.socket) this.socket.disconnect();
   }
 
   navigationButtonPressed({ buttonId }) {

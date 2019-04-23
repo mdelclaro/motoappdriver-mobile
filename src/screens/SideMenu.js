@@ -12,7 +12,7 @@ import FastImage from "react-native-fast-image";
 import ImagePicker from "react-native-image-picker";
 import { connect } from "react-redux";
 
-import { updateAccountInfo } from "../store/actions/";
+import { updateAccountInfo, authLogout } from "../store/actions/";
 
 import MenuItem from "../components/UI/MenuItem";
 import { BASE_COLOR, IMAGES_URL } from "../config";
@@ -21,24 +21,6 @@ class Menu extends Component {
   state = {
     uri: IMAGES_URL + this.props.imgPerfil
   };
-
-  renderImage() {
-    const uri = IMAGES_URL + this.props.imgPerfil;
-    return this.props.isLoading ? (
-      <ActivityIndicator size="large" color="#4e4e4f" />
-    ) : (
-      <Fragment>
-        <TouchableOpacity onPress={this.renderAvatar}>
-          <FastImage source={{ uri }} style={styles.image} fallback />
-        </TouchableOpacity>
-        <View style={styles.imageIconContainer}>
-          <TouchableOpacity style={styles.imageIcon} onPress={this.handleEdit}>
-            <CustomIcon icon={"edit-2"} size={25} color="#4e4e4f" />
-          </TouchableOpacity>
-        </View>
-      </Fragment>
-    );
-  }
 
   handleEdit = () => {
     Alert.alert(
@@ -86,6 +68,35 @@ class Menu extends Component {
     const { updateAccountInfo, userId, imgPerfil } = this.props;
     updateAccountInfo(uri, userId);
     this.setState({ uri: IMAGES_URL + imgPerfil });
+  }
+
+  handleLogout = async () => {
+    await this.props.authLogout();
+    Navigation.setRoot({
+      root: {
+        component: {
+          name: "motoapp.Auth"
+        }
+      }
+    });
+  };
+
+  renderImage() {
+    const uri = IMAGES_URL + this.props.imgPerfil;
+    return this.props.isLoading ? (
+      <ActivityIndicator size="large" color="#4e4e4f" />
+    ) : (
+      <Fragment>
+        <TouchableOpacity onPress={this.renderAvatar}>
+          <FastImage source={{ uri }} style={styles.image} fallback />
+        </TouchableOpacity>
+        <View style={styles.imageIconContainer}>
+          <TouchableOpacity style={styles.imageIcon} onPress={this.handleEdit}>
+            <CustomIcon icon={"edit-2"} size={25} color="#4e4e4f" />
+          </TouchableOpacity>
+        </View>
+      </Fragment>
+    );
   }
 
   renderCamera = () => {
@@ -192,7 +203,7 @@ class Menu extends Component {
           icon="map"
           text="Minhas corridas"
         />
-        <MenuItem onPress={this.props.onLogout} icon="log-out" text="Sair" />
+        <MenuItem onPress={this.handleLogout} icon="log-out" text="Sair" />
       </View>
     );
   }
@@ -243,7 +254,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   updateAccountInfo: (imgPerfil, idMotoqueiro) =>
-    updateAccountInfo(null, null, imgPerfil, idMotoqueiro)
+    updateAccountInfo(null, null, imgPerfil, idMotoqueiro),
+  authLogout: () => authLogout()
 };
 
 export default connect(

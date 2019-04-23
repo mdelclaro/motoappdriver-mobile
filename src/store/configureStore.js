@@ -15,7 +15,7 @@ import {
   RidesReducer
 } from "./reducers/";
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   ui: UIReducer,
   auth: AuthReducer,
   form: FormReducer,
@@ -26,6 +26,14 @@ const rootReducer = combineReducers({
   chats: ChatReducer,
   rides: RidesReducer
 });
+
+const rootReducer = (state, action) => {
+  console.log(action);
+  if (action.type === "auth_logout") {
+    state = undefined;
+  }
+  return appReducer(state, action);
+};
 
 // redux-persist
 const persistConfig = {

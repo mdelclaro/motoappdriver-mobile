@@ -59,7 +59,6 @@ class Chat extends Component {
     this.socket.emit("join", { id: this.props.idMotoqueiro });
 
     this.socket.on("msgFromRider", async data => {
-      console.log(data.mensagem);
       const stateMessage = {
         _id: data.mensagem._id,
         text: data.mensagem.text,
@@ -86,7 +85,7 @@ class Chat extends Component {
   }
 
   componentWillUnmount() {
-    this.socket.disconnect();
+    if (this.socket) this.socket.disconnect();
   }
 
   async onSend(messages = []) {

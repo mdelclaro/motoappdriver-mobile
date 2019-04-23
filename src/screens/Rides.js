@@ -105,7 +105,7 @@ class Rides extends Component {
       <Fragment>
         <Appbar.Header>
           <Appbar.BackAction onPress={this.goBack} />
-          <Appbar.Content title="Minhas viagens" />
+          <Appbar.Content title="Minhas corridas" />
         </Appbar.Header>
         <View style={styles.container}>
           {this.props.isLoading ? (
