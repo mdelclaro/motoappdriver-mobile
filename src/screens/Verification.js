@@ -50,19 +50,21 @@ const Verification = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "space-between"
   },
   titleContainer: {
     justifyContent: "flex-start",
-    paddingTop: 60
+    paddingTop: 60,
+    paddingBottom: 20
   },
   contentContainer: {
     flex: 1,
     marginLeft: 50,
     marginRight: 50,
+    justifyContent: "space-evenly",
     alignContent: "center",
-    alignItems: "center",
-    paddingTop: 60
+    alignItems: "center"
   },
   imageContainer: {
     flex: 1,
