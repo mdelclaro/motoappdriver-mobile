@@ -12,7 +12,8 @@ import {
   Info,
   Verification,
   Chats,
-  Rides
+  Rides,
+  Profile
 } from "./screens/";
 import { Camera, ProfileImage, Chat } from "./components/";
 
@@ -86,6 +87,11 @@ const registerScreens = () => {
     "motoapp.Rides",
     () => props => providerWrapper(props, Rides),
     () => Rides
+  );
+  Navigation.registerComponent(
+    "motoapp.Profile",
+    () => props => providerWrapper(props, Profile),
+    () => Profile
   );
   Navigation.registerComponent("motoapp.Camera", () => Camera);
   Navigation.registerComponent("motoapp.ProfileImage", () => ProfileImage);

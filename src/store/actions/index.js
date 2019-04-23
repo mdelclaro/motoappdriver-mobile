@@ -2,7 +2,7 @@ export { signUp } from "./SignUpAction";
 export { uiStartLoading, uiStopLoading } from "./UIAction";
 export { acceptCorrida, startCorrida, finishCorrida } from "./RequestAction";
 export { addRating } from "./RatingAction";
-export { updateInfo, updateAccountInfo } from "./InfoAction";
+export { updateInfo, updateAccountInfo, getDetails } from "./InfoAction";
 export { updateLocation } from "./LocationAction";
 export { getChats, sendMessage, setChats } from "./ChatAction";
 export { getRides } from "./RidesAction";

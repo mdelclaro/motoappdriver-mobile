@@ -25,8 +25,6 @@ export const addRating = (idMotoqueiro, nota) => {
       );
 
       if (result.ok) {
-        let res = await result.json();
-        console.log(res);
         dispatch(uiStopLoading());
         return true;
       } else {

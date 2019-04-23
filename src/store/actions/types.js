@@ -27,7 +27,8 @@ export const REQUEST_CLEAR_CORRIDA = "request_clear_corrida";
 
 export const LOCATION_SET_LOCATION = "location_set_location";
 
-export const INFO_UPDATE = "info_update";
+export const INFO_SET = "info_set";
+export const INFO_SET_DETAILS = "info_set_details";
 
 export const CHAT_SET = "chat_SET";
 

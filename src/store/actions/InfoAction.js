@@ -1,7 +1,7 @@
 import { uiStartLoading, uiStopLoading } from "./UIAction";
 import { authGetToken } from "./AuthAction";
 import { updateAccountStatus } from "./StatusAction";
-import { INFO_UPDATE } from "./types";
+import { INFO_SET, INFO_SET_DETAILS } from "./types";
 import { BASE_URL } from "../../config";
 
 import { timeout } from "../../utils";
@@ -29,7 +29,7 @@ export const updateInfo = (cnh1, cnh2, moto, placa, idMotoqueiro) => {
 
       if (result.ok) {
         let res = await result.json();
-        dispatch(updateAccountStatus(res.motoqueiro.status));
+        await dispatch(updateAccountStatus(res.motoqueiro.status));
         dispatch(uiStopLoading());
         return true;
       } else {
@@ -100,7 +100,6 @@ export const updateAccountInfo = (
 
         await dispatch(setInfo(email, imgPerfil));
         dispatch(uiStopLoading());
-        console.log("opa");
         return true;
       } else {
         let res = await result.json();
@@ -122,10 +121,61 @@ export const setInfo = (
   imgPerfil = store.getState().info.imgPerfil
 ) => {
   return {
-    type: INFO_UPDATE,
+    type: INFO_SET,
     payload: {
       email,
       imgPerfil
+    }
+  };
+};
+
+export const getDetails = idMotoqueiro => {
+  return async dispatch => {
+    dispatch(uiStartLoading());
+    const token = await dispatch(authGetToken());
+    try {
+      const result = await timeout(
+        fetch(`${BASE_URL}usuario/motoqueiro/${idMotoqueiro}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token
+          }
+        })
+      );
+
+      if (result.ok) {
+        let res = await result.json();
+        console.log(res);
+        const { nome, sobrenome, moto, corridas, avaliacoes } = res.motoqueiro;
+        await dispatch(setDetails(nome, sobrenome, moto, corridas, avaliacoes));
+        dispatch(uiStopLoading());
+        return true;
+      } else {
+        let res = await result.json();
+        console.log(res);
+        dispatch(uiStopLoading());
+        alert("Ocorreu um erro ao avaliar o motoqueiro");
+        return false;
+      }
+    } catch (err) {
+      dispatch(uiStopLoading());
+      alert("Ocorreu um erro");
+      console.log("Erro: " + err);
+      return false;
+    }
+  };
+};
+
+export const setDetails = (nome, sobrenome, moto, corridas, avaliacoes) => {
+  return {
+    type: INFO_SET_DETAILS,
+    payload: {
+      nome,
+      sobrenome,
+      moto,
+      corridas,
+      avaliacoes
     }
   };
 };

@@ -88,7 +88,12 @@ class Menu extends Component {
     ) : (
       <Fragment>
         <TouchableOpacity onPress={this.renderAvatar}>
-          <FastImage source={{ uri }} style={styles.image} fallback />
+          <FastImage
+            source={{ uri }}
+            style={styles.image}
+            fallback
+            resizeMode={FastImage.resizeMode.center}
+          />
         </TouchableOpacity>
         <View style={styles.imageIconContainer}>
           <TouchableOpacity style={styles.imageIcon} onPress={this.handleEdit}>

@@ -45,6 +45,7 @@ const startApp = async () => {
         }
       }
     });
+    store.dispatch(uiStopLoading());
   }
   // aguardando aprovação
   else if (status === 1) {
@@ -56,7 +57,7 @@ const startApp = async () => {
             {
               component: {
                 id: "verification",
-                name: "motoapp.Verification",
+                name: "motoapp.Profile",
                 options: {
                   topBar: {
                     visible: false
@@ -68,6 +69,7 @@ const startApp = async () => {
         }
       }
     });
+    store.dispatch(uiStopLoading());
   }
   // aprovado
   else if (status === 2) {

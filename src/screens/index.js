@@ -5,5 +5,6 @@ import Info from "./Info";
 import Verification from "./Verification";
 import Chats from "./Chats";
 import Rides from "./Rides";
+import Profile from "./Profile";
 
-export { Auth, SideMenu, Main, Info, Verification, Chats, Rides };
+export { Auth, SideMenu, Main, Info, Verification, Chats, Rides, Profile };
