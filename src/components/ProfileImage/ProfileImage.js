@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Navigation } from "react-native-navigation";
 
 import CustomIcon from "../UI/CustomIcon";
-import { View, ImageBackground, BackButton } from "./styles";
+import { View, ImageBackground, BackButton, Container } from "./styles";
 import { BASE_COLOR } from "../../config";
 
 const ProfileImage = props => {
@@ -13,14 +13,15 @@ const ProfileImage = props => {
   };
 
   return (
-    <Fragment>
-      <BackButton onPress={this.handleBack}>
-        <CustomIcon icon={"arrow-left"} size={25} color="#f8f8f8" />
-      </BackButton>
-      <View style={{ backgroundColor: BASE_COLOR }}>
-        <ImageBackground source={uri} resizeMode="center" />
-      </View>
-    </Fragment>
+    <View>
+      <ImageBackground source={uri} resizeMode="center">
+        <Container>
+          <BackButton onPress={this.handleBack}>
+            <CustomIcon icon={"x"} size={30} color="#f8f8f8" />
+          </BackButton>
+        </Container>
+      </ImageBackground>
+    </View>
   );
 };
 

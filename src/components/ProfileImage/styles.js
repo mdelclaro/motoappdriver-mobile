@@ -6,12 +6,20 @@ export const View = styled.View`
   flex: 1;
 `;
 
-export const ImageBackground = styled.Image`
+export const ImageBackground = styled.ImageBackground`
   flex: 1;
+`;
+
+export const Container = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
 `;
 
 export const BackButton = styled.TouchableOpacity`
   flex: 0;
+  background-color: ${BASE_COLOR};
   border-radius: 100px;
   height: 55px;
   width: 55px;
@@ -19,6 +27,5 @@ export const BackButton = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   position: absolute;
-  left: 5px;
-  top: 15px;
+  bottom: 15px;
 `;
