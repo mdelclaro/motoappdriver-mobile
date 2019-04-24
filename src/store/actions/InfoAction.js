@@ -49,30 +49,29 @@ export const updateInfo = (cnh1, cnh2, moto, placa, idMotoqueiro) => {
 
 export const updateAccountInfo = data => {
   return async dispatch => {
-    const { email, senha, imgPerfil, idMotoqueiro } = data;
     dispatch(uiStartLoading());
     try {
       const token = await dispatch(authGetToken());
       let formData = new FormData();
 
-      if (email) {
-        formData.append("email", email);
+      if (data.email) {
+        formData.append("email", data.email);
       }
 
-      if (senha) {
-        formData.append("senha", senha);
+      if (data.senha) {
+        formData.append("senha", data.senha);
       }
 
-      if (imgPerfil) {
+      if (data.imgPerfil) {
         formData.append("imgPerfil", {
-          uri: imgPerfil,
+          uri: data.imgPerfil,
           type: "image/jpg",
           name: "imgPerfil"
         });
       }
 
       const result = await timeout(
-        fetch(`${BASE_URL}usuario/motoqueiro/${idMotoqueiro}`, {
+        fetch(`${BASE_URL}usuario/motoqueiro/${data.idMotoqueiro}`, {
           method: "PUT",
           body: formData,
           headers: {

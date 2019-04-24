@@ -274,7 +274,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   updateAccountInfo: (imgPerfil, idMotoqueiro) =>
-    updateAccountInfo(null, null, imgPerfil, idMotoqueiro),
+    updateAccountInfo({ imgPerfil, idMotoqueiro }),
   authLogout: () => authLogout()
 };
 
