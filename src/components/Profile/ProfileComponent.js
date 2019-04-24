@@ -15,7 +15,6 @@ import {
   BackButton
 } from "./styles";
 import CustomIcon from "../UI/CustomIcon";
-import avatar from "../../assets/helmet/helmet.png";
 import { BASE_COLOR, IMAGES_URL } from "../../config";
 
 const Profile = props => {
