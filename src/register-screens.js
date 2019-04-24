@@ -12,10 +12,11 @@ import {
   Info,
   Verification,
   Chats,
+  Chat,
   Rides,
   Profile
 } from "./screens/";
-import { Camera, ProfileImage, Chat } from "./components/";
+import { Camera, ProfileImage } from "./components/";
 
 import { store, persistor } from "./store/configureStore";
 import { BASE_COLOR } from "./config";
@@ -59,11 +60,6 @@ const registerScreens = () => {
     () => Auth
   );
   Navigation.registerComponent(
-    "motoapp.Verification",
-    () => props => providerWrapper(props, Verification),
-    () => Verification
-  );
-  Navigation.registerComponent(
     "motoapp.Info",
     () => props => providerWrapper(props, Info),
     () => Info
@@ -93,6 +89,7 @@ const registerScreens = () => {
     () => props => providerWrapper(props, Profile),
     () => Profile
   );
+  Navigation.registerComponent("motoapp.Verification", () => Verification);
   Navigation.registerComponent("motoapp.Camera", () => Camera);
   Navigation.registerComponent("motoapp.ProfileImage", () => ProfileImage);
 };
