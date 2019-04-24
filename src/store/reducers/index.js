@@ -6,7 +6,6 @@ import StatusReducer from "./StatusReducer";
 import LocationReducer from "./LocationReducer";
 import InfoReducer from "./InfoReducer";
 import ChatReducer from "./ChatReducer";
-import RidesReducer from "./RidesReducer";
 
 export {
   RequestReducer,
@@ -16,6 +15,5 @@ export {
   StatusReducer,
   LocationReducer,
   InfoReducer,
-  ChatReducer,
-  RidesReducer
+  ChatReducer
 };

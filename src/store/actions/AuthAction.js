@@ -1,8 +1,6 @@
 import { AsyncStorage } from "react-native";
 import { AUTH_SET_TOKEN, AUTH_LOGOUT } from "./types";
 import { uiStartLoading, uiStopLoading } from "./UIAction";
-import { updateAccountStatus } from "./StatusAction";
-import { setInfo } from "./InfoAction";
 import { BASE_URL } from "../../config";
 
 import startApp from "../../App";
@@ -15,7 +13,7 @@ export const authAutoSignIn = () => {
       await dispatch(authGetToken());
       startApp();
     } catch (err) {
-      console.log(err);
+      console.log("Invalid credentials... Signup!");
       dispatch(uiStopLoading());
     }
   };
@@ -40,26 +38,7 @@ export const tryAuth = (email, senha) => {
 
       if (result.ok) {
         let res = await result.json();
-        let {
-          token,
-          refreshToken,
-          userId,
-          expiryDate,
-          accountStatus,
-          imgPerfil
-        } = res;
-
-        // sanitize uri
-        if (imgPerfil) {
-          imgPerfil = imgPerfil.split("images")[1];
-          imgPerfil = imgPerfil.replace("/", "");
-          imgPerfil = imgPerfil.replace("\\", "");
-        } else {
-          imgPerfil = "avatar.png";
-        }
-
-        dispatch(setInfo(email, imgPerfil));
-        dispatch(updateAccountStatus(accountStatus));
+        let { token, refreshToken, userId, expiryDate } = res;
         dispatch(storeAuth(token, refreshToken, userId, expiryDate));
         startApp();
       } else {
@@ -128,15 +107,8 @@ export const authGetToken = () => {
 
           if (result.ok) {
             let res = await result.json();
-            const {
-              token,
-              refreshToken,
-              userId,
-              expiryDate,
-              accountStatus
-            } = res;
+            const { token, refreshToken, userId, expiryDate } = res;
 
-            dispatch(updateAccountStatus(accountStatus));
             dispatch(storeAuth(token, refreshToken, userId, expiryDate));
             return token;
           } else {

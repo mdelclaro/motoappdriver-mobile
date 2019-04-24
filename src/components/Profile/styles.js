@@ -82,6 +82,6 @@ export const BackButton = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   position: absolute;
-  left: 5px;
+  left: 10px;
   top: 15px;
 `;

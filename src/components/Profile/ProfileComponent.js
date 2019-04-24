@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { Navigation } from "react-native-navigation";
 
 import {
@@ -55,7 +55,7 @@ const Profile = props => {
         </FooterContainer>
       </Container>
       <BackButton onPress={() => Navigation.dismissAllModals()}>
-        <CustomIcon icon={"arrow-left"} size={30} color="#f8f8f8" />
+        <CustomIcon icon={"arrow-left"} size={25} color="#f8f8f8" />
       </BackButton>
     </Fragment>
   );

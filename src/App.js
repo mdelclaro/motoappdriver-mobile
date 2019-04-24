@@ -1,9 +1,7 @@
-import { Platform } from "react-native";
 import { Navigation } from "react-native-navigation";
 import { getImageSource } from "react-native-vector-icons/Feather";
 import { store } from "./store/configureStore";
-import { getAccountStatus } from "./store/actions/StatusAction";
-import { uiStopLoading } from "./store/actions/UIAction";
+import { uiStopLoading, getDetails } from "./store/actions/";
 
 import { BASE_COLOR } from "./config";
 
@@ -18,14 +16,12 @@ Navigation.setDefaultOptions({
 });
 
 const startApp = async () => {
-  let status = store.getState().status.accountStatus;
-  if (status === 1) {
-    await store.dispatch(getAccountStatus(store.getState().auth.userId));
-    status = store.getState().status.accountStatus;
-  }
+  await store.dispatch(getDetails(store.getState().auth.userId));
+  const status = store.getState().info.status;
+
   // cadastrar documentos
   if (status === 0) {
-    Navigation.setRoot({
+    await Navigation.setRoot({
       root: {
         stack: {
           id: "infoStack",
@@ -45,11 +41,12 @@ const startApp = async () => {
         }
       }
     });
+
     store.dispatch(uiStopLoading());
   }
   // aguardando aprovação
   else if (status === 1) {
-    Navigation.setRoot({
+    await Navigation.setRoot({
       root: {
         stack: {
           id: "verificationStack",
@@ -57,7 +54,7 @@ const startApp = async () => {
             {
               component: {
                 id: "verification",
-                name: "motoapp.Profile",
+                name: "motoapp.Verification",
                 options: {
                   topBar: {
                     visible: false
@@ -69,110 +66,76 @@ const startApp = async () => {
         }
       }
     });
+
     store.dispatch(uiStopLoading());
   }
   // aprovado
   else if (status === 2) {
-    Promise.all([
-      getImageSource("map-pin", 35, BASE_COLOR),
-      getImageSource(
-        Platform.OS === "android" ? "md-paper-plane" : "ios-paper-plane",
-        35,
-        BASE_COLOR
-      ),
-      getImageSource("arrow-left", 35, BASE_COLOR)
-    ]).then(icons => {
-      Navigation.setRoot({
-        root: {
-          sideMenu: {
-            right: {
-              component: {
-                id: "rightDrawer",
-                name: "motoapp.SideMenu"
-              }
-            },
-            center: {
-              bottomTabs: {
-                id: "bottomTabs",
-                backgroundColor: "white",
-                options: {
-                  topbar: {
-                    visible: true,
-                    id: "topBar",
-                    title: {
-                      text: "Moto App"
-                    }
+    const icon = await getImageSource("map-pin", 35, BASE_COLOR);
+
+    await Navigation.setRoot({
+      root: {
+        sideMenu: {
+          right: {
+            component: {
+              id: "rightDrawer",
+              name: "motoapp.SideMenu"
+            }
+          },
+          center: {
+            bottomTabs: {
+              id: "bottomTabs",
+              backgroundColor: "white",
+              options: {
+                topbar: {
+                  visible: true,
+                  id: "topBar",
+                  title: {
+                    text: "Moto App"
                   }
-                },
-                children: [
-                  {
-                    stack: {
-                      id: "tab1",
-                      children: [
-                        {
-                          component: {
-                            id: "Main",
-                            name: "motoapp.Main",
-                            options: {
-                              topbar: {
-                                visible: true
-                                // leftButton: [
-                                //   {
-                                //     id: "backButton",
-                                //     icon: icons[2],
-                                //     visible: false
-                                //   }
-                                // ]
-                              },
-                              bottomTab: {
-                                text: "Corrida",
-                                textColor: "white",
-                                selectedTextColor: "white",
-                                icon: icons[0],
-                                iconColor: "white"
-                              }
+                }
+              },
+              children: [
+                {
+                  stack: {
+                    id: "tab1",
+                    children: [
+                      {
+                        component: {
+                          id: "Main",
+                          name: "motoapp.Main",
+                          options: {
+                            topbar: {
+                              visible: true
+                            },
+                            bottomTab: {
+                              text: "Corrida",
+                              textColor: "white",
+                              selectedTextColor: "white",
+                              icon,
+                              iconColor: "white"
                             }
                           }
                         }
-                      ]
-                    }
+                      }
+                    ]
                   }
-                  // {
-                  //   stack: {
-                  //     id: "tab2",
-                  //     children: [
-                  //       {
-                  //         component: {
-                  //           id: "Home2",
-                  //           name: "motoapp.Main",
-                  //           options: {
-                  //             bottomTab: {
-                  //               text: "Entrega",
-                  //               textColor: "white",
-                  //               icon: icons[1],
-                  //               iconColor: "white"
-                  //             }
-                  //           }
-                  //         }
-                  //       }
-                  //     ]
-                  //   }
-                  // }
-                ]
-              }
-            },
-            options: {
-              sideMenu: {
-                right: {
-                  width: 260
                 }
+              ]
+            }
+          },
+          options: {
+            sideMenu: {
+              right: {
+                width: 260
               }
             }
           }
         }
-      });
-      store.dispatch(uiStopLoading());
+      }
     });
+
+    store.dispatch(uiStopLoading());
   }
 };
 

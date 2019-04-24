@@ -47,13 +47,9 @@ export const updateInfo = (cnh1, cnh2, moto, placa, idMotoqueiro) => {
   };
 };
 
-export const updateAccountInfo = (
-  email = null,
-  senha = null,
-  imgPerfil = null,
-  idMotoqueiro
-) => {
+export const updateAccountInfo = data => {
   return async dispatch => {
+    const { email, senha, imgPerfil, idMotoqueiro } = data;
     dispatch(uiStartLoading());
     try {
       const token = await dispatch(authGetToken());
@@ -116,10 +112,7 @@ export const updateAccountInfo = (
   };
 };
 
-export const setInfo = (
-  email = store.getState().info.email,
-  imgPerfil = store.getState().info.imgPerfil
-) => {
+export const setInfo = (email, imgPerfil) => {
   return {
     type: INFO_SET,
     payload: {
@@ -131,7 +124,6 @@ export const setInfo = (
 
 export const getDetails = idMotoqueiro => {
   return async dispatch => {
-    dispatch(uiStartLoading());
     const token = await dispatch(authGetToken());
     try {
       const result = await timeout(
@@ -146,20 +138,46 @@ export const getDetails = idMotoqueiro => {
 
       if (result.ok) {
         let res = await result.json();
-        console.log(res);
-        const { nome, sobrenome, moto, corridas, avaliacoes } = res.motoqueiro;
-        await dispatch(setDetails(nome, sobrenome, moto, corridas, avaliacoes));
-        dispatch(uiStopLoading());
+        const {
+          nome,
+          sobrenome,
+          email,
+          moto,
+          corridas,
+          avaliacoes,
+          status
+        } = res.motoqueiro;
+
+        // sanitize uri imgPerfil
+        let imgPerfil = res.motoqueiro.imgPerfil;
+        if (imgPerfil) {
+          imgPerfil = imgPerfil.split("images")[1];
+          imgPerfil = imgPerfil.replace("/", "");
+          imgPerfil = imgPerfil.replace("\\", "");
+        } else {
+          imgPerfil = "avatar.png";
+        }
+
+        const data = {
+          nome,
+          sobrenome,
+          email,
+          moto,
+          corridas,
+          avaliacoes,
+          imgPerfil,
+          status
+        };
+
+        await dispatch(setDetails(data));
         return true;
       } else {
         let res = await result.json();
         console.log(res);
-        dispatch(uiStopLoading());
         alert("Ocorreu um erro ao avaliar o motoqueiro");
         return false;
       }
     } catch (err) {
-      dispatch(uiStopLoading());
       alert("Ocorreu um erro");
       console.log("Erro: " + err);
       return false;
@@ -167,15 +185,11 @@ export const getDetails = idMotoqueiro => {
   };
 };
 
-export const setDetails = (nome, sobrenome, moto, corridas, avaliacoes) => {
+export const setDetails = data => {
   return {
     type: INFO_SET_DETAILS,
     payload: {
-      nome,
-      sobrenome,
-      moto,
-      corridas,
-      avaliacoes
+      data
     }
   };
 };

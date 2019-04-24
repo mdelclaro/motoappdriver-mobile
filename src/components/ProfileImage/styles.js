@@ -6,21 +6,12 @@ export const View = styled.View`
   flex: 1;
 `;
 
-export const ImageBackground = styled.ImageBackground`
+export const ImageBackground = styled.Image`
   flex: 1;
-  height: ${Dimensions.get("window").height}px;
-  width: ${Dimensions.get("window").width}px;
 `;
 
-export const Container = styled.View`
+export const BackButton = styled.TouchableOpacity`
   flex: 0;
-  flex-direction: row;
-  justify-content: center;
-`;
-
-export const TouchableOpacity = styled.TouchableOpacity`
-  flex: 0;
-  background-color: ${BASE_COLOR};
   border-radius: 100px;
   height: 55px;
   width: 55px;

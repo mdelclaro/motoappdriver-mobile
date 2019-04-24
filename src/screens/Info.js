@@ -40,15 +40,13 @@ const mapStateToProps = state => {
   return {
     userId: state.auth.userId,
     cnh1: state.form.cnh1,
-    cnh2: state.form.cnh2,
-    status: state.auth.accountStatus
+    cnh2: state.form.cnh2
   };
 };
 
 const mapDispatchToProps = {
   updateInfo: (cnh1, cnh2, moto, placa, idMotoqueiro) =>
     updateInfo(cnh1, cnh2, moto, placa, idMotoqueiro)
-
 };
 
 export default connect(

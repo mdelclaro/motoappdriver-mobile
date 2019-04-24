@@ -11,8 +11,7 @@ import {
   StatusReducer,
   LocationReducer,
   InfoReducer,
-  ChatReducer,
-  RidesReducer
+  ChatReducer
 } from "./reducers/";
 
 const appReducer = combineReducers({
@@ -23,8 +22,7 @@ const appReducer = combineReducers({
   corrida: RequestReducer,
   location: LocationReducer,
   info: InfoReducer,
-  chats: ChatReducer,
-  rides: RidesReducer
+  chats: ChatReducer
 });
 
 const rootReducer = (state, action) => {

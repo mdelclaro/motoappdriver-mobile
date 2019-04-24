@@ -83,17 +83,10 @@ class Menu extends Component {
 
   renderImage() {
     const uri = IMAGES_URL + this.props.imgPerfil;
-    return this.props.isLoading ? (
-      <ActivityIndicator size="large" color="#4e4e4f" />
-    ) : (
+    return (
       <Fragment>
         <TouchableOpacity onPress={this.renderAvatar}>
-          <FastImage
-            source={{ uri }}
-            style={styles.image}
-            fallback
-            resizeMode={FastImage.resizeMode.center}
-          />
+          <FastImage source={{ uri }} style={styles.image} fallback />
         </TouchableOpacity>
         <View style={styles.imageIconContainer}>
           <TouchableOpacity style={styles.imageIcon} onPress={this.handleEdit}>
@@ -148,6 +141,7 @@ class Menu extends Component {
     const uri = { uri: IMAGES_URL + this.props.imgPerfil };
     Navigation.showModal({
       stack: {
+        id: "avatar",
         children: [
           {
             component: {
@@ -191,13 +185,34 @@ class Menu extends Component {
     });
   };
 
+  renderProfile = () => {
+    Navigation.showModal({
+      stack: {
+        id: "profile",
+        children: [
+          {
+            component: {
+              id: "profile",
+              name: "motoapp.Profile",
+              options: {
+                topBar: {
+                  drawBehind: true
+                }
+              }
+            }
+          }
+        ]
+      }
+    });
+  };
+
   render() {
     return (
       <View style={styles.container}>
         <View style={{ flex: 0, justifyContent: "center" }}>
           {this.renderImage()}
         </View>
-        <MenuItem onPress={this.props.onLogout} icon="user" text="Perfil" />
+        <MenuItem onPress={this.renderProfile} icon="user" text="Perfil" />
         <MenuItem
           onPress={this.renderChat}
           icon="message-circle"

@@ -13,7 +13,7 @@ import moment from "moment";
 
 moment.locale("pt-br");
 
-import { getRides } from "../store/actions";
+import { getDetails } from "../store/actions";
 
 import CustomIcon from "../components/UI/CustomIcon";
 import ListItem from "../components/UI/ListItem";
@@ -29,8 +29,8 @@ class Rides extends Component {
   }
 
   async componentDidMount() {
-    const { getRides, idMotoqueiro } = this.props;
-    await getRides(idMotoqueiro);
+    const { getDetails, idMotoqueiro } = this.props;
+    await getDetails(idMotoqueiro);
   }
 
   renderItem = ({ item }) => {
@@ -146,13 +146,13 @@ const styles = StyleSheet.create({
 mapStateToProps = state => {
   return {
     idMotoqueiro: state.auth.userId,
-    rides: state.rides.rides,
+    rides: state.info.corridas,
     isLoading: state.ui.isLoading
   };
 };
 
 const mapDispatchToProps = {
-  getRides: idMotoqueiro => getRides(idMotoqueiro)
+  getDetails: idMotoqueiro => getDetails(idMotoqueiro)
 };
 
 export default connect(
