@@ -14,7 +14,7 @@ $ npm run android
 ### Project's simplified structure:
 ```
 .
-├── src/                        # Files and images
+├── src/                        # Source code
 │   ├── assets/                 # Files and images
 │   │   └── ...    
 │   ├── components/             # Components used on the screens 
@@ -27,5 +27,6 @@ $ npm run android
 │   ├── config.js               # App constants
 │   ├── register-screens.js     # Screens registration for navigation
 │   └── utils.js                # Util functions
-└── index.js                    # App starting point
+├── index.js                    # App starting point
+└── ...                         # Other configuration and standard files
 ```
