@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import {
   View,
   StyleSheet,
@@ -9,15 +9,16 @@ import {
   ActivityIndicator
 } from "react-native";
 import { connect } from "react-redux";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-import { Formik, yupToFormErrors } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 
 import ButtonWithBackground from "../UI/ButtonWithBackground";
 import InputValidation from "../UI/InputValidation";
 import HeadingText from "../UI/HeadingText";
 import MainText from "../UI/MainText";
+
+import { BACKGROUND_COLOR } from "../../config";
 
 class SignupForm extends Component {
   constructor(props) {
@@ -198,35 +199,14 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 40,
     justifyContent: "center",
-    alignItems: "center"
-  },
-  backgroundImage: {
-    width: "100%",
-    flex: 1
+    alignItems: "center",
+    backgroundColor: BACKGROUND_COLOR
   },
   input: {
-    //backgroundColor: "#eee",
     borderBottomColor: "#bbb"
   },
   inputContainer: {
-    // it controls the input width,
-    // better approach. makes
-    // TextInputs reusable with 100% width
     width: "80%"
-  },
-  landscapePasswordContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  portraitPasswordContainer: {
-    flexDirection: "column",
-    justifyContent: "flex-start"
-  },
-  landscapePasswordWrapper: {
-    width: "45%"
-  },
-  portraitPasswordWrapper: {
-    width: "100%"
   }
 });
 

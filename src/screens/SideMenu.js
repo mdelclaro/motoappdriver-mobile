@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 import { updateAccountInfo, authLogout } from "../store/actions/";
 
 import MenuItem from "../components/UI/MenuItem";
-import { BASE_COLOR, IMAGES_URL } from "../config";
+import { BASE_COLOR, BACKGROUND_COLOR, IMAGES_URL } from "../config";
 
 class Menu extends Component {
   state = {
@@ -232,7 +232,7 @@ class Menu extends Component {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 40,
-    backgroundColor: "#f8f8f8",
+    backgroundColor: BACKGROUND_COLOR,
     flex: 1
   },
   image: {

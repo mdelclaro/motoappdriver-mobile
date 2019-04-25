@@ -15,7 +15,7 @@ import {
   BackButton
 } from "./styles";
 import CustomIcon from "../UI/CustomIcon";
-import { BASE_COLOR, IMAGES_URL } from "../../config";
+import { BASE_COLOR, IMAGES_URL, BACKGROUND_COLOR } from "../../config";
 
 const Profile = props => {
   const { nome, sobrenome, email, corridas, avaliacoes, imgPerfil } = props;
@@ -57,7 +57,7 @@ const Profile = props => {
         </FooterContainer>
       </Container>
       <BackButton onPress={() => Navigation.dismissAllModals()}>
-        <CustomIcon icon={"arrow-left"} size={25} color="#f8f8f8" />
+        <CustomIcon icon={"arrow-left"} size={25} color={BACKGROUND_COLOR} />
       </BackButton>
     </Fragment>
   );

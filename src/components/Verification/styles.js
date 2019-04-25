@@ -1,11 +1,11 @@
 import styled from "styled-components/native";
-import { BASE_COLOR } from "../../config";
+import { BASE_COLOR, BACKGROUND_COLOR } from "../../config";
 
 export const Container = styled.View`
   flex: 1;
   align-items: center;
   justify-content: space-between;
-  background-color: #f8f8f8;
+  background-color: ${BACKGROUND_COLOR};
 `;
 
 export const TitleContainer = styled.View`

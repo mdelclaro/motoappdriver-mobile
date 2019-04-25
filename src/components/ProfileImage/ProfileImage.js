@@ -3,7 +3,7 @@ import { Navigation } from "react-native-navigation";
 
 import CustomIcon from "../UI/CustomIcon";
 import { View, ImageBackground, BackButton, Container } from "./styles";
-import { BASE_COLOR } from "../../config";
+import { BASE_COLOR, BACKGROUND_COLOR } from "../../config";
 
 const ProfileImage = props => {
   const { uri, componentId } = props;
@@ -17,7 +17,7 @@ const ProfileImage = props => {
       <ImageBackground source={uri} resizeMode="center">
         <Container>
           <BackButton onPress={this.handleBack}>
-            <CustomIcon icon={"x"} size={30} color="#f8f8f8" />
+            <CustomIcon icon={"x"} size={30} color={BACKGROUND_COLOR} />
           </BackButton>
         </Container>
       </ImageBackground>

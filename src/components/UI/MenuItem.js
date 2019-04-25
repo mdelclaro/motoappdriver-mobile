@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  Platform
-} from "react-native";
+import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 
 import CustomIcon from "../UI/CustomIcon";
 import { BASE_COLOR, BASE_COLOR_ERROR } from "../../config";
@@ -32,7 +26,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: 10,
-    backgroundColor: "#f8f8f8",
+    backgroundColor: BACKGROUND_COLOR,
     borderBottomWidth: 1,
     borderBottomColor: "#e4e4e4"
   },
