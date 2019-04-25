@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { View } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { Navigation } from "react-native-navigation";
 
 import {
@@ -37,8 +37,14 @@ const Profile = props => {
           <MainText>
             {nome} {sobrenome}
           </MainText>
-          <SecondaryText>{email}</SecondaryText>
+          <View style={{ flexDirection: "row" }}>
+            <SecondaryText>{email} </SecondaryText>
+            <TouchableOpacity>
+              <CustomIcon icon={"edit-2"} size={15} color={BACKGROUND_COLOR} />
+            </TouchableOpacity>
+          </View>
         </ContentContainer>
+
         <FooterContainer>
           <View>
             <Footer>
@@ -56,6 +62,7 @@ const Profile = props => {
           </View>
         </FooterContainer>
       </Container>
+
       <BackButton onPress={() => Navigation.dismissAllModals()}>
         <CustomIcon icon={"arrow-left"} size={25} color={BACKGROUND_COLOR} />
       </BackButton>
