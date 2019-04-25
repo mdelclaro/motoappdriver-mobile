@@ -144,7 +144,7 @@ class SignupForm extends Component {
                 <View style={{ width: "80%" }}>
                   <ButtonWithBackground
                     myRef={ref => (this.submitButton = ref)}
-                    color="#425cf4"
+                    color={BASE_COLOR}
                     onPress={handleSubmit}
                     isDisabled={!isValid}
                   >
@@ -157,7 +157,7 @@ class SignupForm extends Component {
               {!this.props.isLoading ? (
                 <ButtonWithBackground
                   onPress={this.props.onSwitchAuthMode}
-                  textColor="#425cf4"
+                  textColor={BASE_COLOR}
                 >
                   Cancelar
                 </ButtonWithBackground>

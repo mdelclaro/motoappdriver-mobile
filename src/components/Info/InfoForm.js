@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import {
   View,
   StyleSheet,
@@ -21,7 +21,7 @@ import InputValidation from "../UI/InputValidation";
 import HeadingText from "../UI/HeadingText";
 import MainText from "../UI/MainText";
 import ButtonIcon from "../UI/ButtonIcon";
-import { BASE_COLOR, baseErrorColor } from "../../config";
+import { BASE_COLOR, BASE_COLOR_ERROR, BACKGROUND_COLOR } from "../../config";
 
 class SignupForm extends Component {
   componentDidMount() {
@@ -81,12 +81,7 @@ class SignupForm extends Component {
   render() {
     let headingText = (
       <MainText>
-        <HeadingText
-          style={{
-            // color: "#425cf4"
-            color: BASE_COLOR
-          }}
-        >
+        <HeadingText style={{ color: BASE_COLOR }}>
           Adicionar informações
         </HeadingText>
       </MainText>
@@ -119,7 +114,6 @@ class SignupForm extends Component {
           isValid
         }) => (
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            {/* <Fragment> */}
             <KeyboardAvoidingView style={styles.container} behavior="padding">
               <View
                 style={{
@@ -144,7 +138,7 @@ class SignupForm extends Component {
                   icon={cnh1 ? "checkmark" : "close"}
                   onPress={() => this.renderCamera(1)}
                   buttonStyle={
-                    cnh1 ? null : { backgroundColor: baseErrorColor }
+                    cnh1 ? null : { backgroundColor: BASE_COLOR_ERROR }
                   }
                 >
                   Foto da CNH (frente)
@@ -153,7 +147,7 @@ class SignupForm extends Component {
                   icon={cnh2 ? "checkmark" : "close"}
                   onPress={() => this.renderCamera(2)}
                   buttonStyle={
-                    cnh2 ? null : { backgroundColor: baseErrorColor }
+                    cnh2 ? null : { backgroundColor: BASE_COLOR_ERROR }
                   }
                 >
                   Foto da CNH (verso)
@@ -166,7 +160,6 @@ class SignupForm extends Component {
                   autoCapitalize="words"
                   returnKeyType="next"
                   onSubmitEditing={() => this.placa.focus()}
-                  // onSubmitEditing={() => this.cor.focus()}
                   autoCorrect={false}
                   value={moto}
                   onChange={setFieldValue}
@@ -175,20 +168,6 @@ class SignupForm extends Component {
                   error={touched.moto && errors.moto}
                   style={styles.input}
                 />
-                {/* <InputValidation
-                  myRef={ref => (this.cor = ref)}
-                  placeholder="Cor da moto"
-                  autoCapitalize="words"
-                  returnKeyType="next"
-                  onSubmitEditing={() => this.placa.focus()}
-                  autoCorrect={false}
-                  value={this.props.cor}
-                  onChange={setFieldValue}
-                  onTouch={setFieldTouched}
-                  name="cor"
-                  error={touched.cor && errors.cor}
-                  style={styles.input}
-                /> */}
                 <InputValidation
                   myRef={ref => (this.placa = ref)}
                   placeholder="Placa da moto (apenas letras e números)"
@@ -219,7 +198,6 @@ class SignupForm extends Component {
                 <ActivityIndicator />
               )}
             </KeyboardAvoidingView>
-            {/* </Fragment> */}
           </TouchableWithoutFeedback>
         )}
       />
@@ -232,35 +210,14 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 15,
     justifyContent: "flex-start",
-    alignItems: "center"
-  },
-  backgroundImage: {
-    width: "100%",
-    flex: 1
+    alignItems: "center",
+    backgroundColor: BACKGROUND_COLOR
   },
   input: {
-    //backgroundColor: "#eee",
     borderBottomColor: "#bbb"
   },
   inputContainer: {
-    // it controls the input width,
-    // better approach. makes
-    // TextInputs reusable with 100% width
     width: "80%"
-  },
-  landscapePasswordContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  portraitPasswordContainer: {
-    flexDirection: "column",
-    justifyContent: "flex-start"
-  },
-  landscapePasswordWrapper: {
-    width: "45%"
-  },
-  portraitPasswordWrapper: {
-    width: "100%"
   }
 });
 

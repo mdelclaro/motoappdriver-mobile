@@ -1,8 +1,8 @@
 import styled from "styled-components/native";
-import { BASE_COLOR } from "../../config";
+import { BASE_COLOR, BACKGROUND_COLOR } from "../../config";
 
 export const Container = styled.View`
-  background: #fff;
+  background: ${BACKGROUND_COLOR};
   height: 240px;
   width: 100%;
   position: absolute;

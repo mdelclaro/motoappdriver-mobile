@@ -2,7 +2,7 @@ import React from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 
 import CustomIcon from "../UI/CustomIcon";
-import { BASE_COLOR, BASE_COLOR_ERROR } from "../../config";
+import { BASE_COLOR, BASE_COLOR_ERROR, BACKGROUND_COLOR } from "../../config";
 
 const MenuItem = props => {
   const { icon, text, onPress } = props;

@@ -34,7 +34,7 @@ export const GOOGLE_API = "AIzaSyBtJI4iAvzXZw9o5k2Ee9UwgVyR0vX0vPs";
  */
 export const BASE_COLOR = "#5568f1";
 export const BASE_COLOR_ERROR = "#ff3907";
-export const BACKGROUND_COLOR = "#f8f8f8";
+export const BACKGROUND_COLOR = "#f4f2f2";
 export const MAP_STYLE = [
   {
     featureType: "landscape.man_made",

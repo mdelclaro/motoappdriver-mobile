@@ -42,7 +42,7 @@ class LoginForm extends Component {
     let headingText = (
       <MainText>
         <HeadingText style={{ color: BASE_COLOR }}>MotoApp</HeadingText>
-        <HeadingText style={{ color: "#ddd" }}> Driver</HeadingText>
+        <HeadingText style={{ color: "#bbb" }}> Driver</HeadingText>
       </MainText>
     );
 

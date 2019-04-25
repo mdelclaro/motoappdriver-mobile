@@ -21,7 +21,7 @@ export const TitleText = styled.Text`
 `;
 
 export const TitleTextSecondary = styled(TitleText)`
-  color: #ddd;
+  color: #bbb;
 `;
 
 export const TextOne = styled.Text`

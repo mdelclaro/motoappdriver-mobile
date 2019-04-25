@@ -30,6 +30,11 @@ export const Border = styled.View`
   overflow: hidden;
   justify-content: center;
   align-content: center;
+  shadow-color: #aaa;
+  shadow-offset: 0 0;
+  shadow-opacity: 0.2;
+  shadow-radius: 10;
+  elevation: 3;
 `;
 
 export const Image = styled.Image`
@@ -51,7 +56,7 @@ export const MainText = styled.Text`
 export const SecondaryText = styled.Text`
   font-size: 12px;
   text-align: center;
-  color: #e4e4e4;
+  color: #ccc;
 `;
 
 export const FooterContainer = styled.View`
@@ -72,6 +77,11 @@ export const Footer = styled.View`
   background-color: ${BACKGROUND_COLOR};
   margin-left: 5px;
   margin-right: 5px;
+  shadow-color: #aaa;
+  shadow-offset: 0 0;
+  shadow-opacity: 0.2;
+  shadow-radius: 10;
+  elevation: 3;
 `;
 
 export const BackButton = styled.TouchableOpacity`

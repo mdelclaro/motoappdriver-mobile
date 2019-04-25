@@ -3,7 +3,7 @@ import { getImageSource } from "react-native-vector-icons/Feather";
 import { store } from "./store/configureStore";
 import { uiStopLoading, getDetails } from "./store/actions/";
 
-import { BASE_COLOR } from "./config";
+import { BASE_COLOR, BACKGROUND_COLOR } from "./config";
 
 console.disableYellowBox = true;
 
@@ -12,7 +12,8 @@ Navigation.setDefaultOptions({
     visible: false,
     drawBehind: true,
     animate: false
-  }
+  },
+  bottomTabs: { backgroundColor: BACKGROUND_COLOR }
 });
 
 const startApp = async () => {
@@ -85,14 +86,11 @@ const startApp = async () => {
           center: {
             bottomTabs: {
               id: "bottomTabs",
-              backgroundColor: "white",
+              // backgroundColor: BASE_COLOR,
               options: {
                 topbar: {
                   visible: true,
-                  id: "topBar",
-                  title: {
-                    text: "Moto App"
-                  }
+                  id: "topBar"
                 }
               },
               children: [
@@ -110,10 +108,10 @@ const startApp = async () => {
                             },
                             bottomTab: {
                               text: "Corrida",
-                              textColor: "white",
-                              selectedTextColor: "white",
+                              textColor: BASE_COLOR,
+                              selectedTextColor: BASE_COLOR,
                               icon,
-                              iconColor: "white"
+                              iconColor: BASE_COLOR
                             }
                           }
                         }

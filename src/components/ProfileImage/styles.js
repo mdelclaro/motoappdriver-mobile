@@ -1,9 +1,9 @@
 import styled from "styled-components/native";
-import { Dimensions } from "react-native";
-import { BASE_COLOR } from "../../config";
+import { BASE_COLOR, BACKGROUND_COLOR } from "../../config";
 
 export const View = styled.View`
   flex: 1;
+  background-color: ${BACKGROUND_COLOR};
 `;
 
 export const ImageBackground = styled.ImageBackground`
