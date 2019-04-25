@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   View,
   StyleSheet,
-  Dimensions,
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
@@ -18,19 +17,9 @@ import InputValidation from "../UI/InputValidation";
 import HeadingText from "../UI/HeadingText";
 import MainText from "../UI/MainText";
 
-import { BACKGROUND_COLOR } from "../../config";
+import { BACKGROUND_COLOR, BASE_COLOR } from "../../config";
 
 class SignupForm extends Component {
-  constructor(props) {
-    super(props);
-    Dimensions.addEventListener("change", this.updateStyles);
-  }
-
-  state = {
-    viewMode: Dimensions.get("window").height > 500 ? "portrait" : "landscape",
-    step: 0
-  };
-
   componentDidMount() {
     if (
       this.form.initialValues.email !== "" ||
@@ -49,28 +38,15 @@ class SignupForm extends Component {
     }
   }
 
-  componentWillUnmount() {
-    Dimensions.removeEventListener("change", this.updateStyles);
-  }
-
-  updateStyles = dims => {
-    this.setState({
-      viewMode: dims.window.height > 500 ? "portrait" : "landscape"
-    });
-  };
-
   render() {
-    let headingText = null;
+    let headingText = (
+      <MainText>
+        <HeadingText style={{ color: BASE_COLOR }}>
+          Adicionar informações
+        </HeadingText>
+      </MainText>
+    );
 
-    if (this.state.viewMode === "portrait") {
-      headingText = (
-        <MainText>
-          <HeadingText style={{ color: "#425cf4" }}>
-            Adicionar informações
-          </HeadingText>
-        </MainText>
-      );
-    }
     return (
       <Formik
         initialValues={{
