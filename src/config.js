@@ -1,23 +1,15 @@
-const home = false;
+import { GOOGLE_API_KEY, SERVER } from "react-native-dotenv";
 
 /**
  *  ---------
  * | Network |
  *  ---------
  */
-let BASE_URL, SOCKET_URL, IMAGES_URL;
 
-if (home) {
-  BASE_URL = "http://192.168.2.107:8080/v1/";
-  SOCKET_URL = "http://192.168.2.107:8080/drivers";
-  IMAGES_URL = "http://192.168.2.107:8080/images/";
-} else {
-  BASE_URL = "http://192.168.1.13:8080/v1/";
-  SOCKET_URL = "http://192.168.1.13:8080/drivers";
-  IMAGES_URL = "http://192.168.1.13:8080/images/";
-}
+export const BASE_URL = `${SERVER}v1/`;
+export const SOCKET_URL = `${SERVER}drivers`;
+export const IMAGES_URL = `${SERVER}images/`;
 export const FETCH_TIMEOUT = 3000;
-export { BASE_URL, SOCKET_URL, IMAGES_URL };
 
 /**
  *  --------
@@ -25,7 +17,7 @@ export { BASE_URL, SOCKET_URL, IMAGES_URL };
  *  --------
  */
 
-export const GOOGLE_API = "AIzaSyBtJI4iAvzXZw9o5k2Ee9UwgVyR0vX0vPs";
+export const GOOGLE_API = GOOGLE_API_KEY;
 
 /**
  *  --------
